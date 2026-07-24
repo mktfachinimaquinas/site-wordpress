@@ -59,35 +59,53 @@ e mudar a chave `enabled` para `false`.
 
 ## 2. Pendências abertas
 
+**Convenção de status:**
+- 🔴 **Aberta** — ninguém mexeu
+- 🟡 **Aguardando** — passada a alguém, esperando retorno
+- 🟢 **Resolvida [data]** — fechada, com o método de verificação anotado
+
 ### 2.1 Com o Wilson — informação que só ele tem
 
-| # | Pendência | Bloqueia |
-|---|---|---|
-| 1 | **Spec completa do formulário** — 13 opções de Segmento, regras de roteamento por verba/prazo, formato de integração (form nativo do RD embedado ou form próprio via API?) | Módulo de formulário e integrações |
-| 2 | **Medição** — reaproveitar o GTM-T2J3MRFP existente ou criar contêiner limpo? Existe propriedade GA4? Quem tem acesso ao Search Console do domínio principal? | Baseline de conversão |
-| 3 | **Data-alvo do go-live do site completo** — as 2 semanas cobrem só a homepage | Cronograma dos demais módulos |
-| 4 | **Dono do copy** — ninguém foi designado para escrever ~20 páginas nem validar specs técnicas | Produção de páginas |
-| 5 | **Papel do WhatsApp** — CTA secundário rastreado em todas as páginas? Qual número por unidade? | Header, footer, instrumentação |
-| 6 | **Fronteira de conteúdo do Livro 1** — quem produz o material rico do Guia do Empreendedor? Quantos artigos entram? | Blog e LP do Guia |
-| 7 | **Planilha de capacidade e fotos por modelo** | Páginas de produto |
-| 8 | **Números institucionais** — "+50 modelos" e "+300 máquinas/ano" batem com o dossiê? | Seção de estatísticas |
+| # | Status | Pendência | Bloqueia |
+|---|---|---|---|
+| 0 | 🔴 | **⚠ ÁRVORE DE NAVEGAÇÃO EM DISPUTA** — o dono definiu uma árvore só de produto que diverge do dossiê. Antes de tudo: perguntar ao dono onde moram as Soluções por segmento (destino da mídia paga). Ver `docs/conflito-arvore-navegacao.md` | Toda a Camada 2, interlinking, produção de páginas |
+| 1 | 🔴 | **Spec completa do formulário** — 13 opções de Segmento, roteamento por verba/prazo, formato de integração (form nativo do RD embedado ou próprio via API?). O dossiê diz que a spec já foi aprovada em projeto separado — é caçá-la, não criá-la | Formulário e integrações |
+| 2 | 🔴 | **Medição** — reaproveitar o GTM-T2J3MRFP existente ou criar limpo? Existe GA4? Quem tem acesso ao Search Console? | Baseline de conversão |
+| 3 | 🔴 | **Data-alvo do go-live do site completo** — as 2 semanas cobrem só a homepage | Cronograma |
+| 4 | 🔴 | **Dono do copy** — ninguém designado para escrever ~20 páginas nem validar specs | Produção de páginas |
+| 5 | 🔴 | **Papel do WhatsApp** — CTA secundário rastreado? Qual número por unidade? | Header, footer, instrumentação |
+| 6 | 🔴 | **Fronteira de conteúdo do Livro 1** — quem produz o material rico do Guia? Quantos artigos entram? | Blog e LP do Guia |
+| 7 | 🔴 | **Planilha de capacidade e fotos por modelo** | Páginas de produto |
+| 8 | 🔴 | **Números institucionais** — "+50 modelos" e "+300 máquinas/ano" batem com o dossiê? | Seção de estatísticas |
 
 ### 2.2 Com a designer
 
-| # | Pendência | Enviado |
+| # | Status | Pendência |
 |---|---|---|
-| 1 | **Anotar a camada de largura de cada seção** no Figma (full-bleed / larga / padrão / texto) | 23/07 |
-| 2 | **Validar H2 em 48px** (hoje 58px — só 10% de diferença do H1) | 23/07 |
-| 3 | **Corrigir line-height do H3** — Figma marca 75px sobre fonte de 36px (= 2.08). Correto: 1.25 | 23/07 |
-| 4 | **Conferir quebra do H1** a 1280px em vez de 1558px | 23/07 |
-| 5 | **Breakpoints** — quais valores usou no Figma | 23/07 |
-| 6 | **Frames de 1366px e 390px** (wireframe basta) — hoje só existe 1920 | 23/07 |
-| 7 | **Trocar "Serralheria" por "Calhas"** no menu e no mosaico | ⬜ confirmar envio |
-| 8 | **Texto do mosaico visível no mobile** (hover não existe em toque) | ⬜ confirmar envio |
-| 9 | **Corrigir rótulo "DOBRADEIRA CNC"** sobre a máquina SF3015G (que é laser) | ⬜ confirmar envio |
-| 10 | **Desenhar a página de resultados de busca** — ver 3.1 | ⬜ novo |
-| 11 | **Desenhar a página de obrigado** — ver 3.2 | ⬜ novo |
-| 12 | **Desenhar o template de post do blog** — ver 3.3 | ⬜ novo |
+| 1 | 🟡 23/07 | **Anotar a camada de largura de cada seção** (full-bleed / larga / padrão / texto) |
+| 2 | 🟡 23/07 | **Validar H2 em 48px** (hoje 58px — só 10% de diferença do H1) |
+| 3 | 🟡 23/07 | **Corrigir line-height do H3** — Figma marca 75px sobre 36px (=2.08). Correto: 1.25 |
+| 4 | 🟡 23/07 | **Conferir quebra do H1** a 1280px em vez de 1558px |
+| 5 | 🟡 23/07 | **Breakpoints** — quais valores usou no Figma |
+| 6 | 🟡 23/07 | **Frames de 1366px e 390px** (wireframe basta) |
+| 7 | 🟡 | **Trocar "Serralheria" por "Calhas"** — a árvore do dono já usa "Calhas" no menu ✔. Falta confirmar a troca no **mosaico** da home |
+| 8 | 🔴 | **Texto do mosaico visível no mobile** (hover não existe em toque) |
+| 9 | 🔴 | **Corrigir rótulo "DOBRADEIRA CNC"** sobre a máquina SF3015G (que é laser) |
+| 10 | 🔴 | **Desenhar página de resultados de busca** — ver 3.1 |
+| 11 | 🔴 | **Desenhar página de obrigado** — ver 3.2 |
+| 12 | 🔴 | **Desenhar template de post do blog** — ver 3.3 |
+| 13 | 🔴 | **Desenhar o menu mobile (hamburguer)** — só existe desktop no Figma |
+| 14 | 🔴 | **Definir os estados dos componentes** — hover, foco, erro, carregando (ver análise 360, B.1) |
+
+### 2.3 Verificações técnicas — pendentes de confirmação
+
+| # | Status | Item |
+|---|---|---|
+| 1 | 🟢 24/07 | **Country Blocking do Loginizer desativado** — confirmado por print, "Enable" desmarcado |
+| 2 | 🟢 24/07 | **Repositório publicado no GitHub** (privado) — confirmado por `git remote -v` |
+| 3 | 🔴 | **Escopo do firewall geográfico** — resolvido pela desativação acima, mas confirmar em produção no go-live |
+| 4 | 🟡 24/07 | **noindex do subdomínio de dev** — Wilson marcou "desencorajar indexação". Confirmar que está ativo em dev e DESMARCAR no go-live |
+| 5 | 🔴 | **Plugins da véspera** — GoSMTP, CookieAdmin, ACF, reCAPTCHA já aparecem instalados. Confirmar configuração de cada um |
 
 ---
 
