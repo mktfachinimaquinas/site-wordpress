@@ -37,6 +37,12 @@ o que está decidido lá — execute.
 - **Performance:** WP Rocket PRO · **SEO:** RankMath PRO
 - **Segurança:** Loginizer PRO · **Backup:** Backuply PRO
 
+**ÁRVORE DE NAVEGAÇÃO — em disputa.** O dono da empresa definiu uma árvore
+(ver `docs/conflito-arvore-navegacao.md`) que diverge da seção 7.1 do dossiê
+em pontos de SEO. A árvore do dono prevalece por enquanto. Não construir
+página sobre estrutura de navegação até a decisão fechar. Os conflitos estão
+documentados para defesa junto à diretoria.
+
 ---
 
 ## Design System
