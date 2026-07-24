@@ -245,3 +245,75 @@ Detalhamento em `docs/relatorio-analise-homepage.md`.
 | 9 | Validar "+50 modelos" e "+300 máquinas/ano" | ⬜ |
 | 10 | Eventos de GTM em todos os CTAs | ⬜ |
 | 11 | Breadcrumbs (geram schema `BreadcrumbList`) | ⬜ |
+
+
+## 6. Backlog — páginas e templates
+
+> **Estas três não são opcionais.** A homepage linka para todas. Ou elas
+> existem, ou a funcionalidade correspondente não pode subir no lançamento.
+
+### 6.1 Página de obrigado — `/obrigado`
+
+**Prioridade: alta.** É requisito de medição, não só de UX.
+
+A forma mais confiável de contar conversão é o carregamento de uma URL
+específica. Sem ela, o rastreamento depende de detectar mudança na tela, que é
+frágil e quebra com facilidade. Isso é o "baseline de conversão visitante→lead
+instrumentado desde o dia 1" que consta como métrica de sucesso do Livro 1.
+
+**Precisa ter:**
+- Confirmação clara do envio
+- Prazo de retorno do comercial
+- Próximo passo: link para catálogo, para páginas de produto, ou WhatsApp
+- Evento de conversão do GTM disparando no carregamento
+
+**Bloqueia:** o formulário não pode subir sem ela.
+
+### 6.2 Página de resultados de busca
+
+**Prioridade: alta se a busca subir no lançamento.**
+
+A busca expansível está especificada em detalhe — expansão ao clique, itens do
+menu somem, "X" para fechar. Mas o Elementor não gera a página de resultados;
+ela vem do tema. Com Hello Elementor (casca vazia), o resultado sai sem estilo
+nenhum: fundo branco, fonte serifada, lista crua.
+
+É a primeira coisa que o usuário vê depois de usar a funcionalidade que mais
+deu trabalho construir.
+
+**Precisa ter:**
+- Template no Elementor com o design system aplicado
+- Estado de "nenhum resultado encontrado" com sugestão de navegação
+- Exibição do termo buscado
+
+**Alternativa se o prazo apertar:** não subir a busca no lançamento. Melhor
+ausente que quebrada.
+
+### 6.3 Template de post do blog
+
+**Prioridade: média-alta.**
+
+A homepage tem a seção "Notícias" puxando do blog. O post individual não foi
+desenhado — sem template, herda o padrão do Hello Elementor, que é nenhum.
+
+Consequência dupla: o artigo fica sem identidade visual, e a estratégia de
+conteúdo do dossiê (blog como motor de autoridade) nasce sem casa.
+
+**Precisa ter:**
+- Template de post único no Elementor
+- Hierarquia de headings correta (H1 = título do post)
+- Breadcrumbs
+- Largura de texto corrido limitada a 720px
+- CTA ao final apontando ao formulário
+
+**Alternativa se o prazo apertar:** subir a homepage sem a seção de notícias.
+Ela depende de haver post publicado de qualquer forma.
+
+### 6.4 Outros itens de página
+
+| Item | Prioridade | Observação |
+|---|---|---|
+| Página 404 personalizada | Média | Barata de fazer, evita beco sem saída |
+| Páginas jurídicas | Alta | Requisito legal — o footer já linka "Política de Privacidade" |
+
+---
