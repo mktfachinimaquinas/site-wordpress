@@ -1,224 +1,336 @@
 # Módulo 1 — Design System no Elementor
 
 **Projeto:** Site Fachini Máquinas
-**Objetivo:** cadastrar a fundação visual do site nos Estilos Globais do
-Elementor, de modo que toda página construída depois herde cor, tipografia e
-espaçamento automaticamente.
-**Executor:** Wilson (fundação) → designer (montagem das páginas)
+**Versão:** 2 — consolidada com os valores reais extraídos do Figma (23/07/2026)
+**Objetivo:** cadastrar a fundação visual nos Estilos Globais do Elementor, de
+modo que toda página construída depois herde cor, tipografia e espaçamento.
 
 ---
 
 ## Por que este módulo vem primeiro
 
 Estilos Globais são a diferença entre um site e uma pilha de páginas. Cadastrado
-corretamente, mudar o azul da marca é uma edição em um lugar. Não cadastrado,
-é caçar o hex em 20 páginas e rezar para não esquecer nenhuma.
+corretamente, mudar o azul da marca é uma edição em um lugar. Não cadastrado, é
+caçar o hex em 20 páginas e rezar para não esquecer nenhuma.
 
 É também o que torna o treinamento da designer viável: com a fundação pronta,
-ela não decide cor nem tamanho de fonte — ela escolhe de uma lista curta. O
-trabalho dela vira composição, não design de sistema.
+ela não decide cor nem tamanho de fonte — escolhe de uma lista curta. O trabalho
+dela vira composição, não design de sistema.
 
 ---
 
-## Parte 1 — Paleta
-
-### 1.1 Cores travadas (dossiê)
+## Parte 1 — Paleta (fechada)
 
 | Nome | Hex | Uso |
 |---|---|---|
-| Navy Fachini | `#15274E` | Cor institucional. Fundos de seção escura, títulos, footer |
-| Vermelho Fachini | `#E01E26` | **Exclusivo de CTA e destaque.** Nunca em texto corrido |
+| Navy Primário | `#15274E` | Títulos, fundos de seção escura |
+| Navy Secundário | `#00224E` | Footer, sobreposição em imagem |
+| Vermelho | `#E01E26` | CTA — **exclusivo** |
+| Vermelho Hover | `#B01319` | Estado hover dos botões |
+| Onix | `#0F0F0F` | Corpo de texto |
+| Off-white | `#FBFBFB` | Fundo padrão |
+| Cinza Névoa | `#F1F3F6` | Seção alternada, cards, contorno de input |
+| Cinza Médio | `#5C6675` | Texto de apoio, barras de slide inativas |
 
-**Regra de disciplina:** o vermelho é o recurso mais escasso da paleta. Se ele
-aparecer em tudo, para de significar "clique aqui". No layout atual ele está
-bem usado — botões e a palavra "ORÇAMENTO" no formulário. Mantenha assim.
+Navy Primário, Navy Secundário e Vermelho vêm do manual de marca. Vermelho
+Hover e os dois cinzas são cores de sistema — existem por necessidade funcional
+e todas as combinações de texto foram verificadas contra o mínimo WCAG AA de
+4.5:1.
 
-### 1.2 Cores de apoio (proposta — validar)
+**Regra de disciplina:** o vermelho é o recurso mais escasso da paleta. Se
+aparecer em tudo, para de significar "clique aqui".
 
-O layout precisa de mais que dois tons para funcionar. Estas são derivadas das
-duas travadas, não concorrem com elas:
-
-| Nome | Hex | Uso |
-|---|---|---|
-| Navy Profundo | `#0E1A36` | Hover de seções escuras, footer, sobreposição em imagem |
-| Vermelho Hover | `#B01319` | Estado hover dos botões vermelhos |
-| Texto Escuro | `#1F2937` | Corpo de texto sobre fundo claro |
-| Texto Médio | `#5B6472` | Legendas, texto de apoio, placeholders |
-| Cinza Claro | `#F4F6F8` | Fundo de seção alternada, cards |
-| Borda | `#DDE2E8` | Divisores, contornos de input |
-| Branco | `#FFFFFF` | Fundo padrão, texto sobre navy |
-| Texto sobre Navy | `#C9D2E0` | Corpo de texto dentro de seções navy |
-
-**Por que "Texto Escuro" não é preto puro:** `#000000` sobre branco produz
-contraste alto demais e cansa a leitura em telas. `#1F2937` tem uma leve
-inclinação para o azul, o que amarra o corpo de texto com o navy da marca sem
-que ninguém perceba conscientemente.
+**Estados translúcidos não geram cor nova.** Hover do menu é branco a ~12%;
+texto de apoio sobre navy é off-white a ~80%; sobreposição de imagem é navy com
+opacidade.
 
 ---
 
 ## Parte 2 — Tipografia
 
-### 2.1 A fonte
+### 2.1 As duas famílias
 
-**Archivo**, do Google Fonts. Licença SIL Open Font License — uso comercial
-livre, sem custo, web e impresso.
+| Fonte | Peso | Onde | Arquivos |
+|---|---|---|---|
+| **Mitr** | 700 Bold | H1 e H2 — **sempre em caixa alta** | 1 |
+| **Archivo** | 400 Regular | Corpo de texto | 1 |
+| **Archivo** | 600 SemiBold | H3, H4, H5, menu | 1 |
+| **Archivo** | 700 Bold | Botões, subtítulo do hero | 1 |
 
-**Pesos a carregar: apenas 3.**
+**Quatro arquivos no total.** Ambas do Google Fonts sob licença SIL OFL — uso
+comercial livre, hospedagem local permitida.
 
-| Peso | Nome | Uso |
-|---|---|---|
-| 400 | Regular | Corpo de texto |
-| 700 | Bold | Subtítulos, botões, destaques |
-| 900 | Black | Headlines |
+**Restrições:**
 
-Cada peso é um arquivo baixado pelo visitante. Archivo tem 9 pesos disponíveis
-— carregar todos seria desperdiçar orçamento de performance num site cuja
-métrica de sucesso é Core Web Vitals verde no mobile.
+- **Mitr não tem peso acima de 700.** A família vai de ExtraLight a Bold. Se um
+  dia quiserem mais impacto na headline, o único recurso é aumentar o tamanho.
+- **Mitr é exclusiva de caixa alta.** Os terminais arredondados desaparecem em
+  maiúsculas; em caixa mista o tipo fica visivelmente mais macio, o que não
+  serve ao território industrial. Headline em caixa mista usa Archivo 700.
+- **O menu usa SemiBold 600, não Medium 500.** O Figma marca 500, mas a 15px a
+  diferença é imperceptível e evita carregar um quinto arquivo.
 
-**A confirmar com a designer:** o Figma usa o eixo de largura (versão variável)
-ou os cortes estáticos? Se ela usou uma versão mais larga nas headlines, o
-cadastro muda — precisa ser a fonte variável, não os pesos fixos.
+### 2.2 Escala — Desktop (razão 1.333)
 
-### 2.2 Escala tipográfica (proposta — validar contra o Figma)
+Os tamanhos não foram escolhidos por gosto: saem de uma progressão. Cada nível
+é o anterior dividido por **1.333**.
 
-**Desktop (acima de 1024px)**
+```
+64 ÷ 1.333 = 48    48 ÷ 1.333 = 36    36 ÷ 1.333 = 27    27 ÷ 1.333 = 20
+```
 
-| Nível | Tamanho | Peso | Line-height | Observação |
-|---|---|---|---|---|
-| H1 | 56px | 900 | 1.1 | Caixa alta, letter-spacing 0.01em |
-| H2 | 40px | 900 | 1.15 | Caixa alta |
-| H3 | 28px | 700 | 1.25 | |
-| H4 | 22px | 700 | 1.3 | |
-| Corpo | 17px | 400 | 1.6 | |
-| Corpo pequeno | 15px | 400 | 1.6 | Legendas, footer |
-| Botão | 15px | 700 | 1 | Caixa alta, letter-spacing 0.05em |
+O H1 de 64px e o H3 de 36px que a designer definiu já eram dois degraus exatos
+dessa escala. Só o H2 estava fora.
 
-**Mobile (até 767px)**
+**Estes são os valores a cadastrar:**
+
+| Nível | Fonte | Tamanho | Peso | Line-height | Letter-spacing | Caixa |
+|---|---|---|---|---|---|---|
+| H1 | Mitr | 64px | 700 | **1.1** | 0.06em | ALTA |
+| H2 | Mitr | **48px** ⚠ | 700 | **1.15** | 0.06em | ALTA |
+| H3 | Archivo | 36px | 600 | **1.25** ⚠ | 0.02em | ALTA |
+| H4 | Archivo | **27px** | 600 | 1.3 | 0 | normal |
+| H5 | Archivo | **20px** | 600 | 1.35 | 0 | normal |
+| Subtítulo hero | Archivo | 23px | 700 | 1.4 | 0 | ALTA |
+| Corpo | Archivo | 16px | 400 | 1.6 | 0 | normal |
+| Corpo pequeno | Archivo | 14px | 400 | 1.6 | 0 | normal |
+| Botão | Archivo | 15px | 700 | 1 | 0.05em | ALTA |
+| Menu | Archivo | 15px | 600 | 1 | 0 | ALTA |
+
+> ⚠ **H2 — 48px, não 58px.** O Figma marca 58px, o que dá apenas 10% de
+> diferença para o H1. Como os dois usam a mesma fonte, peso, caixa e tracking,
+> o tamanho é o único diferenciador que sobra — e 10% está abaixo do limiar em
+> que o olho lê hierarquia. A 48px a diferença vai a 33% e o H1 volta a dominar.
+> **Pendente de validação da designer.**
+
+> ⚠ **H3 — line-height 1.25, não 75px.** O Figma marca 75px sobre fonte de
+> 36px, o que dá 2.08. Passou despercebido porque "Suporte Técnico" ocupa uma
+> linha só. No primeiro H3 que quebrar em duas linhas, abre um vão de 75px.
+> **Confirmar com a designer.**
+
+**Line-height do H1 e H2 nunca abaixo de 1.1.** O Figma marca 1.02 no H1. Em
+português, acentos em caixa alta ficam acima da altura das maiúsculas — a 1.02
+o acento de "MÁQUINA" encosta na linha de cima, e a cedilha de "PRODUÇÃO"
+invade a linha de baixo.
+
+**H4, H5 e Corpo pequeno** não foram medidos no Figma. Existem porque hoje há um
+vão de 55% entre o H3 (36px) e o corpo (16px) — sem eles, título de card,
+subtítulo de spec técnica e label de formulário recebem tamanho improvisado na
+montagem.
+
+### 2.3 Escala — Mobile (razão 1.2)
+
+Não existe prancheta mobile no Figma. Esta escala é proposta. A razão é menor
+que a de desktop porque em tela pequena saltos grandes desperdiçam espaço
+vertical.
 
 | Nível | Tamanho | Peso | Line-height |
 |---|---|---|---|
-| H1 | 34px | 900 | 1.15 |
-| H2 | 28px | 900 | 1.2 |
-| H3 | 22px | 700 | 1.3 |
-| H4 | 19px | 700 | 1.35 |
+| H1 | 34px | 700 | 1.15 |
+| H2 | 28px | 700 | 1.2 |
+| H3 | 23px | 600 | 1.3 |
+| H4 | 19px | 600 | 1.35 |
+| H5 | 17px | 600 | 1.4 |
+| Subtítulo hero | 17px | 700 | 1.45 |
 | Corpo | 16px | 400 | 1.65 |
 | Corpo pequeno | 14px | 400 | 1.6 |
 | Botão | 15px | 700 | 1 |
 
-**Regra que não se quebra:** corpo de texto no mobile nunca abaixo de 16px.
-Além da legibilidade, o Safari do iOS dá zoom automático em campos de
-formulário com fonte menor que 16px — o que faria a página saltar quando o
-usuário tocasse no formulário de orçamento. Problema clássico e invisível em
-teste de desktop.
+**Regra que não se quebra:** corpo nunca abaixo de 16px no mobile. Além da
+legibilidade, o Safari do iOS dá zoom automático em campo de formulário com
+fonte menor que 16px — a página saltaria quando o usuário tocasse no formulário
+de orçamento.
 
-**Sobre o line-height:** quanto maior o texto, menor o valor. Headline com 1.6
-fica com buracos entre as linhas; corpo com 1.1 fica sufocado. Por isso a
-escala desce de 1.65 no corpo até 1.1 no H1.
+**Sobre o line-height:** quanto maior o texto, menor o valor. Headline a 1.6
+fica com buracos; corpo a 1.1 fica sufocado. Por isso a escala desce de 1.65 no
+corpo até 1.1 no H1.
 
 ---
 
-## Parte 3 — Espaçamento
+## Parte 3 — Hierarquia de headings
 
-Escala base de 8px. Todo espaçamento do site sai desta lista:
+**Princípio: nível de heading é significado, não tamanho.** O H1 não é o texto
+maior — é o assunto da página. A hierarquia serve ao Google e ao leitor de tela.
+
+### Homepage
+
+| Nível | Elementos |
+|---|---|
+| H1 | "Encontre a máquina ideal..." — **um só na página** |
+| H2 | "Aumente a produtividade", "Tecnologia que transforma", "Notícias", "Solicite seu orçamento", título de cada aba do mosaico |
+| H3 | "Suporte técnico", "Instalação profissional", "Pós venda", títulos dos cards de notícia |
+
+### Armadilhas
+
+- **"Aumente a produtividade" é H2, não H1.** Está em Mitr grande e parece título
+  de página, mas semanticamente é seção. Dois H1 deixam o Google sem saber qual
+  é o assunto.
+- **Os números não são heading.** "+50", "+30", "+300" são dados. Devem sair
+  como texto comum estilizado grande. Marcados como H2, entram na estrutura do
+  documento e o Google lê "+50" como um dos assuntos da página.
+- **Links do footer não são heading.** "MÁQUINAS", "QUEM SOMOS" ali são
+  navegação.
+
+### Páginas internas
+
+O H1 é o nome da máquina ou da categoria, sempre contendo a palavra-chave.
+Nunca "Bem-vindo" ou "Conheça nossa linha".
+
+---
+
+## Parte 4 — Espaçamento e largura
+
+### 4.1 Largura de conteúdo
+
+O Figma foi desenhado numa prancheta de **1920px**, com bloco de conteúdo de
+**1558px**. Isso não pode ir direto para o Elementor:
+
+- 1920 não é a tela típica. E há um fator que quase todo mundo esquece: a
+  **escala do Windows**. Um monitor de 1920px a 125% (padrão de fábrica em muito
+  notebook) entrega 1536px de viewport ao navegador; a 150%, entrega 1280px. As
+  larguras reais que chegam ao site se concentram em 1280, 1366, 1440, 1536 e
+  1920.
+- Parágrafo com 1558px de largura dá cerca de 200 caracteres por linha. O
+  confortável para leitura é 50 a 75.
+
+**Uma medida única não resolve**, porque os dois usos se contradizem: imagem,
+grid e card querem largura; texto corrido quer estreiteza. Daí o sistema de
+camadas.
+
+| Camada | Largura | Onde |
+|---|---|---|
+| **Full-bleed** | 100% | Hero, seções navy, banner de CTA, footer |
+| **Larga** | `min(94vw, 1560px)` | Mosaico de categorias, grid de notícias, estatísticas |
+| **Padrão** | **1280px** | Maioria das seções — é o Content Width do Elementor |
+| **Texto** | 720px | Parágrafo corrido |
+
+**No Elementor**, quase tudo é nativo:
+
+- **Padrão:** Site Settings → Layout → Content Width = 1280px
+- **Full-bleed:** no container, Content Width = *Full Width*
+- **Larga:** container em Full Width com container interno de largura customizada
+- **Texto:** limite de 720px no próprio widget
+
+CSS entra só se quiser a largura fluida da camada Larga:
+
+```css
+.fachini-largo {
+  max-width: min(94vw, 1560px);
+  margin-inline: auto;
+}
+```
+
+`94vw` são 94% da largura da janela (`vw` = 1% da viewport). `min()` escolhe o
+menor dos dois: numa tela de 1920, 94vw dá 1805 — maior que 1560, então vence o
+teto; numa de 1366, dá 1284 — menor, então vence ele e sobram 82px de cada lado.
+Adaptação automática sem media query. `margin-inline: auto` centraliza,
+distribuindo a sobra dos dois lados.
+
+Aplica adicionando `fachini-largo` no campo CSS Classes do container.
+
+> **Consequência a validar:** o H1 vai quebrar diferente a 1280px do que quebra
+> a 1558px no Figma. A designer precisa conferir se as três linhas continuam
+> bem distribuídas.
+
+> **Cuidado ao alargar por "sensação de vazio":** quando uma seção parece vazia
+> numa tela grande, a causa costuma ser densidade interna, não largura. Teste:
+> se você alargasse a seção, o conteúdo cresceria junto ou só se afastaria? Se
+> for a segunda, alargar só espalha mais o vazio.
+
+### 4.2 Escala de espaçamento
+
+Base 8px. Todo espaçamento do site sai desta lista:
 
 ```
 8 · 16 · 24 · 32 · 48 · 64 · 96 · 128
 ```
 
-**Por que uma escala fechada:** sem ela, cada seção ganha um valor
-improvisado — 30px aqui, 35px ali, 42px acolá. Ninguém nota individualmente,
-mas o site inteiro fica com uma frouxidão que não se consegue nomear. Escala
-fechada resolve isso sem esforço: só existem 8 opções.
-
-**Padrões de aplicação:**
+Sem escala fechada, cada seção ganha um valor improvisado — 30px aqui, 35px
+ali. Ninguém nota individualmente, mas o site fica com uma frouxidão que não se
+consegue nomear.
 
 | Contexto | Desktop | Mobile |
 |---|---|---|
 | Padding vertical de seção | 96px | 56px |
 | Padding horizontal do container | 24px | 20px |
-| Espaço entre título e texto | 24px | 16px |
-| Espaço entre texto e botão | 32px | 24px |
+| Entre título e texto | 24px | 16px |
+| Entre texto e botão | 32px | 24px |
 | Gap entre cards | 32px | 24px |
-
-**Largura máxima do container:** 1200px.
 
 ---
 
-## Parte 4 — Execução no Elementor
+## Parte 5 — Execução no Elementor
 
-### Passo 1 — Hospedar a fonte localmente
+### Passo 1 — Hospedar as fontes localmente
 
-Antes de cadastrar tipografia, a fonte precisa estar servida do seu próprio
-servidor, não do CDN do Google. Dois motivos: performance (elimina uma conexão
-externa no carregamento inicial, ganho direto de LCP) e LGPD (carregar do
-Google transfere o IP do visitante a um terceiro, o que complica o consentimento
-no CookieAdmin).
+Antes de cadastrar tipografia, Mitr e Archivo precisam estar servidas do próprio
+servidor, não do CDN do Google. Dois motivos: performance (elimina conexão
+externa no carregamento inicial, ganho direto de LCP) e LGPD (carregar do Google
+transfere o IP do visitante a terceiro, o que complica o consentimento no
+CookieAdmin).
 
 O WP Rocket PRO tem a opção de hospedagem local de Google Fonts. Ative antes de
 seguir.
 
-### Passo 2 — Cadastrar as cores globais
+**Carregar apenas:** Mitr 700 · Archivo 400, 600, 700.
 
-**Caminho:** Elementor → hambúrguer no canto superior esquerdo do editor →
-**Site Settings** → **Global Colors**
+### Passo 2 — Cores globais
 
-O Elementor traz 4 slots nomeados. Use assim:
+**Caminho:** Elementor → menu do editor → **Site Settings** → **Global Colors**
 
-| Slot | Cor | Hex |
-|---|---|---|
-| Primary | Navy Fachini | `#15274E` |
-| Secondary | Texto Médio | `#5B6472` |
-| Text | Texto Escuro | `#1F2937` |
-| Accent | Vermelho Fachini | `#E01E26` |
+Os 4 slots nomeados:
 
-Depois adicione as demais como **cores personalizadas**, com nome descritivo —
-"Navy Profundo", "Cinza Claro", "Borda". Nome importa: a designer vai escolher
-por nome numa lista, não por hex.
+| Slot | Cor |
+|---|---|
+| Primary | Navy Primário `#15274E` |
+| Secondary | Cinza Médio `#5C6675` |
+| Text | Onix `#0F0F0F` |
+| Accent | Vermelho `#E01E26` |
+
+As outras quatro entram como **cores personalizadas**, com nome descritivo:
+Navy Secundário, Vermelho Hover, Off-white, Cinza Névoa.
 
 > **Não pule a nomenclatura.** Cor sem nome vira "aquele azul" e alguém acaba
-> digitando o hex na mão em algum lugar. Cada hex digitado à mão é um ponto
-> onde o sistema vaza.
+> digitando o hex na mão. Cada hex digitado à mão é um ponto onde o sistema vaza.
 
-### Passo 3 — Cadastrar as fontes globais
+### Passo 3 — Fontes globais
 
 **Caminho:** Site Settings → **Global Fonts**
 
 | Slot | Configuração |
 |---|---|
-| Primary | Archivo, 900 — headlines |
-| Secondary | Archivo, 700 — subtítulos |
-| Text | Archivo, 400 — corpo |
-| Accent | Archivo, 700 — botões e links |
+| Primary | Mitr 700 — headlines |
+| Secondary | Archivo 600 — subtítulos e menu |
+| Text | Archivo 400 — corpo |
+| Accent | Archivo 700 — botões |
 
 ### Passo 4 — Aplicar aos elementos (o passo que quase todo mundo pula)
 
-Global Fonts cria os slots reutilizáveis, mas **não define automaticamente
-como um H1 aparece na página**. Isso é outro lugar:
+Global Fonts cria os slots reutilizáveis, mas **não define como um H1 aparece
+na página**. Isso é outra tela:
 
 **Caminho:** Site Settings → **Theme Style** → **Typography**
 
-Ali você configura Body e H1 até H6 com os valores da tabela da Parte 2.
-Faça o mesmo em **Theme Style → Buttons** para o botão padrão (fundo Accent,
-texto branco, hover Vermelho Hover).
+Configure Body e H1 até H6 com os valores da Parte 2.2 (desktop) e 2.3 (mobile).
 
-Sem este passo, cada texto colocado na página nasce com o padrão do Elementor
-e alguém acaba ajustando manualmente — que é exatamente o descontrole que este
+Depois **Theme Style → Buttons**: fundo Accent, texto Off-white, hover Vermelho
+Hover, tipografia Archivo 700 / 15px / caixa alta / letter-spacing 0.05em.
+
+Sem este passo, cada texto colocado na página nasce com o padrão do Elementor e
+alguém acaba ajustando manualmente — que é exatamente o descontrole que este
 módulo existe para impedir.
 
-### Passo 5 — Configurar os breakpoints
+### Passo 5 — Breakpoints e largura
 
-**Caminho:** Site Settings → **Layout** → Breakpoints
+**Caminho:** Site Settings → **Layout**
 
-Confirme que os breakpoints ativos são os que a designer usou no Figma.
-Padrão do Elementor: Mobile até 767px, Tablet até 1024px. Se o Figma usou
-outros valores, alinhe agora — depois significa revisar página por página.
+- Content Width: **1280px**
+- Breakpoints: confirmar com a designer quais valores ela usou. Padrão do
+  Elementor: Mobile até 767px, Tablet até 1024px.
 
-Aproveite e defina **Content Width: 1200px** na mesma tela.
+### Passo 6 — Variáveis de espaçamento
 
-### Passo 6 — Cadastrar a escala de espaçamento em Custom CSS
-
-O Elementor não tem campo nativo para escala de espaçamento. A forma limpa é
-declarar variáveis CSS uma vez, em Site Settings → **Custom CSS**:
+**Caminho:** Site Settings → **Custom CSS**
 
 ```css
 :root {
@@ -233,54 +345,45 @@ declarar variáveis CSS uma vez, em Site Settings → **Custom CSS**:
 }
 ```
 
-**O que isso faz:** `:root` é o elemento raiz do documento — o `<html>`.
-Declarar variáveis ali as torna disponíveis em qualquer lugar da página.
-Cada linha cria uma variável CSS (o prefixo `--` é o que a identifica como
-variável). Depois, em qualquer CSS customizado, você usa `var(--esp-5)` em vez
-de digitar `48px`.
+`:root` é o elemento raiz do documento — o `<html>`. Declarar variáveis ali as
+torna disponíveis em qualquer lugar da página. O prefixo `--` é o que identifica
+uma variável CSS. Depois, em qualquer CSS customizado, você usa `var(--esp-5)`
+em vez de digitar `48px`.
 
-Ganho prático: se um dia a escala mudar, muda aqui e propaga para tudo. É a
-mesma lógica das cores globais, aplicada a espaçamento.
-
-Você ainda vai preencher os campos de padding do Elementor com os números
-diretamente — as variáveis servem para o CSS customizado que vem nos próximos
-módulos, como o header.
+Se um dia a escala mudar, muda aqui e propaga. Mesma lógica das cores globais,
+aplicada a espaçamento.
 
 ---
 
-## Parte 5 — Verificação
+## Parte 6 — Verificação
 
-Antes de considerar o módulo fechado:
-
-- [ ] Fonte Archivo servida localmente (checar em DevTools → Network se não há
-      requisição para `fonts.googleapis.com`)
-- [ ] Apenas 3 pesos carregando
-- [ ] As 4 cores globais cadastradas nos slots corretos
-- [ ] Cores de apoio cadastradas **com nome**
+- [ ] Mitr e Archivo servidas localmente (DevTools → Network: nenhuma requisição
+      para `fonts.googleapis.com`)
+- [ ] Apenas 4 arquivos de fonte carregando
+- [ ] 4 cores nos slots corretos + 4 personalizadas **com nome**
 - [ ] Theme Style → Typography preenchido para Body e H1–H6, desktop e mobile
-- [ ] Theme Style → Buttons configurado com hover
+- [ ] Theme Style → Buttons com hover configurado
+- [ ] Content Width em 1280px
 - [ ] Breakpoints alinhados com o Figma
-- [ ] Content Width em 1200px
 - [ ] Variáveis de espaçamento no Custom CSS
-- [ ] Teste: criar uma página de rascunho, jogar um H1, um H2 e um parágrafo
-      sem tocar em nenhuma configuração de estilo. Se saírem certos, a fundação
-      está de pé. Depois apague a página.
+- [ ] **Teste final:** criar página de rascunho, jogar um H1, um H2 e um
+      parágrafo sem tocar em nenhuma configuração de estilo. Se saírem certos, a
+      fundação está de pé. Depois apagar a página.
 
 ---
+
+## Pendências com a designer
+
+1. **Line-height do H3** — confirmar que 75px foi resíduo e adotar 1.25
+2. **Breakpoints** — quais valores ela usou no Figma
+3. **Quebra do H1 a 1280px** — conferir se as três linhas continuam distribuídas
+4. **Hierarquia de headings** — alinhar a marcação semântica da Parte 3 antes da
+   montagem
 
 ## O que este módulo destrava
 
-Com a fundação cadastrada:
-
 - A designer pode ser treinada em composição, não em design de sistema
 - O header (Módulo 2) tem sobre o que ser construído
-- Todo CSS customizado dos módulos seguintes pode referenciar variáveis em vez
-  de valores fixos
-- Mudanças de marca viram edição em um lugar
-
-## Pendências para fechar
-
-1. **Escala tipográfica validada** — a designer confere a tabela da Parte 2
-   contra o Figma e ajusta o que estiver fora
-2. **Eixo de largura** — Archivo variável ou cortes estáticos?
-3. **Breakpoints do Figma** — quais valores ela usou?
+- Todo CSS customizado dos módulos seguintes referencia variáveis, não valores
+  fixos
+- Mudança de marca vira edição em um lugar
