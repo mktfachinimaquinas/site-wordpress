@@ -18,8 +18,12 @@ que será colado no Elementor, os mapas de SEO e os scripts de apoio.
 `docs/DOSSIE_FACHINI_projeto_site.md` é a **fonte de verdade** deste projeto.
 As seções 1 a 12 são o dossiê original; a seção 13 é o adendo de execução.
 
-**Se qualquer sugestão conflitar com o dossiê, o dossiê vence.** Não rediscuta
-o que está decidido lá — execute.
+O dossiê é a referência primária do projeto. Ele prevalece sobre sugestões
+avulsas e não se rediscute por conveniência. Mas não é imutável: decisões de
+quem tem autoridade (dono, diretoria) o atualizam via adendo, e divergências
+técnicas devem ser registradas como pendência para decisão — não aplicadas
+por conta própria nem ignoradas. Quando algo conflitar com o dossiê, o
+procedimento é documentar o conflito, não escolher um lado sozinho.
 
 | Arquivo | O que é |
 |---|---|
