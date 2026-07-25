@@ -87,8 +87,8 @@ dessa escala. Só o H2 estava fora.
 | Nível | Fonte | Tamanho | Peso | Line-height | Letter-spacing | Caixa |
 |---|---|---|---|---|---|---|
 | H1 | Mitr | 64px | 700 | **1.1** | 0.06em | ALTA |
-| H2 | Mitr | **48px** ⚠ | 700 | **1.15** | 0.06em | ALTA |
-| H3 | Archivo | 36px | 600 | **1.25** ⚠ | 0.02em | ALTA |
+| H2 | Mitr | **48px** | 700 | **1.15** | 0.06em | ALTA |
+| H3 | Archivo | 36px | 600 | **1.25** | 0.02em | ALTA |
 | H4 | Archivo | **27px** | 600 | 1.3 | 0 | normal |
 | H5 | Archivo | **20px** | 600 | 1.35 | 0 | normal |
 | Subtítulo hero | Archivo | 23px | 700 | 1.4 | 0 | ALTA |
@@ -97,16 +97,16 @@ dessa escala. Só o H2 estava fora.
 | Botão | Archivo | 15px | 700 | 1 | 0.05em | ALTA |
 | Menu | Archivo | 15px | 600 | 1 | 0 | ALTA |
 
-> ⚠ **H2 — 48px, não 58px.** O Figma marca 58px, o que dá apenas 10% de
-> diferença para o H1. Como os dois usam a mesma fonte, peso, caixa e tracking,
-> o tamanho é o único diferenciador que sobra — e 10% está abaixo do limiar em
-> que o olho lê hierarquia. A 48px a diferença vai a 33% e o H1 volta a dominar.
-> **Pendente de validação da designer.**
+> **H2 — 48px, não 58px (decisão fechada, validada pela designer em
+> 25/07/2026).** O Figma marcava 58px, o que dava apenas 10% de diferença para
+> o H1. Como os dois usam a mesma fonte, peso, caixa e tracking, o tamanho é o
+> único diferenciador que sobra — e 10% está abaixo do limiar em que o olho lê
+> hierarquia. A 48px a diferença vai a 33% e o H1 volta a dominar.
 
-> ⚠ **H3 — line-height 1.25, não 75px.** O Figma marca 75px sobre fonte de
-> 36px, o que dá 2.08. Passou despercebido porque "Suporte Técnico" ocupa uma
-> linha só. No primeiro H3 que quebrar em duas linhas, abre um vão de 75px.
-> **Confirmar com a designer.**
+> **H3 — line-height 1.25, não 75px (decisão fechada, validada pela designer
+> em 25/07/2026).** O Figma marcava 75px sobre fonte de 36px, o que dava 2.08.
+> Passou despercebido porque "Suporte Técnico" ocupa uma linha só. No primeiro
+> H3 que quebrar em duas linhas, abriria um vão de 75px.
 
 **Line-height do H1 e H2 nunca abaixo de 1.1.** O Figma marca 1.02 no H1. Em
 português, acentos em caixa alta ficam acima da altura das maiúsculas — a 1.02
@@ -374,10 +374,9 @@ aplicada a espaçamento.
 
 ## Pendências com a designer
 
-1. **Line-height do H3** — confirmar que 75px foi resíduo e adotar 1.25
-2. **Breakpoints** — quais valores ela usou no Figma
-3. **Quebra do H1 a 1280px** — conferir se as três linhas continuam distribuídas
-4. **Hierarquia de headings** — alinhar a marcação semântica da Parte 3 antes da
+1. **Breakpoints** — quais valores ela usou no Figma
+2. **Quebra do H1 a 1280px** — conferir se as três linhas continuam distribuídas
+3. **Hierarquia de headings** — alinhar a marcação semântica da Parte 3 antes da
    montagem
 
 ## O que este módulo destrava

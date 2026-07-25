@@ -56,11 +56,11 @@ site-wordpress/
 
 ---
 
-## Regra de governança
+## Documentação de referência
 
-**O dossiê vence.** Se qualquer proposta conflitar com o que está em
-`docs/DOSSIE_FACHINI_projeto_site.md`, o dossiê prevalece. O que está decidido
-lá não se rediscute — executa-se.
+A pasta `docs/` contém o material que fundamenta as decisões do projeto —
+contexto de negócio, análise, design system e o controle de pendências.
+Consulte antes de propor mudanças estruturais.
 
 ---
 

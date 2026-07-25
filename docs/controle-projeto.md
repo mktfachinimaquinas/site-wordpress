@@ -15,7 +15,7 @@
 | 23/07 | **Toska exclusiva do logo**, em SVG | Não é webfont |
 | 23/07 | **Roboto descontinuada** | Página `3 - MARCA` do Figma desatualizada |
 | 23/07 | **Sistema de 4 camadas de largura** | Full-bleed 100% · Larga `min(94vw,1560px)` · Padrão 1280px · Texto 720px |
-| 23/07 | **Escala tipográfica razão 1.333** | H2 de 48px pendente de validação da designer |
+| 23/07 | **Escala tipográfica razão 1.333** | H2 de 48px e line-height do H3 de 1.25 validados pela designer em 25/07 |
 | 23/07 | **Hierarquia de headings definida** | Um H1 por página; números de estatística não são heading |
 | 23/07 | **Vídeo fora do hero** | Remove o maior risco de CWV mobile |
 | 23/07 | **Scrollytelling adiado** | Versão intermediária no lançamento: sticky + fade |
@@ -83,8 +83,8 @@ e mudar a chave `enabled` para `false`.
 | # | Status | Pendência |
 |---|---|---|
 | 1 | 🟡 23/07 | **Anotar a camada de largura de cada seção** (full-bleed / larga / padrão / texto) |
-| 2 | 🟡 23/07 | **Validar H2 em 48px** (hoje 58px — só 10% de diferença do H1) |
-| 3 | 🟡 23/07 | **Corrigir line-height do H3** — Figma marca 75px sobre 36px (=2.08). Correto: 1.25 |
+| 2 | 🟢 25/07 | **H2 em 48px validado** pela designer (Figma marcava 58px — só 10% de diferença do H1) |
+| 3 | 🟢 25/07 | **Line-height do H3 corrigido para 1.25**, validado pela designer (Figma marcava 75px sobre 36px = 2.08) |
 | 4 | 🟡 23/07 | **Conferir quebra do H1** a 1280px em vez de 1558px |
 | 5 | 🟡 23/07 | **Breakpoints** — quais valores usou no Figma |
 | 6 | 🟡 23/07 | **Frames de 1366px e 390px** (wireframe basta) |

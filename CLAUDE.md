@@ -92,7 +92,7 @@ sobre navy = off-white ~80%; sobreposição de imagem = navy com opacidade.
 | Nível | Fonte | Peso | Tamanho | Line-height | Tracking | Caixa |
 |---|---|---|---|---|---|---|
 | H1 | Mitr | 700 | 64px | 1.1 | 0.06em | ALTA |
-| H2 | Mitr | 700 | 48px ⚠ | 1.15 | 0.06em | ALTA |
+| H2 | Mitr | 700 | 48px | 1.15 | 0.06em | ALTA |
 | H3 | Archivo | 600 | 36px | 1.25 | 0.02em | ALTA |
 | H4 | Archivo | 600 | 27px | 1.3 | 0 | normal |
 | H5 | Archivo | 600 | 20px | 1.35 | 0 | normal |
@@ -101,9 +101,9 @@ sobre navy = off-white ~80%; sobreposição de imagem = navy com opacidade.
 | Botão | Archivo | 700 | 15px | 1 | 0.05em | ALTA |
 | Menu | Archivo | 600 | 15px | 1 | 0 | ALTA |
 
-> ⚠ **H2 pendente de validação da designer.** O Figma marca 58px, o que dá
-> apenas 10% de diferença para o H1 — abaixo do limiar em que o olho lê
-> hierarquia. Proposta: 48px (33% de diferença).
+> **H2 — 48px, decisão fechada (validada pela designer em 25/07/2026).** O
+> Figma marcava 58px, o que dava apenas 10% de diferença para o H1 — abaixo do
+> limiar em que o olho lê hierarquia. A 48px a diferença é de 33%.
 
 **Mobile** — razão 1.2, proposta (não existe prancheta mobile no Figma)
 

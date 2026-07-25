@@ -73,8 +73,8 @@ Mais impacto na headline só via tamanho.
 | Nível | Fonte | Peso | Tamanho | Line-height | Tracking | Caixa |
 |---|---|---|---|---|---|---|
 | H1 | Mitr | 700 | 64px | 1.1 | 0.06em | ALTA |
-| H2 | Mitr | 700 | 48px ⚠ | 1.15 | 0.06em | ALTA |
-| H3 | Archivo | 600 | 36px | 1.25 ⚠ | 0.02em | ALTA |
+| H2 | Mitr | 700 | 48px | 1.15 | 0.06em | ALTA |
+| H3 | Archivo | 600 | 36px | 1.25 | 0.02em | ALTA |
 | H4 | Archivo | 600 | 27px | 1.3 | 0 | normal |
 | H5 | Archivo | 600 | 20px | 1.35 | 0 | normal |
 | Subtítulo hero | Archivo | 700 | 23px | 1.4 | 0 | ALTA |
@@ -87,8 +87,8 @@ Mais impacto na headline só via tamanho.
 
 | # | Item | Medido | Adotado | Razão |
 |---|---|---|---|---|
-| 1 | H2 tamanho | 58px | **48px** ⚠ | 58 dá só 10% de diferença do H1. Como ambos usam mesma fonte, peso, caixa e tracking, o tamanho é o único diferenciador — 10% está abaixo do limiar em que o olho lê hierarquia. **Pendente de validação da designer** |
-| 2 | H3 line-height | 75px (2.08) | **1.25** ⚠ | Resíduo. Invisível porque "Suporte Técnico" é uma linha só. No primeiro H3 de duas linhas, abre vão de 75px. **Pendente de validação** |
+| 1 | H2 tamanho | 58px | **48px** | 58 dá só 10% de diferença do H1. Como ambos usam mesma fonte, peso, caixa e tracking, o tamanho é o único diferenciador — 10% está abaixo do limiar em que o olho lê hierarquia. **Validado pela designer em 25/07/2026** |
+| 2 | H3 line-height | 75px (2.08) | **1.25** | Resíduo. Invisível porque "Suporte Técnico" é uma linha só. No primeiro H3 de duas linhas, abriria vão de 75px. **Validado pela designer em 25/07/2026** |
 | 3 | H1 line-height | 1.02 | **1.1** | Em português, acentos em caixa alta ficam acima da altura das maiúsculas. A 1.02 o "Á" de MÁQUINA encosta na linha de cima |
 | 4 | Menu peso | Medium 500 | **SemiBold 600** | A 15px a diferença é imperceptível e evita carregar um quinto arquivo de fonte |
 | 5 | H3 tracking | 0% | **0.02em** | Maiúsculas precisam de mais respiro entre letras que minúsculas |
@@ -203,5 +203,3 @@ Escala base 8px: `8 · 16 · 24 · 32 · 48 · 64 · 96 · 128`
 | 2 | Raio de borda de botões, cards e campos de formulário | Designer |
 | 3 | Sombra nos cards de notícia | Designer |
 | 4 | Medição dos espaçamentos reais seção a seção | Designer |
-| 5 | Validação do H2 em 48px | Designer |
-| 6 | Validação do line-height do H3 em 1.25 | Designer |
