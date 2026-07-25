@@ -7,9 +7,6 @@ Repositório de documentação, design system e código customizado do novo site
 > documentação do projeto, os valores do design system, o CSS que será colado no
 > Elementor, os mapas de SEO e os scripts de apoio.
 
-**Confidencial.** O dossiê contém faixas de preço e estratégia competitiva.
-Mantenha o repositório privado.
-
 ---
 
 ## Ambientes
@@ -28,7 +25,7 @@ site-wordpress/
 ├── README.md              # este arquivo — orientação para pessoas
 ├── CLAUDE.md              # contexto e regras para o Claude Code
 ├── docs/
-│   ├── DOSSIE_FACHINI_projeto_site.md   # FONTE DE VERDADE
+│   ├── DOSSIE_FACHINI_projeto_site.md   # documento base do projeto
 │   ├── controle-projeto.md              # decisões, pendências, go-live
 │   ├── relatorio-analise-homepage.md    # análise do layout
 │   └── modulo-01-design-system.md       # guia de execução
@@ -43,10 +40,8 @@ site-wordpress/
 
 ## Por onde começar
 
-1. **`docs/DOSSIE_FACHINI_projeto_site.md`** — a fonte de verdade. Empresa,
-   portfólio, análise competitiva, árvore de páginas, especificação do
-   formulário e regras de governança. As seções 1 a 12 são o dossiê original;
-   a seção 13 é o adendo de decisões de execução.
+1. **`docs/DOSSIE_FACHINI_projeto_site.md`** — o documento base. Empresa, portfólio, 
+análise competitiva, árvore de páginas e especificação do formulário.
 
 2. **`docs/controle-projeto.md`** — o estado atual. O que foi decidido, o que
    está pendente e com quem, e a checklist de go-live. **É o documento que se
