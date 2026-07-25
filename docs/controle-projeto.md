@@ -1,7 +1,7 @@
 # Controle do Projeto — Site Fachini Máquinas
 
 **Documento vivo.** Atualizar a cada decisão tomada ou pendência resolvida.
-**Última atualização:** 23/07/2026
+**Última atualização:** 25/07/2026
 
 ---
 
@@ -59,6 +59,10 @@ e mudar a chave `enabled` para `false`.
 
 ## 2. Pendências abertas
 
+> Este é o índice único de pendências. Qualquer pendência registrada em
+> outro documento (tokens.md, modulo-01, etc.) deve também aparecer aqui.
+> Se não está aqui, não está no radar.
+
 **Convenção de status:**
 - 🔴 **Aberta** — ninguém mexeu
 - 🟡 **Aguardando** — passada a alguém, esperando retorno
@@ -96,6 +100,10 @@ e mudar a chave `enabled` para `false`.
 | 12 | 🔴 | **Desenhar template de post do blog** — ver 3.3 |
 | 13 | 🔴 | **Desenhar o menu mobile (hamburguer)** — só existe desktop no Figma |
 | 14 | 🔴 | **Definir os estados dos componentes** — hover, foco, erro, carregando (ver análise 360, B.1) |
+| 15 | 🔴 | **Raio de borda de botões, cards e campos de formulário** — pendência de extração do Figma (fonte: `design-system/tokens.md`, seção 8) |
+| 16 | 🔴 | **Sombra nos cards de notícia** — pendência de extração do Figma (fonte: `design-system/tokens.md`, seção 8) |
+| 17 | 🔴 | **Medição dos espaçamentos reais seção a seção no Figma** — pendência de extração (fonte: `design-system/tokens.md`, seção 8) |
+| 18 | 🔴 | **Hierarquia de headings** — alinhar a marcação semântica da Parte 3 antes da montagem (fonte: `docs/modulo-01-design-system.md`, "Pendências com a designer") |
 
 ### 2.3 Verificações técnicas — pendentes de confirmação
 
