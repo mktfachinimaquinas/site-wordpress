@@ -1,7 +1,7 @@
 # Controle do Projeto — Site Fachini Máquinas
 
 **Documento vivo.** Atualizar a cada decisão tomada ou pendência resolvida.
-**Última atualização:** 25/07/2026
+**Última atualização:** 26/07/2026
 
 ---
 
@@ -9,6 +9,11 @@
 
 | Data | Decisão | Observação |
 |---|---|---|
+| 26/07 | **POSICIONAMENTO: perfiladeira é fabricação Fachini** | Decisão da diretoria. Sustentado por capacidade instalada — insumos e estrutura para fabricar cada componente, histórico de refabricação completa. Finame em andamento. Ver seção 14 do dossiê |
+| 26/07 | **Árvore de navegação: seguir Figma por ora** | Foco na entrega. Ajustes de estrutura ficam para depois do lançamento |
+| 26/07 | **MÓDULO 1 CONCLUÍDO** | Global Colors, Global Fonts, Theme Style completo, Content Width 1280, Layout Full Width, variáveis de espaçamento. Teste de herança validado |
+| 26/07 | **Ultimate Addons for Elementor removido** | Redundante com Elementor Pro. Templates de cabeçalho/rodapé apagados, ambiente limpo, cache limpo |
+| 26/07 | **H3 sem transformação de caixa** | Aparece em caixa alta nos diferenciais e caixa baixa nos cards de notícia. Caixa alta aplicada por seção |
 | 23/07 | **Paleta de 8 cores** | Navy `#15274E` · Navy Sec. `#00224E` · Vermelho `#E01E26` · Verm. Hover `#B01319` · Onix `#0F0F0F` · Off-white `#FBFBFB` · Cinza Névoa `#F1F3F6` · Cinza Médio `#5C6675` |
 | 23/07 | **Mitr 700 para H1/H2**, sempre caixa alta | Mitr não tem peso acima de 700 |
 | 23/07 | **Archivo 400/600/700** para o resto | 4 arquivos de fonte no total, hospedados localmente |
@@ -72,7 +77,8 @@ e mudar a chave `enabled` para `false`.
 
 | # | Status | Pendência | Bloqueia |
 |---|---|---|---|
-| 0 | 🔴 | **⚠ ÁRVORE DE NAVEGAÇÃO EM DISPUTA** — o dono definiu uma árvore só de produto que diverge do dossiê. Antes de tudo: perguntar ao dono onde moram as Soluções por segmento (destino da mídia paga). Ver `docs/conflito-arvore-navegacao.md` | Toda a Camada 2, interlinking, produção de páginas |
+| 0 | 🟡 | **Árvore de navegação** — decisão 26/07: seguir Figma por ora, foco na entrega. Confirmar com o dono onde moram as Soluções por segmento quando houver espaço. Ver `docs/conflito-arvore-navegacao.md` | Camada 2, interlinking |
+| 0b | 🟡 | **Finame para perfiladeiras** — processo em andamento, etapa inicial superada. Até concluir, evitar "100% nacional" no site. Ao concluir, vira prova a exibir | Afirmações sobre financiamento |
 | 1 | 🔴 | **Spec completa do formulário** — 13 opções de Segmento, roteamento por verba/prazo, formato de integração (form nativo do RD embedado ou próprio via API?). O dossiê diz que a spec já foi aprovada em projeto separado — é caçá-la, não criá-la | Formulário e integrações |
 | 2 | 🔴 | **Medição** — reaproveitar o GTM-T2J3MRFP existente ou criar limpo? Existe GA4? Quem tem acesso ao Search Console? | Baseline de conversão |
 | 3 | 🔴 | **Data-alvo do go-live do site completo** — as 2 semanas cobrem só a homepage | Cronograma |
@@ -105,7 +111,17 @@ e mudar a chave `enabled` para `false`.
 | 17 | 🔴 | **Medição dos espaçamentos reais seção a seção no Figma** — pendência de extração (fonte: `design-system/tokens.md`, seção 8) |
 | 18 | 🔴 | **Hierarquia de headings** — alinhar a marcação semântica da Parte 3 antes da montagem (fonte: `docs/modulo-01-design-system.md`, "Pendências com a designer") |
 
-### 2.3 Verificações técnicas — pendentes de confirmação
+### 2.3 Verificações técnicas
+
+**Resolvidas em 26/07/2026:**
+
+| Item | Método de verificação |
+|---|---|
+| 🟢 Ambiente de dev limpo | Templates UAE e Theme Builder apagados; plugin desativado e excluído; cache limpo. Site retornou ao Hello Elementor puro |
+| 🟢 Módulo 1 validado no Elementor | Página de rascunho com H1/H2/H3/parágrafo/botão herdou tipografia, cores e hover sem configuração manual |
+| 🟢 H1 duplicado corrigido | Modelo de página trocado para Elementor Largura Total — o título da página deixou de gerar um segundo H1 |
+
+**Pendentes:**
 
 | # | Status | Item |
 |---|---|---|

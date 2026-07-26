@@ -88,7 +88,7 @@ dessa escala. Só o H2 estava fora.
 |---|---|---|---|---|---|---|
 | H1 | Mitr | 64px | 700 | **1.1** | 0.06em | ALTA |
 | H2 | Mitr | **48px** | 700 | **1.15** | 0.06em | ALTA |
-| H3 | Archivo | 36px | 600 | **1.25** | 0.02em | ALTA |
+| H3 | Archivo | 36px | 600 | **1.25** | 0.02em | normal |
 | H4 | Archivo | **27px** | 600 | 1.3 | 0 | normal |
 | H5 | Archivo | **20px** | 600 | 1.35 | 0 | normal |
 | Subtítulo hero | Archivo | 23px | 700 | 1.4 | 0 | ALTA |
@@ -107,6 +107,12 @@ dessa escala. Só o H2 estava fora.
 > em 25/07/2026).** O Figma marcava 75px sobre fonte de 36px, o que dava 2.08.
 > Passou despercebido porque "Suporte Técnico" ocupa uma linha só. No primeiro
 > H3 que quebrar em duas linhas, abriria um vão de 75px.
+
+> **H3 sem transformação de caixa no Theme Style.** Ele aparece em dois
+> contextos no layout: "SUPORTE TÉCNICO / INSTALAÇÃO PROFISSIONAL / PÓS VENDA"
+> em caixa alta, e títulos de card de notícia em caixa baixa. Forçar maiúsculas
+> globalmente quebraria os segundos. A caixa alta é aplicada por seção, no
+> widget.
 
 **Line-height do H1 e H2 nunca abaixo de 1.1.** O Figma marca 1.02 no H1. Em
 português, acentos em caixa alta ficam acima da altura das maiúsculas — a 1.02
@@ -357,18 +363,37 @@ aplicada a espaçamento.
 
 ## Parte 6 — Verificação
 
-- [ ] Mitr e Archivo servidas localmente (DevTools → Network: nenhuma requisição
-      para `fonts.googleapis.com`)
-- [ ] Apenas 4 arquivos de fonte carregando
-- [ ] 4 cores nos slots corretos + 4 personalizadas **com nome**
-- [ ] Theme Style → Typography preenchido para Body e H1–H6, desktop e mobile
-- [ ] Theme Style → Buttons com hover configurado
-- [ ] Content Width em 1280px
-- [ ] Breakpoints alinhados com o Figma
-- [ ] Variáveis de espaçamento no Custom CSS
-- [ ] **Teste final:** criar página de rascunho, jogar um H1, um H2 e um
-      parágrafo sem tocar em nenhuma configuração de estilo. Se saírem certos, a
-      fundação está de pé. Depois apagar a página.
+**MÓDULO CONCLUÍDO em 26/07/2026.**
+
+- [x] Fontes hospedadas localmente — WP Rocket, opção "Auto-hospedar Fontes
+      Google" ativa
+- [x] Mitr 700 · Archivo 400/600/700
+- [x] 4 cores nos slots + 4 personalizadas com nome
+- [x] Theme Style → Typography: corpo e H1–H6
+- [x] Theme Style → Links: navy com sublinhado, hover vermelho
+- [x] Theme Style → Buttons com hover configurado
+- [x] Content Width em 1280px
+- [x] Layout de página padrão: Elementor Largura Total (evita o H1 duplicado do
+      título de página)
+- [x] Variáveis de espaçamento no Custom CSS
+- [x] **Teste final validado** — página de rascunho com H1, H2, H3, parágrafo e
+      botão herdaram corretamente, sem configuração manual. Página apagada.
+- [ ] Breakpoints alinhados com o Figma — **pendente da designer**
+
+### Aprendizados da execução
+
+- **Altura da linha e espaçamento entre letras usam EM, não PX.** Em px, um
+  line-height de 1.1 colapsa as linhas uma sobre a outra. Regra: número com
+  casa decimal → EM; número inteiro grande (tamanho de fonte) → PX.
+- **Decimal com ponto, nunca vírgula.** `1.1`, não `1,1` — CSS usa o padrão
+  internacional.
+- **Slots de Global Fonts não carregam tamanho.** Só família e peso. O tamanho
+  é definido no Theme Style, por nível. Slot com tamanho embutido "mente" sobre
+  os usos em que aparece com outro tamanho.
+- **O título da página gera um H1 extra.** Com o modelo "Padrão" do Hello
+  Elementor, a página imprime o título como H1 além do widget. O modelo
+  "Elementor Largura Total" resolve na origem — melhor que esconder por CSS,
+  porque título escondido ainda conta como H1 para o Google.
 
 ---
 

@@ -74,7 +74,7 @@ Mais impacto na headline só via tamanho.
 |---|---|---|---|---|---|---|
 | H1 | Mitr | 700 | 64px | 1.1 | 0.06em | ALTA |
 | H2 | Mitr | 700 | 48px | 1.15 | 0.06em | ALTA |
-| H3 | Archivo | 600 | 36px | 1.25 | 0.02em | ALTA |
+| H3 | Archivo | 600 | 36px | 1.25 | 0.02em | normal |
 | H4 | Archivo | 600 | 27px | 1.3 | 0 | normal |
 | H5 | Archivo | 600 | 20px | 1.35 | 0 | normal |
 | Subtítulo hero | Archivo | 700 | 23px | 1.4 | 0 | ALTA |

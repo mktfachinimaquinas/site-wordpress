@@ -85,7 +85,7 @@ busca que hoje vai para o concorrente. É dinheiro na mesa.
 **Árvore do dono:** "Calhas" como item solto no topo, sem subdivisões.
 
 **Dossiê:** a linha Lisa/Dentada (dobradeiras/viradeiras de calha) é **60% do
-volume de vendas** e a **única de fabricação própria** — o maior ativo de
+volume de vendas** e a **linha de fabricação própria mais antiga (desde 1996)** — o maior ativo de
 comunicação da empresa. Slug definido: `/dobradeiras-de-chapa`, com a diretriz
 de que title/H1 contenham "viradeira" (sinônimo forte no Sul).
 
@@ -95,7 +95,7 @@ subaproveitar comercialmente a linha mais forte e o único diferencial de
 "fabricação própria".
 
 **Argumento para a diretoria:** a linha de maior volume merece, no mínimo,
-paridade de destaque com Perfiladeiras. E "fabricação própria" é um argumento
+paridade de destaque com Perfiladeiras. E a origem em 1996 é um argumento
 de venda que nenhum concorrente importador pode usar — esconder isso é abrir
 mão de vantagem única.
 

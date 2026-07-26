@@ -154,15 +154,12 @@ seu assunto) e conteúdo (autoridade). Esta parte cobre a técnica e a on-page.
 
 ### C.2 On-page página a página (a partir da árvore de navegação)
 
-> ⚠ **A árvore de navegação está em disputa** (ver
-> `docs/conflito-arvore-navegacao.md`). O dono definiu uma árvore só de produto;
-> a camada de Soluções do dossiê pode não existir nela. As diretrizes de title
-> abaixo, vindas do dossiê, valem para as páginas que forem construídas — mas
-> **quais páginas existem** depende da decisão pendente. O pacote on-page (title,
-> description, H1, schema) se aplica a qualquer estrutura que vencer.
+> **Decisão 26/07/2026:** a árvore segue o Figma e o mapa do dono por ora, com
+> foco na entrega. Os conflitos com a seção 7.1 do dossiê estão documentados em
+> `docs/conflito-arvore-navegacao.md` para revisão depois do lançamento. O
+> pacote on-page abaixo se aplica a qualquer estrutura.
 
-O dossiê entrega as diretrizes de title. O trabalho é executar página a página —
-sobre a árvore que for decidida.
+O dossiê entrega as diretrizes de title. O trabalho é executar página a página.
 
 **Camada 1 — LPs de produto** (já com diretrizes no dossiê):
 
@@ -172,13 +169,14 @@ sobre a árvore que for decidida.
 | `/dobradeiras-industriais` | title/H1 devem conter "CNC" — alta intenção. Avaliar LP extra `/dobradeira-cnc` |
 | `/corte-a-laser-senfeng` | title: "Máquina de Corte a Laser Fibra Senfeng" — captura busca ampla + marca |
 | `/perfiladeira-drywall` | slug cobre só drywall; não misturar Porta Palete/Painel EPS |
+| Páginas de perfiladeira | **title/H1 devem conter "fabricante" ou "fábrica"** — território liberado pela decisão de posicionamento (seção 14 do dossiê). Ex.: "Perfiladeira de Telhas — Fabricante Nacional \| Fachini" |
 
 **Camada 2 — Soluções por segmento** (LPs para tráfego pago + orgânico de cauda):
 
-> ⚠ **Esta camada não aparece na árvore do dono.** É a de maior impacto na
-> conversão — destino dos ~2.000 leads/mês de mídia paga. Confirmar com o dono
-> onde as Soluções moram antes de tratar como definitiva. Ver Conflito 1 em
-> `docs/conflito-arvore-navegacao.md`.
+> **Esta camada não aparece na árvore do dono.** É a de maior impacto na
+> conversão — destino dos ~2.000 leads/mês de mídia paga. Fica registrada para
+> quando houver espaço de agenda; não bloqueia a entrega da homepage. Ver
+> Conflito 1 em `docs/conflito-arvore-navegacao.md`.
 
 | Segmento | Slug |
 |---|---|
@@ -240,6 +238,72 @@ antes do orgânico tradicional. Custo baixo, retorno direto.
 
 ---
 
+### C.6 Pesquisa de palavra-chave — o que ainda não sabemos
+
+Este é o maior buraco do plano atual, e vale nomear com franqueza: **o projeto
+tem diretrizes de title, mas nenhum dado de busca.**
+
+O dossiê diz "o title deve conter CNC" ou "deve conter viradeira" — recomendações
+corretas, baseadas em conhecimento de mercado. Mas ninguém verificou volume,
+dificuldade ou quem ocupa as três primeiras posições hoje. **Sem isso, mirar o
+topo é palpite informado, não estratégia.**
+
+**O que precisa ser levantado, por termo:**
+
+| Dado | Por que importa |
+|---|---|
+| Volume mensal de busca | Separa o que vale esforço do que não move ponteiro |
+| Quem ocupa as 3 primeiras posições | Define se o termo é vencível no curto prazo |
+| Tipo de conteúdo que ranqueia | Se o topo é ocupado por blog, LP de produto não vence |
+| Termos de cauda longa sem disputa | É por onde um domínio novo entra |
+
+**Ferramentas, todas acessíveis:**
+
+- **Planejador de Palavras-Chave do Google Ads** — a Fachini já tem conta ativa
+  (gasta ~2.000 leads/mês em mídia). Dá volume e concorrência de graça
+- **Search Console** — depois do go-live, mostra para o que o site já aparece,
+  inclusive termos que ninguém imaginou
+- **A própria SERP** — autocomplete, "As pessoas também perguntam" e buscas
+  relacionadas são pesquisa qualitativa gratuita
+- **Relatório de termos de pesquisa do Google Ads** — dado real de quem clicou e
+  converteu, não estimativa. **Este é o mais valioso e ninguém está usando**
+
+**Termos prioritários a validar** (com o território que a decisão de
+posicionamento liberou):
+
+```
+fabricante de perfiladeiras          perfiladeira de telhas preço
+fábrica de perfiladeiras             máquina de fazer telhas
+perfiladeira nacional                quanto custa uma perfiladeira
+dobradeira de calhas                 viradeira de calhas
+dobradeira CNC                       guilhotina industrial
+máquina de corte a laser preço       corte a laser fibra
+como montar fábrica de telhas        perfiladeira steel frame
+```
+
+**Entrega esperada:** uma planilha em `seo/` com termo, volume, dificuldade,
+página de destino e intenção. É ela que transforma a árvore em plano de SEO.
+
+---
+
+### C.7 Lacuna competitiva — o mapa mais barato que existe
+
+O dossiê nomeia os concorrentes (Esquadros, Marafon, Maqperf, WeldVision, V8).
+O que ninguém fez ainda é olhar **para o que eles ranqueiam e a Fachini não**.
+
+**Método, sem ferramenta paga:** busque os 15 termos acima no Google, anônimo, e
+registre quem aparece no top 3 e com que tipo de página. Em duas horas você tem
+o mapa de onde há espaço e onde a briga é cara.
+
+**O que procurar:**
+
+- Termos onde **nenhum concorrente forte** aparece → entrada rápida
+- Termos onde o topo é **conteúdo raso** → dá para superar com profundidade
+- Termos onde o topo é **marketplace ou agregador** → difícil, evitar por ora
+- Perguntas em "As pessoas também perguntam" sem resposta boa → pauta de blog
+
+---
+
 ## Parte D — Conteúdo e SEM
 
 ### D.1 Estratégia de conteúdo (dossiê 7.3)
@@ -286,7 +350,87 @@ cru. RankMath configura; precisa de imagem por página de produto.
 
 ---
 
-## Parte E — Medição: sem isso, nada acima é verificável
+## Parte E — Autoridade: o fator que decide o top 1
+
+> Esta é a parte que faltava no documento, e é a mais importante para o objetivo
+> declarado. Vale ler antes de qualquer outra coisa desta análise.
+
+### E.1 A verdade desconfortável
+
+**É possível executar todo o resto deste documento com perfeição e ainda assim
+não chegar ao primeiro lugar.**
+
+SEO on-page — title, H1, schema, interlinking, performance — é condição
+necessária, não suficiente. Ele coloca a página no jogo. Quem decide a posição
+final, em termo competitivo, é a **autoridade do domínio**: quantos sites
+relevantes apontam para o seu, e o quanto o Google confia na fonte.
+
+O site atual da Fachini tem quase nenhuma autoridade construída. Isso não se
+resolve com nada que está nas Partes A a D.
+
+**O que isso significa na prática:**
+
+- Termos de **cauda longa** ("perfiladeira para telha trapezoidal preço") são
+  vencíveis já no lançamento, com on-page bem feito
+- Termos **de cabeça** ("perfiladeira", "máquina de corte a laser") exigem
+  autoridade e levam meses
+- Prometer top 1 em termo de cabeça para o lançamento é promessa que não se
+  cumpre. Prometer cauda longa é realista e defensável
+
+### E.2 Os ativos de link que a Fachini tem e não usa
+
+Aqui está a boa notícia: a empresa tem matéria-prima de autoridade que a maioria
+dos concorrentes não tem, e nada disso está sendo explorado.
+
+| Ativo | Como vira link ou citação |
+|---|---|
+| **4 unidades físicas** | Google Business Profile, diretórios locais, associações comerciais de cada cidade |
+| **6.000 máquinas entregues** | Cases nomeados — cada cliente satisfeito é uma página e um possível link |
+| **Clientes de porte** (Yoki, Aurora, Klabin, Minerva) | Menção em release, case conjunto, página de fornecedores homologados |
+| **Parceria Senfeng** | Link do fabricante para o representante oficial no Brasil. Pedido simples, alto valor |
+| **28 anos de operação** | Histórico rende pauta em veículos setoriais |
+| **Feiras e eventos** | Listagem de expositor gera link de domínio com autoridade |
+| **Fornecedores** | Muitos têm página "onde encontrar" — pedir inclusão |
+| **Associações setoriais** | Filiação costuma gerar perfil com link |
+
+**Nenhum desses exige verba de mídia.** Exigem pedido, relacionamento e tempo —
+que é exatamente o que uma empresa de 28 anos tem de sobra e uma startup não.
+
+### E.3 E-E-A-T — como o Google mede confiança
+
+O Google avalia páginas por *Experience, Expertise, Authoritativeness, Trust*.
+Em compra de ticket alto — e aqui se vende de R$ 25 mil a R$ 1,2 milhão — esse
+peso é maior, porque a decisão do usuário tem consequência financeira séria.
+
+**O que o site precisa exibir:**
+
+| Sinal | Como implementar |
+|---|---|
+| **Quem escreve** | Artigos assinados por pessoa real, com cargo e experiência. Não "Equipe Fachini" |
+| **Prova verificável** | CNPJ, endereços completos, telefones reais, tempo de mercado — no rodapé e na página institucional |
+| **Experiência demonstrada** | Fotos próprias das máquinas e da fábrica, não banco de imagens. O layout já acerta nisso |
+| **Cases com nome** | "Cliente X aumentou produção em Y%" vale muito mais que logo solto na parede |
+| **Especificação honesta** | Tabelas técnicas completas, inclusive limitações. Página que só elogia o produto sinaliza publicidade, não informação |
+
+**Ação para o Livro 1:** o site precisa **nascer preparado** para isso — estrutura
+de autor no blog, página institucional com credenciais, schema de organização com
+dados completos. A produção de cases e conteúdo assinado é Livro 2, mas a
+estrutura não pode ser retrofit.
+
+### E.4 A vantagem que ninguém pode copiar
+
+O dossiê registra que a Fachini é a **única do mercado a assumir a marca Senfeng**.
+Isso é mais que posicionamento comercial — é um ativo de SEO irreplicável no curto
+prazo: buscas por "Senfeng Brasil", "Senfeng assistência", "corte a laser Senfeng"
+deveriam todas terminar em fachinimaquinas.com.br.
+
+Nenhum concorrente pode disputar esses termos sem assumir a mesma marca, coisa
+que eles evitam por posicionamento. **É o caminho mais curto para as primeiras
+posições em um conjunto de termos com intenção comercial real.**
+
+---
+
+## Parte F — Medição: sem isso, nada acima é verificável
 
 O dossiê define métricas de sucesso (7.4) e todas dependem de instrumentação
 desde o dia 1.
@@ -305,41 +449,74 @@ limpo? Existe GA4? Quem tem acesso ao Search Console? (registradas no controle)
 
 ---
 
-## Parte F — Prioridação: o que blinda o orgânico nas 2 semanas
+## Parte G — Priorização e expectativa realista
 
-Nem tudo cabe. Ordem por impacto no objetivo "primeira página":
+### G.1 O que blinda o orgânico no lançamento (inegociável)
 
-**Blindagem mínima do lançamento (inegociável):**
-
-1. Googlebot livre ✅ + noindex removido no go-live
-2. 100% das páginas da árvore com title/description/H1 corretos
+1. Googlebot livre ✅ + **noindex removido no go-live**
+2. 100% das páginas com title/description/H1 corretos
 3. Schema Organization + Product + LocalBusiness + Breadcrumb
 4. Core Web Vitals verde no mobile
 5. Sitemap + Search Console + IndexNow
 6. Redirects 301 do site antigo
 7. Formulário qualificador + medição de conversão
-8. Interlinking Camada 1 ↔ Camada 2
+8. Interlinking entre páginas de produto
+9. **Planilha de palavras-chave** (C.6) — sem ela, os titles são palpite
 
-**Alta prioridade, logo após:**
+### G.2 Alta prioridade, logo após
 
-9. SEO local das 4 unidades
-10. 2-3 artigos pilares + Guia do Empreendedor
-11. Open Graph por página
+10. SEO local das 4 unidades — o caminho mais rápido para primeira posição
+11. Google Business Profile completo e verificado (é autoridade, não só mapa)
+12. **Pedido de link à Senfeng** — baixo esforço, alto retorno (E.2)
+13. 2-3 artigos pilares + Guia do Empreendedor
+14. Open Graph por página
+15. Estrutura de autor no blog e credenciais na institucional (E.3)
 
-**Estrutural (Livro 2):**
+### G.3 Estrutural (Livro 2)
 
-12. Os 10 artigos completos
-13. Conteúdo técnico Senfeng
-14. Configurador/experiência para competir com Esquadros
-15. Material rico por segmento
+16. Os 10 artigos completos
+17. Conteúdo técnico Senfeng — a vantagem irreplicável (E.4)
+18. Cases nomeados com clientes
+19. Construção sistemática de citações e links (E.2)
+20. Configurador/experiência para competir com Esquadros
+
+### G.4 Expectativa realista por horizonte
+
+Vale alinhar isso com a diretoria antes de prometer resultado:
+
+| Horizonte | O que é realista |
+|---|---|
+| **Lançamento + 30 dias** | Site indexado, aparecendo para o nome da marca e termos de cauda longa com pouca disputa. Search Console começando a mostrar impressões |
+| **90 dias** | Primeiras posições em cauda longa e em busca local ("perfiladeira Curitiba"). Termos Senfeng bem posicionados |
+| **6 meses** | Disputa real em termos de meio de cabeça, se o conteúdo e as citações avançarem |
+| **12 meses+** | Termos de cabeça ("perfiladeira", "corte a laser") — dependem de autoridade acumulada |
+
+**O ganho imediato do projeto não é orgânico.** É converter melhor os ~2.000
+leads/mês de mídia paga que já chegam. O orgânico é o ativo que se constrói em
+paralelo e reduz a dependência de mídia ao longo do tempo. Prometer top 1 em
+termo de cabeça para o lançamento é o tipo de promessa que corrói credibilidade
+interna quando não se cumpre.
 
 ---
 
-## Resumo de uma linha
+## Resumo
 
-O dossiê já entregou a estratégia e a arquitetura. O que falta é execução
-disciplinada em três frentes paralelas: **UX/UI** com estados e mobile de
-verdade, **SEO técnico** página a página com schema e interlinking, e **medição**
-desde o primeiro visitante. A blindagem do orgânico não é um truque — é 100% da
-árvore no ar, rastreável, rápida e sinalizando corretamente seu assunto, com
-conteúdo nascendo para dar autoridade.
+O dossiê entregou a estratégia e a arquitetura. O que falta é execução
+disciplinada em quatro frentes: **UX/UI** com estados e mobile de verdade,
+**SEO técnico** página a página com schema e interlinking, **autoridade**
+construída a partir de ativos que a empresa já tem e não usa, e **medição**
+desde o primeiro visitante.
+
+Três coisas que este documento acrescenta ao plano original:
+
+1. **Sem pesquisa de palavra-chave, os titles são palpite** (C.6). O dado está
+   disponível de graça na conta de Ads que a empresa já mantém.
+2. **On-page não decide o top 1 sozinho** (E.1). Autoridade decide — e a Fachini
+   tem ativos de link que nenhum concorrente tem: 4 unidades, 6.000 máquinas,
+   clientes de porte e a parceria Senfeng.
+3. **A janela Senfeng é o caminho mais curto para primeiras posições** (E.4).
+   Nenhum concorrente pode disputar esses termos sem assumir a mesma marca.
+
+A blindagem do orgânico não é truque — é o site inteiro no ar, rastreável,
+rápido, sinalizando corretamente seu assunto, com conteúdo e autoridade
+crescendo em paralelo.

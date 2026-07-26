@@ -36,7 +36,8 @@ deve sair do escopo das duas semanas.
 **O problema:** o dossiê é explícito — serralheria vale como **segmento**,
 nunca como **categoria de produto**. O diagnóstico do site atual aponta
 justamente este erro: a linha Lisa/Dentada, que representa 60% do volume e é
-a única de fabricação própria, está hoje enterrada sob o rótulo "Serralheria".
+a linha de fabricação própria mais antiga da empresa, está hoje enterrada sob
+o rótulo "Serralheria".
 
 Ninguém busca "serralheria" no Google querendo comprar dobradeira de calha.
 Busca-se pelo nome da máquina. Manter o rótulo replica no site novo o erro que

@@ -18,7 +18,7 @@
 - **Comercial:** 8 vendedores, todos trabalhando leads inbound (não há prospecção ativa)
 - **Volume de leads:** ~2.000/mês (1.997 entre 01–27/maio), majoritariamente de mídia paga em redes sociais
 - **Estrutura:** empresa familiar. Donos: Jucemar Fachini e Rodrigo Fachini (diretor executivo). O site menciona "Grupo Fachini" com "quatro marcas sólidas e complementares" nos setores industrial e automotivo (há uma Fachini Distribuidora — e-mail de marketing usa o domínio fachinidistrribuidora.com.br [sic, com erro de digitação])
-- **Marketing:** 1 pessoa (gestora), área criada há ~2 anos. Uma pessoa de criativos entra em julho/2026. Sem estratégia de conteúdo, sem jornada de compra estruturada, sem métricas de funil. CRM: RD Station (CRM + Marketing)
+- **Marketing:** gestora + criativo (entrada jul/2026). Equipe enxuta — o site precisa performar com pouca manutenção. Estratégia de conteúdo e métricas de funil são escopo do Livro 2. CRM: RD Station (CRM + Marketing)
 - **Clientes de referência exibidos no site:** Yoki, Aurora, Klabin, Minerva, Laborvida, RPM, Moschem
 
 **Contexto interno relevante para o projeto:** a empresa cresceu por produto e força comercial, não por marketing — a cultura de gestão por métricas ainda está em formação (CRM subutilizado, funil sem medição de conversão). O site atual foi terceirizado (Mova Comunicação) sobre um template reaproveitado. Há abertura recente da diretoria para profissionalizar a operação comercial e de marketing, o que é a janela deste projeto.
@@ -60,10 +60,10 @@ Produto importado (provável fabricante: HX Machine Tool — hxmachinetool.com),
 - **Situação interna:** é o produto de maior ticket e o menos dominado pela equipe comercial — vendedores e gestor têm pouco conhecimento técnico. Diagnóstico: falha de posicionamento, não de produto. Promoções ativas na linha SF3015N
 - **Máquina de solda 4-em-1 (SF3000HWM):** solda, limpeza, corte e limpeza de cordão. 3000W, solda até 7mm (inox/carbono) e 6mm (alumínio), corta até 3mm. Alimentador de arame 0,8–2,0mm. Trifásico 380V, 15kW. R$ 53–85 mil conforme configuração. Concorre com a linha de solda laser da WeldVision
 
-### 2.4 Perfiladeiras — MERCADO PRINCIPAL, montagem Fachini com componentes importados
+### 2.4 Perfiladeiras — MERCADO PRINCIPAL, fabricação Fachini
 **O principal mercado da empresa hoje.** Produto de ticket alto mais vendido.
 
-- **Fiscalmente importado** (componentes 100% importados), montagem e suporte Fachini. Não usar "fabricação própria" — o argumento correto é "montagem Fachini com controle de qualidade e suporte local"
+- **Fabricação Fachini** com componentes de classe mundial. A empresa tem insumos e estrutura para fabricar cada componente da máquina — hoje parte é importada por decisão econômica da diretoria, não por limitação técnica. Há histórico de refabricação completa de perfiladeiras. **Comunicar como fabricante** (decisão da diretoria, jul/2026 — ver seção 14)
 - **Linhas:** Simples (TP40, TP25, Ondulada, Forro, Colonial, Lambril), Dupla, Tripla, Perfil U/Steel Frame, Drywall, Porta Palete, Painel Sanduíche EPS, Multi Dobra
 - **Faixa de ticket:** R$ 75 mil (Multi Dobra entrada) a R$ 578 mil (Porta Palete); núcleo do volume entre R$ 180–420 mil
 - **Acessórios:** Prensa Cumeeira (R$ 45 mil), desbobinadores, tesouras, calandras, frisadeiras, fechadores de condutor
@@ -202,7 +202,7 @@ Todos os concorrentes nacionais batem nas mesmas três teclas: **(1) fabricaçã
 ## 6. POSICIONAMENTO RECOMENDADO PARA O NOVO SITE
 
 ### 6.1 Tese central da marca
-**"Engenharia de valor em máquinas para o metal: componentes de classe mundial, montagem e suporte Fachini, preço que fecha a conta."**
+**"Engenharia de valor em máquinas para o metal: componentes de classe mundial, engenharia e suporte Fachini, preço que fecha a conta."**
 
 A Fachini não é a mais tradicional (Marafon é), não é a mais high-tech digital (Esquadros é), não é a alemã (Trumpf é). A Fachini é a que **entende o negócio do cliente** e entrega a máquina certa com o melhor equilíbrio investimento/retorno — com 28 anos, 6.000 máquinas e 4 unidades no Sul para provar que estará presente depois da venda.
 
@@ -314,11 +314,10 @@ Cada artigo com CTA para material rico ou orçamento → alimenta a máquina de 
 ## 8. DESAFIOS PRINCIPAIS (riscos do projeto)
 
 1. **Marketing de 1 pessoa + 1 chegando:** o site novo não pode exigir operação que a equipe não sustenta. Priorizar estrutura que funcione "sozinha" (SEO + conversão) antes de estrutura que exige alimentação diária (blog intenso, redes)
-2. **Sensibilidade política interna:** a gestora de marketing detém o território do site. O projeto precisa dela como protagonista — o material deste dossiê é insumo técnico, não imposição. Vitórias do site devem ser vitórias dela
-3. **Identidade de grupo mal resolvida:** decidir antes do site — Fachini Máquinas é marca independente ou vitrine do Grupo? Recomendação: site 100% Fachini Máquinas, com nota institucional sobre o grupo na página Empresa
-4. **Fabricação própria vs. importado:** a comunicação precisa ser precisa por linha para não criar passivo (dizer "fabricação própria" de perfiladeira é risco jurídico/reputacional). Este dossiê marca linha a linha o que pode ser dito
-5. **Dependência de mídia paga:** hoje 100% dos ~2.000 leads/mês vêm de tráfego pago para um site que não converte nem qualifica. O novo site precisa primeiro CONVERTER MELHOR o tráfego que já existe (ganho imediato), depois construir orgânico (ganho estrutural)
-6. **Janela Senfeng:** a estratégia de divulgar a marca é única no mercado HOJE. Executar rápido a autoridade digital "Senfeng no Brasil = Fachini" antes que outro player copie ou a Senfeng estruture operação própria
+2. **Identidade de grupo mal resolvida:** decidir antes do site — Fachini Máquinas é marca independente ou vitrine do Grupo? Recomendação: site 100% Fachini Máquinas, com nota institucional sobre o grupo na página Empresa
+3. **Precisão na comunicação por linha:** perfiladeiras e calhas comunicadas como fabricação Fachini — sustentado por capacidade instalada e histórico de refabricação. Evitar afirmações de "100% nacional" até a conclusão do credenciamento Finame (em andamento). Laser permanece como parceria Senfeng assumida abertamente
+4. **Dependência de mídia paga:** hoje 100% dos ~2.000 leads/mês vêm de tráfego pago para um site que não converte nem qualifica. O novo site precisa primeiro CONVERTER MELHOR o tráfego que já existe (ganho imediato), depois construir orgânico (ganho estrutural)
+5. **Janela Senfeng:** a estratégia de divulgar a marca é única no mercado HOJE. Executar rápido a autoridade digital "Senfeng no Brasil = Fachini" antes que outro player copie ou a Senfeng estruture operação própria
 
 ---
 
@@ -349,7 +348,7 @@ Cada artigo com CTA para material rico ou orçamento → alimenta a máquina de 
 - WordPress + tema **Hello Elementor** + **Elementor Pro** (page builder)
 - Compatibilização de plugins realizada e validada (Fase 1 — Infraestrutura de TI — concluída)
 - Layout será desenhado no **Figma** antes da montagem no Elementor
-- Execução visual: **designer júnior** (entrada em 01/07) opera o Elementor; decisões de estrutura e conteúdo ficam com o time de negócio
+- Execução visual: designer no Figma e Elementor; decisões de estrutura e conteúdo com o time de negócio
 
 **Roadmap em fases (conduzido em frente paralela com apoio de IA):**
 - Fase 1 — Infraestrutura de TI: ✅ concluída
@@ -370,7 +369,7 @@ Cada artigo com CTA para material rico ou orçamento → alimenta a máquina de 
 
 ## 12. RESUMO EXECUTIVO EM 10 LINHAS
 
-A Fachini Máquinas (1996, Cascavel-PR, R$ 30M+/ano, 6.000 máquinas entregues) compete em 4 mercados com estratégias de marca distintas: dobradeiras leves de fabricação própria (60% do volume), dobradeiras industriais/guilhotinas importadas sob marca Fachini com padrão europeu, perfiladeiras (mercado principal, montagem própria de componentes importados) e laser/solda Senfeng (única do mercado a assumir a marca chinesa, mirando o espaço da Bodor). O site atual desperdiça ~2.000 leads/mês de mídia paga: SEO configurado como imobiliária, produto nº 1 escondido sob "Serralheria", telefones vazios, formulário sem qualificação, zero conteúdo. Os concorrentes definem a régua: Esquadros em experiência digital (configurador 360°), WeldVision em conteúdo+e-commerce (mesma cidade da unidade Fachini de Joinville), Marafon em tradição+financiamento. O novo site deve: converter melhor o tráfego pago existente (formulário qualificador já especificado, integrado ao funil SDR do RD), corrigir o SEO técnico, reorganizar a arquitetura por produto+aplicação, igualar financiamento e pós-venda, e construir a autoridade de conteúdo que nenhum concorrente de perfiladeiras tem — com a janela única de ser a voz da Senfeng no Brasil.
+A Fachini Máquinas (1996, Cascavel-PR, R$ 30M+/ano, 6.000 máquinas entregues) compete em 4 mercados com estratégias de marca distintas: dobradeiras leves de fabricação própria (60% do volume), dobradeiras industriais/guilhotinas importadas sob marca Fachini com padrão europeu, perfiladeiras (mercado principal, fabricação Fachini com componentes de classe mundial) e laser/solda Senfeng (única do mercado a assumir a marca chinesa, mirando o espaço da Bodor). O site atual desperdiça ~2.000 leads/mês de mídia paga: SEO configurado como imobiliária, produto nº 1 escondido sob "Serralheria", telefones vazios, formulário sem qualificação, zero conteúdo. Os concorrentes definem a régua: Esquadros em experiência digital (configurador 360°), WeldVision em conteúdo+e-commerce (mesma cidade da unidade Fachini de Joinville), Marafon em tradição+financiamento. O novo site deve: converter melhor o tráfego pago existente (formulário qualificador já especificado, integrado ao funil SDR do RD), corrigir o SEO técnico, reorganizar a arquitetura por produto+aplicação, igualar financiamento e pós-venda, e construir a autoridade de conteúdo que nenhum concorrente de perfiladeiras tem — com a janela única de ser a voz da Senfeng no Brasil.
 
 ---
 *Documento gerado a partir de sessões de inteligência comercial + pesquisa de mercado (jun/2026). Confidencial — contém faixas de preço e estratégia competitiva.*
@@ -511,3 +510,121 @@ converte, e o baseline exigido na seção 7.4 não existe:
 ---
 *Adendo gerado na fase de execução do Livro 1 (jul/2026). As seções 1 a 12
 permanecem inalteradas.*
+
+---
+
+## 14. ADENDO — ATUALIZAÇÃO DE POSICIONAMENTO (jul/2026)
+
+> **Natureza deste adendo:** registra uma **decisão da diretoria** que atualiza
+> o posicionamento das seções 2 e 6. Pela regra de governança do projeto,
+> decisão de quem tem autoridade atualiza o dossiê. As seções 2.4, 6.1, 8 e o
+> resumo executivo foram ajustados para refletir esta decisão.
+>
+> **Data:** 26/07/2026 · **Origem:** diretoria · **Registrado por:** Wilson Luz
+
+---
+
+### 14.1 A decisão
+
+**A Fachini se posiciona como FABRICANTE de perfiladeiras.**
+
+A versão anterior deste dossiê descrevia perfiladeiras como "montagem Fachini
+de componentes importados", com orientação de nunca usar o termo fabricação
+para essa linha. **Isso está superado** — e, mais que uma decisão comercial, é
+uma correção factual.
+
+---
+
+### 14.2 A sustentação — por que é fato, não posicionamento
+
+O enquadramento anterior partia da premissa de que a Fachini apenas monta
+componentes importados. Essa premissa **não descreve a realidade industrial**:
+
+- A empresa tem **insumos e estrutura para fabricar cada componente** da
+  máquina
+- Há **histórico de refabricação completa** de perfiladeiras, executada
+  internamente por diferentes motivos operacionais
+- A composição atual de componentes importados é **decisão econômica da
+  diretoria**, não limitação técnica
+
+Quem projeta, fabrica quando necessário, monta, testa, garante e dá suporte é
+fabricante. A capacidade instalada sustenta a afirmação — não se trata de
+enquadramento de marketing.
+
+**Status Finame:** o processo de credenciamento para perfiladeiras está em
+andamento e já superou a etapa inicial. Enquanto não concluído, evitar
+afirmações específicas de "100% nacional" ou reivindicação de linha Finame no
+site. Ao concluir, vira prova a ser exibida.
+
+---
+
+### 14.3 Por que fortalece a estratégia
+
+A seção 4 registra que Esquadros, WeldVision e Marafon competem todos no eixo
+"100% nacional + Finame". Com o enquadramento de "montagem", a Fachini nunca
+disputaria esse terreno — ficaria permanentemente na defensiva num argumento
+que os concorrentes usam para vender.
+
+Como fabricante, ela entra no jogo **e** mantém o diferencial que os outros não
+têm: componentes de classe mundial com preço que fecha a conta.
+
+| Antes | Agora |
+|---|---|
+| "Montagem Fachini de componentes importados" | "Fabricação Fachini com componentes de classe mundial" |
+
+---
+
+### 14.4 Impacto em SEO — território que estava fechado
+
+O posicionamento anterior vetava um conjunto de buscas de alta intenção
+comercial. Elas passam a ser keyword principal das páginas de perfiladeira:
+
+- `fabricante de perfiladeiras`
+- `fábrica de perfiladeiras`
+- `perfiladeira nacional`
+- `fabricante de perfiladeira de telhas`
+
+Quem busca "fabricante" quer comprar direto, sem intermediário. Esses termos
+entram nos titles e H1.
+
+---
+
+### 14.5 As trilhas de marca — atualizadas
+
+A estratégia de marcas distintas por linha (seção 2) permanece válida:
+
+| Linha | Como comunicar |
+|---|---|
+| **Perfiladeiras** | **Fabricação Fachini** ← atualizado |
+| **Calhas / Lisa e Dentada** | Fabricação própria desde 1996 — a origem da empresa, 60% do volume |
+| **Dobradeiras CN/CNC e guilhotinas** | Marca Fachini com padrão europeu de componentes |
+| **Laser e Solda** | **Parceria Senfeng, assumida abertamente** |
+
+**Consequência:** "fabricação própria" deixa de ser exclusividade da linha de
+calhas. Onde outros documentos do projeto descreverem Lisa/Dentada como "a
+única linha de fabricação própria", leia-se "a linha de fabricação própria mais
+antiga, desde 1996".
+
+---
+
+### 14.6 O limite que permanece
+
+**O discurso de fabricante não se aplica à linha laser.**
+
+A marca Senfeng está estampada no equipamento, e assumi-la é estratégia
+declarada da empresa (seção 2) — é o diferencial de ser a voz da Senfeng no
+Brasil. Descrever laser como fabricação Fachini contradiz o que o cliente vê na
+máquina e destrói a credibilidade da parceria.
+
+**Regra prática:**
+
+| Linha | Termo |
+|---|---|
+| Perfiladeiras e Calhas | fabricação Fachini |
+| CN/CNC e Guilhotinas | marca Fachini, padrão europeu |
+| Laser e Solda | parceria Senfeng |
+
+---
+
+*Adendo de posicionamento. As seções 2.4, 6.1, 8 e o resumo executivo já foram
+atualizados para refletir esta decisão.*

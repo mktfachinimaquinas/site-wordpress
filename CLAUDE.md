@@ -16,7 +16,8 @@ que será colado no Elementor, os mapas de SEO e os scripts de apoio.
 ## Fonte de verdade
 
 `docs/DOSSIE_FACHINI_projeto_site.md` é a **fonte de verdade** deste projeto.
-As seções 1 a 12 são o dossiê original; a seção 13 é o adendo de execução.
+As seções 1 a 12 são o dossiê; 13 e 14 são adendos de execução e de
+posicionamento.
 
 O dossiê é a referência primária do projeto. Ele prevalece sobre sugestões
 avulsas e não se rediscute por conveniência. Mas não é imutável: decisões de
@@ -46,6 +47,23 @@ procedimento é documentar o conflito, não escolher um lado sozinho.
 em pontos de SEO. A árvore do dono prevalece por enquanto. Não construir
 página sobre estrutura de navegação até a decisão fechar. Os conflitos estão
 documentados para defesa junto à diretoria.
+
+**POSICIONAMENTO — perfiladeira é FABRICAÇÃO Fachini.** Decisão da diretoria
+(26/07/2026, seção 14 do dossiê). Sustentado por capacidade instalada: a empresa
+tem insumos e estrutura para fabricar cada componente, e há histórico de
+refabricação completa. A composição atual de importados é decisão econômica, não
+limitação técnica. Finame para perfiladeiras em andamento.
+
+Termos por linha:
+
+| Linha | Como comunicar |
+|---|---|
+| Perfiladeiras e Calhas | fabricação Fachini |
+| CN/CNC e Guilhotinas | marca Fachini, padrão europeu |
+| Laser e Solda | **parceria Senfeng** — nunca fabricação |
+
+Evitar "100% nacional" até a conclusão do Finame. Keywords liberadas:
+`fabricante de perfiladeiras`, `fábrica de perfiladeiras`, `perfiladeira nacional`.
 
 ---
 
@@ -97,7 +115,7 @@ sobre navy = off-white ~80%; sobreposição de imagem = navy com opacidade.
 |---|---|---|---|---|---|---|
 | H1 | Mitr | 700 | 64px | 1.1 | 0.06em | ALTA |
 | H2 | Mitr | 700 | 48px | 1.15 | 0.06em | ALTA |
-| H3 | Archivo | 600 | 36px | 1.25 | 0.02em | ALTA |
+| H3 | Archivo | 600 | 36px | 1.25 | 0.02em | normal |
 | H4 | Archivo | 600 | 27px | 1.3 | 0 | normal |
 | H5 | Archivo | 600 | 20px | 1.35 | 0 | normal |
 | Corpo | Archivo | 400 | 16px | 1.6 | 0 | normal |
@@ -108,6 +126,11 @@ sobre navy = off-white ~80%; sobreposição de imagem = navy com opacidade.
 > **H2 — 48px, decisão fechada (validada pela designer em 25/07/2026).** O
 > Figma marcava 58px, o que dava apenas 10% de diferença para o H1 — abaixo do
 > limiar em que o olho lê hierarquia. A 48px a diferença é de 33%.
+
+> **H3 sem transformação de caixa no Theme Style.** Ele aparece em dois
+> contextos: "SUPORTE TÉCNICO / INSTALAÇÃO PROFISSIONAL / PÓS VENDA" em caixa
+> alta, e títulos de card de notícia em caixa baixa. Forçar maiúsculas
+> globalmente quebraria os segundos. A caixa alta é aplicada por seção.
 
 **Mobile** — razão 1.2, proposta (não existe prancheta mobile no Figma)
 
@@ -184,6 +207,18 @@ rebaixar para H4 só porque é menor.
 
 ---
 
+## Status dos módulos
+
+**Módulo 1 — Design System: CONCLUÍDO em 26/07/2026.** Executado no Elementor:
+Global Colors (8 cores), Global Fonts (4 slots), Theme Style completo
+(tipografia H1–H6, corpo, links, botões), Content Width 1280px, Layout padrão
+Elementor Largura Total, variáveis de espaçamento no Custom CSS. Teste de
+herança validado em página de rascunho.
+
+**Módulo 2 — Header:** próximo. Menu, dropdown por clique, busca expansível.
+
+---
+
 ## Escopo da entrega de 2 semanas
 
 - Hero em slider **sem vídeo** — remove o maior risco de CWV mobile
@@ -234,9 +269,13 @@ pressa — fora do caminho crítico).
 - **Não instale dependência sem necessidade real.**
 - **Não invente informação sobre empresa, produtos ou preços.** Se não estiver
   no dossiê, pergunte.
-- **Cuidado com posicionamento de produto.** O dossiê define o que pode e não
-  pode ser dito sobre fabricação própria vs. importado, linha por linha. Erro
-  aqui é comercial, não técnico.
+- **Cuidado com posicionamento de produto.** Perfiladeiras e calhas =
+  fabricação Fachini. Laser = parceria Senfeng, nunca fabricação. Erro aqui é
+  comercial, não técnico.
+- **Não instalar plugin sem avaliação.** Cada plugin carrega CSS/JS em todas as
+  páginas e concorre com a meta de CWV verde no mobile. Verificar antes se o
+  Elementor Pro já resolve nativamente. Descartado em 26/07/2026: Ultimate
+  Addons for Elementor (redundante).
 - **Antes de sugerir CSS, verifique se o Elementor resolve no painel.** CSS que
   duplica função nativa é manutenção sem motivo.
 
