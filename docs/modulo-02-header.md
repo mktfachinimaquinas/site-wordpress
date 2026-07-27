@@ -5,6 +5,27 @@
 **Objetivo:** construir o cabeçalho do site — a peça que aparece em todas as
 páginas e concentra a maior parte do código customizado do projeto.
 
+**Status: passo 5 de 11** (atualizado em 26/07/2026)
+
+| # | Passo | Status |
+|---|---|---|
+| 1 | Menu no WordPress | ✅ |
+| 2 | Template + containers aninhados | ✅ |
+| 3 | Widgets de menu e busca | ✅ |
+| 4 | Posicionamento absoluto — flutua sobre o hero | ✅ |
+| 5 | **Fundo condicional** | ⬅ atual |
+| 6 | CSS dos hovers | ⬜ |
+| 7 | Dropdown por clique (JS) | ⬜ |
+| 8 | Busca expansível | ⬜ |
+| 9 | Acessibilidade de teclado | ⬜ |
+| 10 | Mobile | ⬜ |
+| 11 | Logo em SVG | ⬜ |
+
+**Classes aplicadas:** `fachini-header` · `fachini-menu` · `fachini-busca`
+
+**⚠ Correção pendente:** o item "Serralheria" do dropdown precisa virar
+**"Calhas"** (Aparência → Menus). É o bloqueador nº 1 do relatório de análise.
+
 ---
 
 ## Por que o header é o módulo mais difícil

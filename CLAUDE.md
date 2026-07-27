@@ -31,6 +31,9 @@ procedimento é documentar o conflito, não escolher um lado sozinho.
 | `docs/relatorio-analise-homepage.md` | Bloqueadores, riscos de conversão, fila de código customizado |
 | `docs/modulo-01-design-system.md` | Guia de execução do design system |
 | `design-system/tokens.md` | Valores extraídos do Figma |
+| `docs/modulo-02-header.md` | Guia do header em execução |
+| `docs/analise-360-ux-seo.md` | Estratégia de UX/UI e SEO |
+| `BRIEFING.md` | Documento de continuidade entre conversas |
 
 ---
 
@@ -215,7 +218,20 @@ Global Colors (8 cores), Global Fonts (4 slots), Theme Style completo
 Elementor Largura Total, variáveis de espaçamento no Custom CSS. Teste de
 herança validado em página de rascunho.
 
-**Módulo 2 — Header:** próximo. Menu, dropdown por clique, busca expansível.
+**Módulo 2 — Header: EM EXECUÇÃO, passo 5 de 11.**
+
+Concluído: menu criado no WordPress, template de cabeçalho, containers
+aninhados (externo 100% + interno 1280px), widgets de menu e busca,
+posicionamento absoluto funcionando — o header flutua sobre o hero.
+
+Classes CSS aplicadas: `fachini-header` (container externo), `fachini-menu`,
+`fachini-busca`.
+
+Próximo passo: CSS do fundo condicional — navy nas páginas internas,
+transparente na home via `body.home`.
+
+Pendências do módulo: "Serralheria" no menu precisa virar "Calhas"; decisão
+sobre sticky.
 
 ---
 

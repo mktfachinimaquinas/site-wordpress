@@ -24,11 +24,15 @@ Repositório de documentação, design system e código customizado do novo site
 site-wordpress/
 ├── README.md              # este arquivo — orientação para pessoas
 ├── CLAUDE.md              # contexto e regras para o Claude Code
+├── BRIEFING.md            # continuidade entre sessões de trabalho
 ├── docs/
 │   ├── DOSSIE_FACHINI_projeto_site.md   # documento base do projeto
 │   ├── controle-projeto.md              # decisões, pendências, go-live
+│   ├── analise-360-ux-seo.md            # estratégia de UX/UI e SEO
 │   ├── relatorio-analise-homepage.md    # análise do layout
-│   └── modulo-01-design-system.md       # guia de execução
+│   ├── conflito-arvore-navegacao.md     # árvore do dono vs. dossiê
+│   ├── modulo-01-design-system.md       # guia de execução (concluído)
+│   └── modulo-02-header.md              # guia de execução (em andamento)
 ├── design-system/
 │   └── tokens.md          # valores extraídos do Figma
 ├── css/                   # CSS customizado para o Elementor
@@ -84,8 +88,8 @@ avança-se. Nada de executar vários módulos em paralelo.
 
 | Módulo | Escopo | Status |
 |---|---|---|
-| 1 | Design System no Elementor | em execução |
-| 2 | Header — menu, dropdown, busca expansível | |
+| 1 | Design System no Elementor | ✅ concluído |
+| 2 | Header — menu, dropdown, busca expansível | em execução |
 | 3 | Formulário qualificador e medição | bloqueado pela spec |
 | 4 | Produção de páginas | |
 | 5 | SEO on-page | |

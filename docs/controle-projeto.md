@@ -1,7 +1,7 @@
 # Controle do Projeto — Site Fachini Máquinas
 
 **Documento vivo.** Atualizar a cada decisão tomada ou pendência resolvida.
-**Última atualização:** 26/07/2026
+**Última atualização:** 26/07/2026 (fim da sessão 1)
 
 ---
 
@@ -13,6 +13,9 @@
 | 26/07 | **Árvore de navegação: seguir Figma por ora** | Foco na entrega. Ajustes de estrutura ficam para depois do lançamento |
 | 26/07 | **MÓDULO 1 CONCLUÍDO** | Global Colors, Global Fonts, Theme Style completo, Content Width 1280, Layout Full Width, variáveis de espaçamento. Teste de herança validado |
 | 26/07 | **Ultimate Addons for Elementor removido** | Redundante com Elementor Pro. Templates de cabeçalho/rodapé apagados, ambiente limpo, cache limpo |
+| 26/07 | **Header transparente sobre o hero** | Sólido navy nas páginas internas via `body.home`. Sticky pendente — recomendação é sem sticky no lançamento |
+| 26/07 | **Menu: "Máquinas" como guarda-chuva** | As categorias do mapa do dono ficam no dropdown. Oito itens soltos apertariam o header em 1280px |
+| 26/07 | **JavaScript: foco no ensino** | Conceito explicado, Wilson escreve, revisão. Recalibra com "escreve" se comprometer o prazo |
 | 26/07 | **H3 sem transformação de caixa** | Aparece em caixa alta nos diferenciais e caixa baixa nos cards de notícia. Caixa alta aplicada por seção |
 | 23/07 | **Paleta de 8 cores** | Navy `#15274E` · Navy Sec. `#00224E` · Vermelho `#E01E26` · Verm. Hover `#B01319` · Onix `#0F0F0F` · Off-white `#FBFBFB` · Cinza Névoa `#F1F3F6` · Cinza Médio `#5C6675` |
 | 23/07 | **Mitr 700 para H1/H2**, sempre caixa alta | Mitr não tem peso acima de 700 |
