@@ -30,23 +30,196 @@ body:not(.home) .fachini-header {
 
 /* ==========================================================================
    2. HOVER DOS ITENS DO MENU
+   --------------------------------------------------------------------------
+   Medidas extraidas do Figma:
+     padding 12px horizontal / 8px vertical
+     corner radius 120px (pilula)
+     fundo branco a 15% de opacidade
+     altura do item 32px
    ========================================================================== */
 
-/* a implementar — passo 6 */
+/* Estado normal — define a forma e prepara a animacao.
+   .elementor-item e a classe que o Elementor da aos itens de primeiro nivel
+   (os do submenu recebem .elementor-sub-item e sao tratados na secao 4).
+
+   IMPORTANTE: zerar o padding no painel do widget para nao somar com este.
+
+   A altura e definida explicitamente (32px, valor do Figma) e o texto e
+   centralizado com flexbox. Assim a altura nao depende do calculo
+   padding + line-height, que e fragil e varia com a fonte.
+
+   O padding aqui e SO horizontal — ele controla a LARGURA da pilula.
+   A distancia ENTRE os itens e outra coisa: widget de Menu > Estilo >
+   Espaco entre. Duas alavancas separadas para dois efeitos diferentes. */
+.fachini-header .elementor-widget-nav-menu .elementor-nav-menu .elementor-item {
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 12px;
+  line-height: 1;
+  border-radius: 120px;
+  text-decoration: none;
+  transition: background-color 200ms ease;
+}
+
+/* Remove o sublinhado herdado do Theme Style tambem no hover.
+   Links do site tem sublinhado por padrao; no menu isso nao se aplica. */
+.fachini-header .elementor-nav-menu .elementor-item:hover {
+  text-decoration: none;
+}
+
+/* Impede o deslocamento dos itens vizinhos no hover.
+
+   O problema: a pilula do hover so existe no estado :hover, entao o item
+   "cresce" quando o mouse entra e empurra os vizinhos para o lado.
+
+   A solucao: o padding e o espaco ja existem no estado NORMAL — o hover
+   apenas pinta o fundo. Como as medidas nao mudam, nada se move.
+   E o que ja acontece com o padding: 0 12px acima. Esta regra garante
+   que o item do Elementor nao aplique margem propria por cima. */
+.fachini-header .elementor-nav-menu > li > .elementor-item {
+  margin: 0;
+}
+
+/* Estado hover e foco — o retangulo translucido aparece.
+   O :focus entra junto para quem navega por teclado ver onde esta. */
+.fachini-header .elementor-widget-nav-menu .elementor-nav-menu .elementor-item:hover,
+.fachini-header .elementor-widget-nav-menu .elementor-nav-menu .elementor-item:focus {
+  background-color: rgba(255, 255, 255, 0.15);
+}
 
 
 /* ==========================================================================
    3. CHEVRON DO ITEM COM SUBMENU
+   --------------------------------------------------------------------------
+   A seta aparece somente no hover do item "Maquinas".
+
+   Usar opacity, nunca display:none. Com display:none o icone sai do fluxo
+   e o texto "pula" quando ele aparece. Com opacity o espaco continua
+   reservado e nada se move — mesmo principio da secao 2.
    ========================================================================== */
 
-/* a implementar — passo 6 */
+.fachini-header .elementor-widget-nav-menu .elementor-nav-menu .sub-arrow {
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+
+.fachini-header .elementor-widget-nav-menu .elementor-nav-menu .elementor-item:hover .sub-arrow,
+.fachini-header .elementor-widget-nav-menu .elementor-nav-menu .elementor-item:focus .sub-arrow {
+  opacity: 1;
+}
 
 
 /* ==========================================================================
    4. ITENS DO DROPDOWN
+   --------------------------------------------------------------------------
+   NAO controlar a largura do painel por CSS.
+
+   O SmartMenus (biblioteca que o Elementor usa para menus) escreve estilo
+   inline no <ul> em tempo de execucao:
+     style="width: auto; min-width: 10em; max-width: 1000px"
+
+   Estilo inline vence qualquer folha de estilo, inclusive com !important.
+   A ordem de precedencia e:
+     1. inline com !important
+     2. inline                    <- SmartMenus atua aqui
+     3. folha de estilo com !important
+     4. folha de estilo normal
+
+   Para alargar o painel, aumente o Espacamento horizontal em
+   Widget de Menu > Estilo > Lista suspensa. O painel acompanha o
+   conteudo, entao itens mais largos alargam o painel.
+   --------------------------------------------------------------------------
+   Ao passar o mouse: o item desliza para a direita e ganha um marcador
+   vermelho a esquerda.
+
+   .elementor-sub-item e a classe dos links de submenu (os de primeiro
+   nivel usam .elementor-item, tratados na secao 2).
    ========================================================================== */
 
-/* a implementar — passo 6 */
+/* SOBRE A ESPECIFICIDADE DESTES SELETORES
+
+   O Elementor gera CSS a partir do painel do widget no formato:
+     .elementor-367 .elementor-element.elementor-element-40786ca .elementor-nav-menu--dropdown a
+   Sao 4 classes. Um seletor com 3 classes PERDE para ele, mesmo vindo
+   depois no arquivo — em CSS, mais especifico vence a ordem.
+
+   Por isso estes seletores usam 5 classes. Nao e capricho: e o minimo
+   para o CSS customizado prevalecer sobre o painel.
+
+   Regra pratica do projeto: se o painel resolve, use o painel. Se
+   precisar de CSS para algo que o painel nao faz, a especificidade
+   precisa superar a gerada pelo widget. */
+
+/* Estado normal — a borda ja existe, mas transparente.
+
+   Por que transparente em vez de nao existir: borda que aparece do nada
+   empurra o conteudo 3px para a direita. Reservando o espaco desde o
+   inicio, o hover so troca a cor e nada se desloca. */
+/* Estado normal do item.
+
+   position: relative prepara o item para receber a barra, que e
+   posicionada em relacao a ele. Sem isso, a barra se posicionaria em
+   relacao a pagina inteira. */
+.fachini-header .elementor-widget-nav-menu .elementor-nav-menu .sub-menu .elementor-sub-item {
+  position: relative;
+  text-decoration: none;
+  transition: transform 200ms ease;
+}
+
+/* A BARRA VERMELHA
+
+   Em vez de border-left, a barra e um pseudo-elemento — um elemento
+   gerado por CSS, que nao existe no HTML.
+
+   Por que trocar: a borda do item herdava o border-radius de 12px do
+   painel e ficava curvada nas pontas. O pseudo-elemento e independente,
+   entao permanece reto.
+
+   Como funciona:
+     content: ''        obrigatorio — sem isso o pseudo-elemento nao existe
+     position: absolute posiciona em relacao ao item (que e relative)
+     left/top/bottom    cola na borda esquerda, com 6px de folga em cima
+                        e embaixo para a barra ficar menor que o item
+     width: 3px         a espessura
+     opacity: 0         invisivel ate o hover */
+.fachini-header .elementor-widget-nav-menu .elementor-nav-menu .sub-menu .elementor-sub-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 6px;
+  bottom: 6px;
+  width: 3px;
+  background-color: #E01E26;
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+
+/* Estado hover — desliza e revela o marcador.
+
+   transform: translateX() move o elemento sem afetar o layout ao redor.
+   Diferente de mudar margin-left, que empurraria os vizinhos. E o
+   navegador processa transform na placa de video, sem recalcular a
+   pagina — mais performatico. */
+.fachini-header .elementor-widget-nav-menu .elementor-nav-menu .sub-menu .elementor-sub-item:hover,
+.fachini-header .elementor-widget-nav-menu .elementor-nav-menu .sub-menu .elementor-sub-item:focus {
+  transform: translateX(8px);
+  background-color: transparent;
+  text-decoration: none;
+}
+
+/* A barra aparece no hover. */
+.fachini-header .elementor-widget-nav-menu .elementor-nav-menu .sub-menu .elementor-sub-item:hover::before,
+.fachini-header .elementor-widget-nav-menu .elementor-nav-menu .sub-menu .elementor-sub-item:focus::before {
+  opacity: 1;
+}
+
+/* O sublinhado vem do Theme Style > Links, onde o site inteiro usa link
+   sublinhado. Item de menu e navegacao, nao link de texto — por isso a
+   remocao explicita nos dois estados.
+
+   O fundo transparente no hover neutraliza qualquer cinza herdado do
+   tema. O destaque visual do dropdown e o deslizar + a barra vermelha. */
 
 
 /* ==========================================================================

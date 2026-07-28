@@ -1,7 +1,7 @@
 # Controle do Projeto — Site Fachini Máquinas
 
 **Documento vivo.** Atualizar a cada decisão tomada ou pendência resolvida.
-**Última atualização:** 26/07/2026 (fim da sessão 1)
+**Última atualização:** 27/07/2026 (fim da sessão 2)
 
 ---
 
@@ -13,6 +13,8 @@
 | 26/07 | **Árvore de navegação: seguir Figma por ora** | Foco na entrega. Ajustes de estrutura ficam para depois do lançamento |
 | 26/07 | **MÓDULO 1 CONCLUÍDO** | Global Colors, Global Fonts, Theme Style completo, Content Width 1280, Layout Full Width, variáveis de espaçamento. Teste de herança validado |
 | 26/07 | **Ultimate Addons for Elementor removido** | Redundante com Elementor Pro. Templates de cabeçalho/rodapé apagados, ambiente limpo, cache limpo |
+| 27/07 | **Módulo 2 — passos 5 e 6 concluídos** | Fundo condicional, hover do menu, chevron, dropdown com deslizar e barra vermelha. CSS versionado em `css/header.css` |
+| 27/07 | **Largura do dropdown fica automática** | O SmartMenus escreve estilo inline no `<ul>`, que vence qualquer CSS. Ajuste via Espaçamento horizontal no painel do widget |
 | 27/07 | **Mitr em SemiBold 600** | O Bold da Mitr é visivelmente mais pesado que o de uma grotesca ocidental — origem tailandesa, contraste maior entre pesos. Em caixa alta ficava excessivo. Alinhado com a equipe |
 | 27/07 | **Escala tipográfica revista — razão 1.25** | H1 alinhado aos 56px do Figma (a 64px ficava desproporcional em notebook). H3 permanece em 36px. Novos valores: 56 · 45 · 36 · 29 · 23 |
 | 26/07 | **Botões sem sombra** | Superfícies planas. Sombra em cards de notícia segue pendente da designer |
@@ -30,7 +32,7 @@
 | 23/07 | **Hierarquia de headings definida** | Um H1 por página; números de estatística não são heading |
 | 23/07 | **Vídeo fora do hero** | Remove o maior risco de CWV mobile |
 | 23/07 | **Scrollytelling adiado** | Versão intermediária no lançamento: sticky + fade |
-| 23/07 | **"Serralheria" → "Calhas"** | Serralheria é segmento, nunca categoria de produto |
+| 23/07 → 27/07 | **Rótulo da linha Lisa/Dentada** | Decisão revista: "Serralheria" é segmento e não produto, mas "Calhas" subdimensiona a máquina. **Adiado para teste A/B pós-lançamento** (ver 6.4) |
 | 23/07 | **Country Blocking do Loginizer DESATIVADO** | Ver 1.1 abaixo |
 
 ### 1.1 Registro — Loginizer Country Blocking
@@ -104,7 +106,7 @@ e mudar a chave `enabled` para `false`.
 | 4 | 🟡 23/07 | **Conferir quebra do H1** a 1280px em vez de 1558px |
 | 5 | 🟡 23/07 | **Breakpoints** — quais valores usou no Figma |
 | 6 | 🟡 23/07 | **Frames de 1366px e 390px** (wireframe basta) |
-| 7 | 🟡 | **Trocar "Serralheria" por "Calhas"** — a árvore do dono já usa "Calhas" no menu ✔. Falta confirmar a troca no **mosaico** da home |
+| 7 | ⏸️ | **Rótulo da linha Lisa/Dentada** — adiado para teste A/B pós-lançamento (ver 6.4). "Serralheria" fica no ar por ora |
 | 8 | 🔴 | **Texto do mosaico visível no mobile** (hover não existe em toque) |
 | 9 | 🔴 | **Corrigir rótulo "DOBRADEIRA CNC"** sobre a máquina SF3015G (que é laser) |
 | 10 | 🔴 | **Desenhar página de resultados de busca** — ver 3.1 |
@@ -282,7 +284,7 @@ Detalhamento em `docs/relatorio-analise-homepage.md`.
 
 | # | Item | Status |
 |---|---|---|
-| 1 | "Serralheria" → "Calhas" no menu e mosaico | ⬜ |
+| 1 | Rótulo da linha Lisa/Dentada | ⏸️ teste A/B pós-lançamento (ver 6.4) |
 | 2 | Formulário completo conforme seção 9 do dossiê | ⬜ bloqueado pela spec |
 | 3 | "Soluções" no menu principal | ⬜ |
 | 4 | Telefone no header + WhatsApp | ⬜ |
@@ -357,7 +359,43 @@ conteúdo do dossiê (blog como motor de autoridade) nasce sem casa.
 **Alternativa se o prazo apertar:** subir a homepage sem a seção de notícias.
 Ela depende de haver post publicado de qualquer forma.
 
-### 6.4 Outros itens de página
+### 6.4 Teste A/B — rótulo da linha Lisa/Dentada
+
+**Pós-lançamento.** O rótulo do menu para a linha de viradeiras/dobradeiras de
+chapa fica em aberto e será decidido por teste, não por opinião.
+
+**O impasse:**
+
+| Rótulo | Problema |
+|---|---|
+| "Serralheria" | É o **segmento de cliente**, não o produto. Ninguém busca "serralheria" querendo comprar máquina |
+| "Calhas" | **Subdimensiona a máquina.** A dentada com dentes ajustáveis dobra até 2mm em carbono e 1mm em inox — faz caixa, painel elétrico, duto de refrigeração, bandeja, além de calha |
+| "Viradeiras" | Termo forte no Sul, é produto e não segmento, evita colisão com as dobradeiras CNC de "Corte e Dobra". Menos volume nacional |
+| "Dobradeiras de Chapa" | Mais buscado nacionalmente, mas colide com "Corte e Dobra → Dobradeiras" |
+
+**Formato do teste:** duas versões — uma proposta por marketing, outra por
+Wilson junto com o time de vendas. Comparar por cliques no menu, entrada nas
+páginas e leads gerados.
+
+**Insumo técnico a preservar** (do vendedor técnico, 27/07/2026): a máquina tem
+dentes ajustáveis com diversos tamanhos de trabalho, dobra até 2mm em aço
+carbono e 1mm em inox. Isso abre aplicações muito além de calha — refrigeração,
+painéis de energia, e uma variedade grande de dobras calculáveis.
+
+**Este insumo vale além do rótulo:**
+
+- **Conteúdo da página de produto** — tabela de capacidade por material e uma
+  seção "o que dá para fabricar" com as aplicações
+- **SEO de cauda longa** — "dobradeira para painel elétrico", "viradeira para
+  duto de refrigeração" são buscas de lead qualificado que hoje não encontram a
+  Fachini
+- **Valida a camada de Soluções** (seção 7.1 do dossiê) — a mesma máquina serve
+  calheiro, eletricista industrial e refrigerista. Três páginas de segmento
+  apontando para um produto
+
+---
+
+### 6.5 Outros itens de página
 
 | Item | Prioridade | Observação |
 |---|---|---|

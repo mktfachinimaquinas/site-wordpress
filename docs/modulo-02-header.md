@@ -5,7 +5,7 @@
 **Objetivo:** construir o cabeçalho do site — a peça que aparece em todas as
 páginas e concentra a maior parte do código customizado do projeto.
 
-**Status: passo 5 de 11** (atualizado em 26/07/2026)
+**Status: passo 7 de 11** (atualizado em 27/07/2026)
 
 | # | Passo | Status |
 |---|---|---|
@@ -13,9 +13,9 @@ páginas e concentra a maior parte do código customizado do projeto.
 | 2 | Template + containers aninhados | ✅ |
 | 3 | Widgets de menu e busca | ✅ |
 | 4 | Posicionamento absoluto — flutua sobre o hero | ✅ |
-| 5 | **Fundo condicional** | ⬅ atual |
-| 6 | CSS dos hovers | ⬜ |
-| 7 | Dropdown por clique (JS) | ⬜ |
+| 5 | Fundo condicional | ✅ |
+| 6 | CSS dos hovers | ✅ |
+| 7 | **Dropdown por clique (JS)** | ⬅ atual |
 | 8 | Busca expansível | ⬜ |
 | 9 | Acessibilidade de teclado | ⬜ |
 | 10 | Mobile | ⬜ |

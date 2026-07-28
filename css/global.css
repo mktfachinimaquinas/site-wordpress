@@ -29,3 +29,26 @@
   --esp-7: 96px;
   --esp-8: 128px;
 }
+
+/* ==========================================================================
+   2. ROLAGEM SUAVE
+   --------------------------------------------------------------------------
+   Faz ancoras internas rolarem suave em vez de saltar. Aplicado no elemento
+   raiz (html), nao no body — a rolagem da pagina e gerenciada pelo html.
+
+   Usado pelos CTAs que levam ao formulario, como "Seja Cliente Fachini".
+
+   A segunda regra respeita quem configurou no sistema operacional que
+   prefere menos animacao. Ignorar isso pode causar nausea e tontura em
+   pessoas com sensibilidade a movimento. auto e o comportamento padrao.
+   ========================================================================== */
+
+:root {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    scroll-behavior: auto;
+  }
+}
