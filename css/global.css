@@ -1,0 +1,31 @@
+/* ==========================================================================
+   GLOBAL — Site Fachini Maquinas
+   --------------------------------------------------------------------------
+   CSS que vale para o site inteiro. Variaveis, ajustes de base.
+   Colado em: Elementor > Configuracoes do Site > CSS Personalizado
+
+   CSS de componente vive em arquivos proprios (header.css, footer.css...)
+   e e colado abaixo deste bloco no mesmo campo.
+   ========================================================================== */
+
+
+/* ==========================================================================
+   1. ESCALA DE ESPACAMENTO
+   --------------------------------------------------------------------------
+   Base 8px. Toda medida de espacamento do site sai desta lista.
+   Uso: padding: var(--esp-5);  em vez de  padding: 48px;
+
+   Se a escala mudar, muda aqui e propaga para todo o CSS customizado.
+   Mesma logica das cores globais, aplicada a espacamento.
+   ========================================================================== */
+
+:root {
+  --esp-1: 8px;
+  --esp-2: 16px;
+  --esp-3: 24px;
+  --esp-4: 32px;
+  --esp-5: 48px;
+  --esp-6: 64px;
+  --esp-7: 96px;
+  --esp-8: 128px;
+}
