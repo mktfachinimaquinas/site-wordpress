@@ -42,15 +42,21 @@
 
 | Item | Valor |
 |---|---|
-| Headlines (H1, H2) | **Mitr** Bold 700 — Google Fonts, SIL OFL |
+| Headlines (H1, H2) | **Mitr** SemiBold 600 — Google Fonts, SIL OFL |
 | Texto (H3+, corpo, menu, botões) | **Archivo** 400 / 600 / 700 — Google Fonts, SIL OFL |
 | Logo | **Toska Bold** — exclusiva do logo, em SVG vetorizado |
 | Descontinuada | Roboto |
 | Eixo de largura variável | Não utilizado |
-| Total de arquivos a carregar | **4** — Mitr 700 · Archivo 400, 600, 700 |
+| Total de arquivos a carregar | **4** — Mitr 600 · Archivo 400, 600, 700 |
 
 **Restrição:** Mitr vai de ExtraLight (200) a Bold (700). Não existe Black.
 Mais impacto na headline só via tamanho.
+
+**Sobre o peso:** Mitr é de origem tailandesa. O alfabeto tailandês exige
+contraste maior entre pesos, e isso se reflete no desenho latino — o Bold (700)
+dela aparenta um peso acima do Bold de uma grotesca ocidental típica. Em caixa
+alta o efeito dobra. **O projeto usa 600 (SemiBold)**, que na prática entrega a
+presença de um Bold convencional. Não confundir com engano.
 
 ---
 
@@ -60,7 +66,7 @@ Mais impacto na headline só via tamanho.
 
 | Elemento | Fonte | Peso | Tamanho | Line-height | Tracking |
 |---|---|---|---|---|---|
-| "Encontre a máquina ideal..." | Mitr | Bold | 64px | 65px (1.02) | 6% |
+| "Encontre a máquina ideal..." | Mitr | Bold | 56px | 60px (1.07) | 6% |
 | "Aumente a produtividade..." | Mitr | Bold | 58px | 68px (1.17) | 6% |
 | "Suporte Técnico" | Archivo | SemiBold | 36px | 75px (2.08) | 0% |
 | Subtítulo do hero | Archivo | Bold | 23px | auto | 0% |
@@ -68,15 +74,15 @@ Mais impacto na headline só via tamanho.
 | Menu "Máquinas" | Archivo | Medium | 15px | auto | 0% |
 | Corpo de texto | Archivo | Regular | 16px | auto | 0% |
 
-**Adotado** — escala modular razão 1.333 (`64 → 48 → 36 → 27 → 20`):
+**Adotado** — escala modular razão 1.25 (`56 → 45 → 36 → 29 → 23`):
 
 | Nível | Fonte | Peso | Tamanho | Line-height | Tracking | Caixa |
 |---|---|---|---|---|---|---|
-| H1 | Mitr | 700 | 64px | 1.1 | 0.06em | ALTA |
-| H2 | Mitr | 700 | 48px | 1.15 | 0.06em | ALTA |
+| H1 | Mitr | 600 | 56px | 1.1 | 0.06em | ALTA |
+| H2 | Mitr | 600 | 45px | 1.15 | 0.06em | ALTA |
 | H3 | Archivo | 600 | 36px | 1.25 | 0.02em | normal |
-| H4 | Archivo | 600 | 27px | 1.3 | 0 | normal |
-| H5 | Archivo | 600 | 20px | 1.35 | 0 | normal |
+| H4 | Archivo | 600 | 29px | 1.3 | 0 | normal |
+| H5 | Archivo | 600 | 23px | 1.35 | 0 | normal |
 | Subtítulo hero | Archivo | 700 | 23px | 1.4 | 0 | ALTA |
 | Corpo | Archivo | 400 | 16px | 1.6 | 0 | normal |
 | Corpo pequeno | Archivo | 400 | 14px | 1.6 | 0 | normal |
@@ -87,22 +93,23 @@ Mais impacto na headline só via tamanho.
 
 | # | Item | Medido | Adotado | Razão |
 |---|---|---|---|---|
-| 1 | H2 tamanho | 58px | **48px** | 58 dá só 10% de diferença do H1. Como ambos usam mesma fonte, peso, caixa e tracking, o tamanho é o único diferenciador — 10% está abaixo do limiar em que o olho lê hierarquia. **Validado pela designer em 25/07/2026** |
+| 1 | H2 tamanho | 58px | **45px** | 58 dá só 10% de diferença do H1. Como ambos usam mesma fonte, peso, caixa e tracking, o tamanho é o único diferenciador — 10% está abaixo do limiar em que o olho lê hierarquia. **Validado pela designer em 25/07/2026** |
 | 2 | H3 line-height | 75px (2.08) | **1.25** | Resíduo. Invisível porque "Suporte Técnico" é uma linha só. No primeiro H3 de duas linhas, abriria vão de 75px. **Validado pela designer em 25/07/2026** |
-| 3 | H1 line-height | 1.02 | **1.1** | Em português, acentos em caixa alta ficam acima da altura das maiúsculas. A 1.02 o "Á" de MÁQUINA encosta na linha de cima |
+| 3 | H1 line-height | 1.07 (60px/56px) | **1.1** | Em português, acentos em caixa alta ficam acima da altura das maiúsculas. A 1.02 o "Á" de MÁQUINA encosta na linha de cima |
 | 4 | Menu peso | Medium 500 | **SemiBold 600** | A 15px a diferença é imperceptível e evita carregar um quinto arquivo de fonte |
 | 5 | H3 tracking | 0% | **0.02em** | Maiúsculas precisam de mais respiro entre letras que minúsculas |
+| 6 | Peso do H1/H2 | Bold 700 | **SemiBold 600** | O Bold da Mitr é visivelmente mais pesado que o de uma grotesca ocidental (origem tailandesa, contraste maior entre pesos). Em caixa alta ficava excessivo. **Alinhado com a equipe em 27/07/2026** |
 
 ---
 
 ## 5. Tipografia — Mobile
 
-**Não existe prancheta mobile no Figma.** Escala proposta, razão 1.2.
+**Não existe prancheta mobile no Figma.** Escala proposta, razão 1.18.
 
 | Nível | Tamanho | Peso | Line-height |
 |---|---|---|---|
-| H1 | 34px | 700 | 1.15 |
-| H2 | 28px | 700 | 1.2 |
+| H1 | 32px | 600 | 1.15 |
+| H2 | 27px | 600 | 1.2 |
 | H3 | 23px | 600 | 1.3 |
 | H4 | 19px | 600 | 1.35 |
 | H5 | 17px | 600 | 1.4 |
@@ -202,4 +209,5 @@ Escala base 8px: `8 · 16 · 24 · 32 · 48 · 64 · 96 · 128`
 | 1 | Breakpoints usados no Figma | Designer |
 | 2 | Raio de borda de botões, cards e campos de formulário | Designer |
 | 3 | Sombra nos cards de notícia | Designer |
+| — | ~~Sombra em botões~~ — **definido: sem sombra** (26/07/2026) | ✅ |
 | 4 | Medição dos espaçamentos reais seção a seção | Designer |

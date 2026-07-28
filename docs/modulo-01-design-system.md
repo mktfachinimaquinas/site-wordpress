@@ -52,7 +52,7 @@ opacidade.
 
 | Fonte | Peso | Onde | Arquivos |
 |---|---|---|---|
-| **Mitr** | 700 Bold | H1 e H2 — **sempre em caixa alta** | 1 |
+| **Mitr** | 600 SemiBold | H1 e H2 — **sempre em caixa alta** | 1 |
 | **Archivo** | 400 Regular | Corpo de texto | 1 |
 | **Archivo** | 600 SemiBold | H3, H4, H5, menu | 1 |
 | **Archivo** | 700 Bold | Botões, subtítulo do hero | 1 |
@@ -64,44 +64,58 @@ comercial livre, hospedagem local permitida.
 
 - **Mitr não tem peso acima de 700.** A família vai de ExtraLight a Bold. Se um
   dia quiserem mais impacto na headline, o único recurso é aumentar o tamanho.
+- **Mitr tem o Bold visivelmente mais pesado que o comum.** É uma tipografia de
+  origem tailandesa — o alfabeto tailandês exige contraste maior entre pesos, e
+  isso se reflete no desenho latino. Na prática, o Bold (700) dela aparenta um
+  peso acima do Bold de uma grotesca ocidental típica. Somado à caixa alta, fica
+  excessivo. **Por isso o projeto usa 600 (SemiBold)** — não é engano nem
+  divergência a corrigir.
 - **Mitr é exclusiva de caixa alta.** Os terminais arredondados desaparecem em
   maiúsculas; em caixa mista o tipo fica visivelmente mais macio, o que não
   serve ao território industrial. Headline em caixa mista usa Archivo 700.
 - **O menu usa SemiBold 600, não Medium 500.** O Figma marca 500, mas a 15px a
   diferença é imperceptível e evita carregar um quinto arquivo.
 
-### 2.2 Escala — Desktop (razão 1.333)
+### 2.2 Escala — Desktop (razão 1.25)
 
 Os tamanhos não foram escolhidos por gosto: saem de uma progressão. Cada nível
-é o anterior dividido por **1.333**.
+é o anterior dividido por **1.25**.
 
 ```
-64 ÷ 1.333 = 48    48 ÷ 1.333 = 36    36 ÷ 1.333 = 27    27 ÷ 1.333 = 20
+56 ÷ 1.25 = 45    45 ÷ 1.25 = 36    36 ÷ 1.25 = 29    29 ÷ 1.25 = 23
 ```
 
-O H1 de 64px e o H3 de 36px que a designer definiu já eram dois degraus exatos
-dessa escala. Só o H2 estava fora.
+**A escala parte dos 56px que o Figma define para o H1** — e o H3 cai
+exatamente em 36px, também o valor da designer. Dois pontos de alinhamento com
+o arquivo original.
 
 **Estes são os valores a cadastrar:**
 
 | Nível | Fonte | Tamanho | Peso | Line-height | Letter-spacing | Caixa |
 |---|---|---|---|---|---|---|
-| H1 | Mitr | 64px | 700 | **1.1** | 0.06em | ALTA |
-| H2 | Mitr | **48px** | 700 | **1.15** | 0.06em | ALTA |
+| H1 | Mitr | **56px** | 600 | **1.1** | 0.06em | ALTA |
+| H2 | Mitr | **45px** | 600 | **1.15** | 0.06em | ALTA |
 | H3 | Archivo | 36px | 600 | **1.25** | 0.02em | normal |
-| H4 | Archivo | **27px** | 600 | 1.3 | 0 | normal |
-| H5 | Archivo | **20px** | 600 | 1.35 | 0 | normal |
+| H4 | Archivo | **29px** | 600 | 1.3 | 0 | normal |
+| H5 | Archivo | **23px** | 600 | 1.35 | 0 | normal |
 | Subtítulo hero | Archivo | 23px | 700 | 1.4 | 0 | ALTA |
 | Corpo | Archivo | 16px | 400 | 1.6 | 0 | normal |
 | Corpo pequeno | Archivo | 14px | 400 | 1.6 | 0 | normal |
 | Botão | Archivo | 15px | 700 | 1 | 0.05em | ALTA |
 | Menu | Archivo | 15px | 600 | 1 | 0 | ALTA |
 
-> **H2 — 48px, não 58px (decisão fechada, validada pela designer em
-> 25/07/2026).** O Figma marcava 58px, o que dava apenas 10% de diferença para
-> o H1. Como os dois usam a mesma fonte, peso, caixa e tracking, o tamanho é o
-> único diferenciador que sobra — e 10% está abaixo do limiar em que o olho lê
-> hierarquia. A 48px a diferença vai a 33% e o H1 volta a dominar.
+> **Escala revista em 27/07/2026.** A versão anterior partia de H1 em 64px,
+> extraído do Figma numa primeira leitura. O arquivo define **56px**, e a 64px
+> o título ficava desproporcional em notebook — a 150% de escala do Windows,
+> 64px CSS renderiza como cerca de uma polegada física.
+>
+> A escala foi reconstruída a partir de 56 com razão 1.25. O H1 e o H2 mantêm
+> 24% de diferença, acima do limiar em que o olho lê hierarquia (o problema
+> original era o H2 a 58px, que dava apenas 10%).
+>
+> **Tamanho de fonte não influencia SEO.** O Google avalia se o H1 existe, se é
+> único e se contém a palavra-chave — não seu tamanho. A escolha é de
+> legibilidade.
 
 > **H3 — line-height 1.25, não 75px (decisão fechada, validada pela designer
 > em 25/07/2026).** O Figma marcava 75px sobre fonte de 36px, o que dava 2.08.
@@ -124,7 +138,7 @@ vão de 55% entre o H3 (36px) e o corpo (16px) — sem eles, título de card,
 subtítulo de spec técnica e label de formulário recebem tamanho improvisado na
 montagem.
 
-### 2.3 Escala — Mobile (razão 1.2)
+### 2.3 Escala — Mobile (razão 1.18)
 
 Não existe prancheta mobile no Figma. Esta escala é proposta. A razão é menor
 que a de desktop porque em tela pequena saltos grandes desperdiçam espaço
@@ -132,8 +146,8 @@ vertical.
 
 | Nível | Tamanho | Peso | Line-height |
 |---|---|---|---|
-| H1 | 34px | 700 | 1.15 |
-| H2 | 28px | 700 | 1.2 |
+| H1 | 32px | 600 | 1.15 |
+| H2 | 27px | 600 | 1.2 |
 | H3 | 23px | 600 | 1.3 |
 | H4 | 19px | 600 | 1.35 |
 | H5 | 17px | 600 | 1.4 |
@@ -278,7 +292,7 @@ CookieAdmin).
 O WP Rocket PRO tem a opção de hospedagem local de Google Fonts. Ative antes de
 seguir.
 
-**Carregar apenas:** Mitr 700 · Archivo 400, 600, 700.
+**Carregar apenas:** Mitr 600 · Archivo 400, 600, 700.
 
 ### Passo 2 — Cores globais
 
@@ -305,7 +319,7 @@ Navy Secundário, Vermelho Hover, Off-white, Cinza Névoa.
 
 | Slot | Configuração |
 |---|---|
-| Primary | Mitr 700 — headlines |
+| Primary | Mitr 600 — headlines |
 | Secondary | Archivo 600 — subtítulos e menu |
 | Text | Archivo 400 — corpo |
 | Accent | Archivo 700 — botões |
@@ -321,6 +335,10 @@ Configure Body e H1 até H6 com os valores da Parte 2.2 (desktop) e 2.3 (mobile)
 
 Depois **Theme Style → Buttons**: fundo Accent, texto Off-white, hover Vermelho
 Hover, tipografia Archivo 700 / 15px / caixa alta / letter-spacing 0.05em.
+
+**Botões sem sombra** (decisão 26/07/2026). Deixe o campo Box Shadow vazio. O
+vermelho já carrega peso visual suficiente — sombra somaria ruído e destoaria
+do território industrial, que pede superfícies planas e definidas.
 
 Sem este passo, cada texto colocado na página nasce com o padrão do Elementor e
 alguém acaba ajustando manualmente — que é exatamente o descontrole que este
@@ -367,7 +385,7 @@ aplicada a espaçamento.
 
 - [x] Fontes hospedadas localmente — WP Rocket, opção "Auto-hospedar Fontes
       Google" ativa
-- [x] Mitr 700 · Archivo 400/600/700
+- [x] Mitr 600 · Archivo 400/600/700
 - [x] 4 cores nos slots + 4 personalizadas com nome
 - [x] Theme Style → Typography: corpo e H1–H6
 - [x] Theme Style → Links: navy com sublinhado, hover vermelho

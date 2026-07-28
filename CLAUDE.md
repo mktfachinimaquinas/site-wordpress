@@ -91,11 +91,14 @@ Text = Onix · Accent = Vermelho. As outras quatro como personalizadas, com nome
 **Estados translúcidos não geram cor nova.** Hover do menu = branco ~12%; texto
 sobre navy = off-white ~80%; sobreposição de imagem = navy com opacidade.
 
+**Botões sem sombra** (26/07/2026). Superfícies planas — coerente com o
+território industrial. Sombra em cards ainda pendente da designer.
+
 ### Tipografia — duas famílias, 4 arquivos
 
 | Fonte | Peso | Onde |
 |---|---|---|
-| **Mitr** | 700 | H1 e H2 — **sempre em CAIXA ALTA** |
+| **Mitr** | 600 | H1 e H2 — **sempre em CAIXA ALTA** |
 | **Archivo** | 400 | Corpo |
 | **Archivo** | 600 | H3, H4, H5, menu |
 | **Archivo** | 700 | Botões, subtítulo do hero |
@@ -103,6 +106,12 @@ sobre navy = off-white ~80%; sobreposição de imagem = navy com opacidade.
 - Ambas do Google Fonts, licença SIL OFL. **Hospedadas localmente**, nunca via
   CDN do Google (performance + LGPD).
 - **Mitr não tem peso acima de 700.** Mais impacto só via tamanho.
+- **Mitr tem o Bold visivelmente mais pesado que o comum.** É uma tipografia de
+  origem tailandesa — o alfabeto tailandês exige contraste maior entre pesos, e
+  isso se reflete no desenho latino. Na prática, o Bold (700) dela aparenta um
+  peso acima do Bold de uma grotesca ocidental típica. Somado à caixa alta, fica
+  excessivo. **Por isso o projeto usa 600 (SemiBold)** — não é engano nem
+  divergência a corrigir.
 - **Mitr só em caixa alta.** Em caixa mista os terminais arredondados aparecem
   e o tom fica macio demais para o território industrial. Headline em caixa
   mista usa Archivo 700.
@@ -110,37 +119,42 @@ sobre navy = off-white ~80%; sobreposição de imagem = navy com opacidade.
 - **Roboto está descontinuada.** A página `3 - MARCA` do Figma está desatualizada.
 - Não adicionar peso novo sem avaliar custo em Core Web Vitals.
 
-### Escala tipográfica — razão 1.333
+### Escala tipográfica — razão 1.25
 
 **Desktop**
 
 | Nível | Fonte | Peso | Tamanho | Line-height | Tracking | Caixa |
 |---|---|---|---|---|---|---|
-| H1 | Mitr | 700 | 64px | 1.1 | 0.06em | ALTA |
-| H2 | Mitr | 700 | 48px | 1.15 | 0.06em | ALTA |
+| H1 | Mitr | 600 | 56px | 1.1 | 0.06em | ALTA |
+| H2 | Mitr | 600 | 45px | 1.15 | 0.06em | ALTA |
 | H3 | Archivo | 600 | 36px | 1.25 | 0.02em | normal |
-| H4 | Archivo | 600 | 27px | 1.3 | 0 | normal |
-| H5 | Archivo | 600 | 20px | 1.35 | 0 | normal |
+| H4 | Archivo | 600 | 29px | 1.3 | 0 | normal |
+| H5 | Archivo | 600 | 23px | 1.35 | 0 | normal |
 | Corpo | Archivo | 400 | 16px | 1.6 | 0 | normal |
 | Corpo pequeno | Archivo | 400 | 14px | 1.6 | 0 | normal |
 | Botão | Archivo | 700 | 15px | 1 | 0.05em | ALTA |
 | Menu | Archivo | 600 | 15px | 1 | 0 | ALTA |
 
-> **H2 — 48px, decisão fechada (validada pela designer em 25/07/2026).** O
-> Figma marcava 58px, o que dava apenas 10% de diferença para o H1 — abaixo do
-> limiar em que o olho lê hierarquia. A 48px a diferença é de 33%.
+> **Escala revista em 27/07/2026.** O H1 a 64px ficou grande demais em notebook
+> (a 150% de escala do Windows, 64px CSS renderiza como ~1 polegada física). O
+> Figma define 56px — a escala foi reconstruída a partir desse valor com razão
+> 1.25. **O H3 permanece em 36px**, valor original da designer.
+>
+> Tamanho de fonte **não influencia SEO.** O que importa no H1 é existir, ser
+> único, conter a palavra-chave e estar marcado semanticamente. A escolha é de
+> legibilidade, não de ranking.
 
 > **H3 sem transformação de caixa no Theme Style.** Ele aparece em dois
 > contextos: "SUPORTE TÉCNICO / INSTALAÇÃO PROFISSIONAL / PÓS VENDA" em caixa
 > alta, e títulos de card de notícia em caixa baixa. Forçar maiúsculas
 > globalmente quebraria os segundos. A caixa alta é aplicada por seção.
 
-**Mobile** — razão 1.2, proposta (não existe prancheta mobile no Figma)
+**Mobile** — razão 1.18, proposta (não existe prancheta mobile no Figma)
 
 | Nível | Tamanho | Line-height |
 |---|---|---|
-| H1 | 34px | 1.15 |
-| H2 | 28px | 1.2 |
+| H1 | 32px | 1.15 |
+| H2 | 27px | 1.2 |
 | H3 | 23px | 1.3 |
 | H4 | 19px | 1.35 |
 | H5 | 17px | 1.4 |

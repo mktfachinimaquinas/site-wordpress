@@ -13,6 +13,9 @@
 | 26/07 | **Árvore de navegação: seguir Figma por ora** | Foco na entrega. Ajustes de estrutura ficam para depois do lançamento |
 | 26/07 | **MÓDULO 1 CONCLUÍDO** | Global Colors, Global Fonts, Theme Style completo, Content Width 1280, Layout Full Width, variáveis de espaçamento. Teste de herança validado |
 | 26/07 | **Ultimate Addons for Elementor removido** | Redundante com Elementor Pro. Templates de cabeçalho/rodapé apagados, ambiente limpo, cache limpo |
+| 27/07 | **Mitr em SemiBold 600** | O Bold da Mitr é visivelmente mais pesado que o de uma grotesca ocidental — origem tailandesa, contraste maior entre pesos. Em caixa alta ficava excessivo. Alinhado com a equipe |
+| 27/07 | **Escala tipográfica revista — razão 1.25** | H1 alinhado aos 56px do Figma (a 64px ficava desproporcional em notebook). H3 permanece em 36px. Novos valores: 56 · 45 · 36 · 29 · 23 |
+| 26/07 | **Botões sem sombra** | Superfícies planas. Sombra em cards de notícia segue pendente da designer |
 | 26/07 | **Header transparente sobre o hero** | Sólido navy nas páginas internas via `body.home`. Sticky pendente — recomendação é sem sticky no lançamento |
 | 26/07 | **Menu: "Máquinas" como guarda-chuva** | As categorias do mapa do dono ficam no dropdown. Oito itens soltos apertariam o header em 1280px |
 | 26/07 | **JavaScript: foco no ensino** | Conceito explicado, Wilson escreve, revisão. Recalibra com "escreve" se comprometer o prazo |
