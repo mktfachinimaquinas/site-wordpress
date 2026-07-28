@@ -1,0 +1,56 @@
+/* ==========================================================================
+   HEADER — Site Fachini Maquinas
+   --------------------------------------------------------------------------
+   Este arquivo e a fonte de verdade do CSS do cabecalho.
+   O conteudo e colado em: Elementor > Configuracoes do Site > CSS Personalizado
+
+   Classes definidas no Elementor:
+     .fachini-header  container externo (barra do header)
+     .fachini-menu    container do menu de navegacao
+     .fachini-busca   container do campo de pesquisa
+
+   Cores da paleta usadas aqui:
+     Navy Primario  #15274E
+     Off-white      #FBFBFB
+   ========================================================================== */
+
+
+/* ==========================================================================
+   1. FUNDO CONDICIONAL
+   ========================================================================== */
+
+/* Header com fundo navy nas paginas internas.
+   Na home fica transparente para flutuar sobre o hero.
+   O WordPress adiciona a classe "home" ao body apenas na pagina inicial —
+   por isso a negacao ancorada no body. */
+body:not(.home) .fachini-header {
+  background-color: #15274E;
+}
+
+
+/* ==========================================================================
+   2. HOVER DOS ITENS DO MENU
+   ========================================================================== */
+
+/* a implementar — passo 6 */
+
+
+/* ==========================================================================
+   3. CHEVRON DO ITEM COM SUBMENU
+   ========================================================================== */
+
+/* a implementar — passo 6 */
+
+
+/* ==========================================================================
+   4. ITENS DO DROPDOWN
+   ========================================================================== */
+
+/* a implementar — passo 6 */
+
+
+/* ==========================================================================
+   5. BUSCA EXPANSIVEL
+   ========================================================================== */
+
+/* a implementar — passo 8 */

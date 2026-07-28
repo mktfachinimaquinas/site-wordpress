@@ -244,8 +244,8 @@ Classes CSS aplicadas: `fachini-header` (container externo), `fachini-menu`,
 Próximo passo: CSS do fundo condicional — navy nas páginas internas,
 transparente na home via `body.home`.
 
-Pendências do módulo: "Serralheria" no menu precisa virar "Calhas"; decisão
-sobre sticky.
+Pendências do módulo: decisão sobre sticky. O rótulo da linha Lisa/Dentada
+ficou adiado para teste A/B pós-lançamento.
 
 ---
 
@@ -254,8 +254,10 @@ sobre sticky.
 - Hero em slider **sem vídeo** — remove o maior risco de CWV mobile
 - Scrollytelling **adiado** para depois do go-live. No lançamento: sticky via
   Elementor + fade simples
-- **"Serralheria" não é categoria de produto** — é segmento. A categoria correta
-  é **"Calhas"**, conforme o mapa do Figma e o dossiê
+- **Rótulo da linha Lisa/Dentada em aberto.** "Serralheria" é segmento e não
+  produto, mas "Calhas" subdimensiona a máquina (dentes ajustáveis, dobra 2mm
+  carbono / 1mm inox — faz painel elétrico, duto de refrigeração, caixa). Fica
+  para teste A/B pós-lançamento. **Não sugerir troca de rótulo até lá.**
 - Divisão: Wilson prepara a fundação (Estilos Globais, header, footer, template
   mestre); designer monta as seções herdando o sistema
 
