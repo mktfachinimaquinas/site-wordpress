@@ -1,6 +1,6 @@
 # Tarefas e Validações — Design | Site Fachini
 
-**Data:** 26/07/2026
+**Data:** 28/07/2026 (revisão 2 — inclui decisões de 27 e 28/07)
 **Contexto:** o design system já está cadastrado no Elementor (cores,
 tipografia, espaçamentos, botões). O header está em construção. Para seguir
 com a montagem das seções, preciso de algumas definições e ajustes.
@@ -38,7 +38,7 @@ O site usa **quatro larguras diferentes**, conforme o tipo de conteúdo:
 |---|---|---|
 | **Full-bleed** | 100% da tela | Hero, faixas navy, banner de CTA, footer |
 | **Larga** | até 1560px | Mosaico de categorias, grid de notícias, estatísticas |
-| **Padrão** | 1280px | Maioria das seções |
+| **Padrão** | 1200px | Maioria das seções |
 | **Texto** | 720px | Parágrafo corrido |
 
 **Por que quatro e não uma:** imagem e grid ficam melhores largos; texto corrido
@@ -61,16 +61,30 @@ Peguei cores, tipografia e larguras do arquivo. Faltaram estes:
 | **Raio de borda dos campos de formulário** | Valor em px |
 | **Altura dos campos de formulário** | Valor em px |
 | **Sombra nos cards de notícia** | Existe? Se sim, os valores |
+| **Espaçamentos reais entre seções** | Padding vertical de cada seção |
 
 **Já definido:** botões **sem sombra** (decisão 26/07). A pergunta de sombra
 acima vale só para os cards.
-| **Espaçamentos reais entre seções** | Padding vertical de cada seção |
 
 Sobre os espaçamentos: adotei uma escala de 8px
 (`8 · 16 · 24 · 32 · 48 · 64 · 96 · 128`) com padding vertical de 96px por
 seção no desktop. **Se os valores do Figma forem muito diferentes disso, me
 avisa** — a escala pode ser ajustada, mas precisa ser uma decisão consciente e
 não um acúmulo de valores diferentes por seção.
+
+---
+
+### 1.3b A camada "Larga" ainda faz sentido a 1200px?
+
+Com o conteúdo padrão em 1200px, a camada "Larga" (`min(94vw, 1560px)`)
+entrega **1284px** numa tela de 1366 — apenas 84px a mais que o padrão.
+
+Duas saídas:
+
+- **Ganha número novo** — algo entre 1360 e 1440, para a diferença ser visível
+- **Sai do sistema** — o mosaico e o grid de notícias viram full-bleed
+
+**O que preciso:** sua leitura sobre qual faz mais sentido no layout novo.
 
 ---
 
@@ -106,6 +120,16 @@ celular:
 
 ---
 
+### 2.1b Busca expansível — a transição
+
+Quando o campo de busca expande e os itens do menu somem, isso acontece com
+**transição suave** (os links desaparecem com fade enquanto a barra cresce) ou
+**seca** (somem de uma vez)?
+
+Precisa estar definido antes de eu montar o comportamento.
+
+---
+
 ### 2.2 Slides do hero — restrição nova
 
 **Decisão tomada:** o header vai ser **transparente sobre o hero**, para o
@@ -135,17 +159,13 @@ escuro na base de cada imagem. No desktop, mantém o comportamento de hover.
 
 ---
 
-### 2.4 "Serralheria" → "Calhas" no mosaico
+### 2.4 Rótulo da primeira aba do mosaico — adiado
 
-A primeira aba do mosaico está como "Serralheria". Precisa virar **"Calhas"**.
+A aba "Serralheria" **fica como está por enquanto**. O rótulo definitivo dessa
+linha será decidido por teste A/B depois do lançamento — há argumentos técnicos
+de ambos os lados e a decisão sai do dado, não da opinião.
 
-**Por quê:** serralheria é o **tipo de cliente**, não o nome do produto. Quem
-quer comprar uma dobradeira de calha busca "dobradeira de calha", nunca
-"serralheria". O site atual comete esse erro e é uma das principais razões de a
-linha que mais vende ser invisível no Google.
-
-"Serralheria" volta a ser usada depois, nas páginas por segmento de cliente —
-que é onde a palavra funciona.
+Nenhuma ação necessária agora.
 
 ---
 
@@ -203,13 +223,19 @@ Decisões já conversadas com a equipe. Registrando para o arquivo acompanhar:
 
 | Item | Figma | Adotado | Razão |
 |---|---|---|---|
+| **Tamanho do H2** | 58px | **45px** | Escala modular de razão 1.25 a partir de 56px. Confirmado em 28/07 |
 | **Peso do H1 e H2** | Mitr Bold (700) | **Mitr SemiBold (600)** | O Bold da Mitr é bem mais estourado que o de uma grotesca comum. Em caixa alta ficava excessivo |
 | **Tamanho do H1** | 56px | **56px** ✔ | Alinhado ao Figma (uma versão anterior estava em 64px) |
+| **Largura do conteúdo** | — | **1200px** | Ajustado de 1280 para 1200 em 28/07, acompanhando o novo layout de 1366px |
 | **Line-height do H1** | 60px (1.07) | **1.1** | Em português, acento em caixa alta encosta na linha de cima a 1.07 |
 | **Sombra nos botões** | — | **sem sombra** | Superfícies planas, coerente com o território industrial |
 
 A escala completa ficou: **H1 56 · H2 45 · H3 36 · H4 29 · H5 23 · corpo 16**
 (razão 1.25). O H3 permaneceu nos 36px que você definiu.
+
+**Nota sobre o H2:** você validou 48px em 25/07. A escala foi revista em 27/07
+e o valor passou a 45px, confirmado em 28/07. Registro aqui para o histórico
+ficar correto.
 
 ---
 
@@ -311,14 +337,15 @@ breadcrumb e um CTA ao final.
 
 - [ ] Breakpoints usados no Figma
 - [ ] Camada de largura anotada em cada seção
+- [ ] **A camada "Larga" ainda faz sentido a 1200px?** (ver 1.3b)
 - [ ] Raio de borda, altura de campo, sombra, espaçamentos
 - [ ] Frames de 1366px e 390px (wireframe)
 
 **Em seguida (bloqueia seções):**
 
 - [ ] Menu mobile
+- [ ] **Transição da busca expansível: suave ou seca?** (ver 2.1b) — bloqueia o passo 8
 - [ ] Versão mobile do texto do mosaico
-- [ ] "Serralheria" → "Calhas"
 - [ ] Rótulo "DOBRADEIRA CNC" (confirmar se é placeholder)
 - [ ] Estados dos componentes — prioridade para erro e foco
 - [ ] Considerar o terço superior escuro nos slides do hero

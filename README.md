@@ -35,7 +35,10 @@ site-wordpress/
 │   └── modulo-02-header.md              # guia de execução (em andamento)
 ├── design-system/
 │   └── tokens.md          # valores extraídos do Figma
-├── css/                   # CSS customizado para o Elementor
+├── css/
+│   ├── global.css                    # variáveis e ajustes de base
+│   ├── header.css                    # CSS do cabeçalho
+│   └── elementor-css-completo.txt    # junção, para colar no painel
 ├── seo/                   # mapa de páginas, keywords, titles
 └── scripts/               # automações em Node
 ```
@@ -89,7 +92,7 @@ avança-se. Nada de executar vários módulos em paralelo.
 | Módulo | Escopo | Status |
 |---|---|---|
 | 1 | Design System no Elementor | ✅ concluído |
-| 2 | Header — menu, dropdown, busca expansível | em execução |
+| 2 | Header — menu, dropdown, busca expansível | em execução — passo 7/11 |
 | 3 | Formulário qualificador e medição | bloqueado pela spec |
 | 4 | Produção de páginas | |
 | 5 | SEO on-page | |

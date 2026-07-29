@@ -24,7 +24,7 @@
 | Item | Medido | Adotado | Razão |
 |---|---|---|---|
 | Largura da prancheta desktop | 1920px | — | Referência de desenho |
-| Bloco de conteúdo (logo → busca) | 1558px | **1280px** | 1558 não cabe em monitor de 1440; escala do Windows a 125% entrega 1536px de viewport |
+| Bloco de conteúdo (logo → busca) | 1558px | **1200px** | 1558 não cabe em monitor de 1440. Valor revisto de 1280 para 1200 em 28/07, alinhando ao novo layout da designer para tela de 1366px |
 | Texto corrido | não delimitado | **720px** | Acima de ~75 caracteres por linha a leitura despenca |
 
 **Sistema de 4 camadas adotado:**
@@ -33,7 +33,7 @@
 |---|---|
 | Full-bleed | 100% |
 | Larga | `min(94vw, 1560px)` |
-| Padrão | 1280px |
+| Padrão | 1200px |
 | Texto | 720px |
 
 ---
@@ -93,7 +93,7 @@ presença de um Bold convencional. Não confundir com engano.
 
 | # | Item | Medido | Adotado | Razão |
 |---|---|---|---|---|
-| 1 | H2 tamanho | 58px | **45px** | 58 dá só 10% de diferença do H1. Como ambos usam mesma fonte, peso, caixa e tracking, o tamanho é o único diferenciador — 10% está abaixo do limiar em que o olho lê hierarquia. **Validado pela designer em 25/07/2026** |
+| 1 | H2 tamanho | 58px | **45px** | 58 dá só 10% de diferença do H1. Como ambos usam mesma fonte, peso, caixa e tracking, o tamanho é o único diferenciador — 10% está abaixo do limiar em que o olho lê hierarquia. **Validado pela designer em 25/07/2026 (48px); revisto para 45px em 27/07/2026 por decisão do Wilson e confirmado pela designer em 28/07/2026** |
 | 2 | H3 line-height | 75px (2.08) | **1.25** | Resíduo. Invisível porque "Suporte Técnico" é uma linha só. No primeiro H3 de duas linhas, abriria vão de 75px. **Validado pela designer em 25/07/2026** |
 | 3 | H1 line-height | 1.07 (60px/56px) | **1.1** | Em português, acentos em caixa alta ficam acima da altura das maiúsculas. A 1.02 o "Á" de MÁQUINA encosta na linha de cima |
 | 4 | Menu peso | Medium 500 | **SemiBold 600** | A 15px a diferença é imperceptível e evita carregar um quinto arquivo de fonte |
@@ -178,7 +178,7 @@ claro (2.1:1, mínimo é 4.5:1).
 | Branco sobre Vermelho | 4.8:1 | AA |
 | Branco sobre Vermelho Hover | 7.1:1 | AAA |
 
-**Estados translúcidos não geram cor nova.** Hover do menu = branco a ~12%;
+**Estados translúcidos não geram cor nova.** Hover do menu = branco a 15%;
 texto de apoio sobre navy = off-white a ~80%; sobreposição de imagem = navy com
 opacidade.
 

@@ -5,7 +5,7 @@
 **Objetivo:** construir o cabeçalho do site — a peça que aparece em todas as
 páginas e concentra a maior parte do código customizado do projeto.
 
-**Status: passo 7 de 11** (atualizado em 27/07/2026)
+**Status: passo 7 de 11** (atualizado em 28/07/2026)
 
 | # | Passo | Status |
 |---|---|---|
@@ -23,8 +23,11 @@ páginas e concentra a maior parte do código customizado do projeto.
 
 **Classes aplicadas:** `fachini-header` · `fachini-menu` · `fachini-busca`
 
-**⚠ Correção pendente:** o item "Serralheria" do dropdown precisa virar
-**"Calhas"** (Aparência → Menus). É o bloqueador nº 1 do relatório de análise.
+**Rótulo "Serralheria":** mantido por ora. A decisão de 27/07 adiou a troca
+para teste A/B pós-lançamento — "Serralheria" é segmento e não produto, mas
+"Calhas" subdimensiona a máquina (dentes ajustáveis, dobra 2mm carbono / 1mm
+inox, faz painel elétrico e duto de refrigeração). Ver seção 6.4 do
+`controle-projeto.md`. **Não sugerir a troca até o teste.**
 
 ---
 
@@ -66,18 +69,51 @@ do dono dentro do dropdown.
 ```
 HOME
 MÁQUINAS ▾
-   ├── Calhas
    ├── Perfiladeiras
+   ├── Laser
    ├── Corte e Dobra
-   └── Laser
+   └── Serralheria
 QUEM SOMOS
 BLOG
 CONTATO
 ```
 
-**Por quê:** oito itens soltos na barra ficam apertados em 1280px, diluem a
+**Por quê:** oito itens soltos na barra ficam apertados em 1200px, diluem a
 navegação e pioram no mobile. O guarda-chuva preserva todas as categorias do
 mapa e mantém o header respirável.
+
+### 1.4 "Máquinas" precisa ser botão, não link
+
+**Decisão de 28/07:** não haverá página de categoria. O item existe apenas para
+abrir o submenu.
+
+Isso muda o que ele precisa ser. Hoje é um link customizado apontando para `#`.
+Com **hover** isso não incomoda — ninguém clica no pai. Com **clique**, o mesmo
+gesto dispara duas coisas: abre o submenu **e** navega para `#`, o que salta a
+página para o topo.
+
+E no teclado, link com `#` recebe Enter e navega. Para ser um abridor de
+submenu, ele precisa se comportar como **botão**.
+
+**Spec completa do passo 7:**
+
+| # | Comportamento |
+|---|---|
+| 1 | Abre ao clicar no item |
+| 2 | Não abre mais no hover |
+| 3 | **Impede a navegação padrão do link** (não salta para `#`) |
+| 4 | **Alterna `aria-expanded`** entre `true` e `false` |
+| 5 | Enter e Espaço abrem, em vez de navegar |
+| 6 | Esc fecha |
+| 7 | Clicar fora fecha |
+
+Os itens 3 a 6 vêm da decisão de não ter página. Sem eles, o passo 9
+(acessibilidade de teclado) não tem o que fechar — o item principal do menu
+ficaria inalcançável por teclado.
+
+Ver §4.0b do `controle-projeto.md`.
+
+---
 
 > **Registrado como pendência:** o relatório de análise aponta que faltam
 > "Soluções" no menu e telefone/WhatsApp no header (bloqueadores 1.3 e 1.4).
@@ -90,7 +126,7 @@ mapa e mantém o header respirável.
 |---|---|---|
 | 1 | Hover nos itens: retângulo arredondado cinza translúcido | CSS |
 | 2 | "MÁQUINAS": chevron ▾ aparece no hover | CSS |
-| 3 | Dropdown abre por **clique**, não por hover | JS |
+| 3 | Dropdown abre por **clique**, não por hover — **ver 1.4** | JS |
 | 4 | Itens do dropdown: deslocamento lateral no hover, marcador vermelho | CSS |
 | 5 | Busca expande ocupando o header; itens do menu somem | CSS + JS |
 | 6 | "X" fecha a busca e restaura o menu | JS |
@@ -197,14 +233,14 @@ Nomeia como `Header Principal`. Ao salvar, define a condição de exibição:
 
 ```
 Container Externo  (full width, é a barra do header)
-└── Container Interno  (largura 1280px, centralizado)
+└── Container Interno  (largura 1200px, centralizado)
     ├── Container Logo
     ├── Container Menu
     └── Container Busca
 ```
 
 **Por que dois containers aninhados:** o externo pinta a barra de ponta a ponta
-da tela; o interno mantém o conteúdo dentro dos 1280px do design system. É o
+da tela; o interno mantém o conteúdo dentro dos 1200px do design system. É o
 padrão para qualquer seção full-bleed do site — vale aprender aqui.
 
 **Configuração do Container Externo:**
@@ -220,11 +256,19 @@ padrão para qualquer seção full-bleed do site — vale aprender aqui.
 
 | Controle | Valor |
 |---|---|
-| Largura | 1280px (ou "Largura da caixa" = 1280) |
+| Largura | deixar **vazio** para herdar o Content Width global (1200px). Ver nota abaixo |
 | Direção | Horizontal |
 | Justificar conteúdo | Espaço entre (`space-between`) |
 | Alinhar itens | Centro |
 | Padding | 0 lateral, 16px vertical |
+
+> **Não digite a largura no container interno.** Deixe o campo vazio para ele
+> herdar o Content Width global. Valor digitado à mão não acompanha mudanças —
+> quando o global foi ajustado de 1280 para 1200 em 28/07, o header ficaria em
+> 1280 e o logo desalinhado do conteúdo das seções abaixo, em todas as páginas.
+>
+> Mesmo princípio de escolher cor pelo nome global em vez de digitar o hex:
+> o vínculo é o que mantém o sistema coerente.
 
 ### 3.3 Os widgets
 
@@ -343,14 +387,14 @@ cantos arredondados, cinza translúcido, atrás do texto.
 
 | Propriedade | Para quê |
 |---|---|
-| `background-color` | O retângulo. Use `rgba(255, 255, 255, 0.12)` — branco a 12% |
+| `background-color` | O retângulo. Use `rgba(255, 255, 255, 0.15)` — branco a 15%, valor do Figma |
 | `border-radius` | Os cantos arredondados |
 | `padding` | Faz o retângulo ser maior que o texto |
 | `transition` | Suaviza a aparição (200ms) |
 
 **Sobre `rgba()`:** é uma forma de declarar cor com transparência. Os três
 primeiros números são vermelho, verde e azul (0 a 255); o quarto é a opacidade
-(0 a 1). `rgba(255,255,255,0.12)` é branco a 12% — é assim que se faz um
+(0 a 1). `rgba(255,255,255,0.15)` é branco a 15% — é assim que se faz um
 translúcido sem inventar uma cor nova na paleta.
 
 **Sobre `transition`:** sem ela, o fundo aparece instantaneamente e parece
@@ -440,6 +484,9 @@ Os três conceitos que você vai aprender aqui, em ordem:
    (`addEventListener`)
 3. **Alternar uma classe** — como mudar o estado sem tocar em estilo
    (`classList.toggle`)
+4. **Impedir o comportamento padrão** — como fazer um link não navegar
+   (`preventDefault`). É uma linha, e é o que transforma o "Máquinas" de link
+   em abridor de submenu — ver §1.4
 
 São três conceitos, não três linhas — mas com eles você resolve o dropdown, a
 busca e qualquer interação futura do site. É a base de JavaScript no navegador.
@@ -500,7 +547,7 @@ trabalho é estilizar o painel que abre para respeitar o design system.
 **Estrutura:**
 - [ ] Template de cabeçalho criado no Construtor de Temas, condição "Todo o site"
 - [ ] Menu criado em Aparência → Menus com a hierarquia da seção 1.2
-- [ ] Container externo full width + interno em 1280px
+- [ ] Container externo full width + interno herdando o Content Width global
 - [ ] Logo em SVG, com link para a home
 - [ ] Alinhamento vertical central em todos os elementos
 
@@ -516,8 +563,95 @@ trabalho é estilizar o painel que abre para respeitar o design system.
 - [ ] Navegação por teclado completa
 - [ ] Foco visível
 - [ ] Hambúrguer funcional no mobile
-- [ ] Testado em 1280, 1440 e 390px de largura
+- [ ] Testado em 1200, 1440 e 390px de largura
 - [ ] CSS versionado em `css/header.css` no repositório
+
+---
+
+## Aprendizados da execução
+
+> Registrados durante os passos 5 e 6. Evitam repetir a mesma investigação nos
+> módulos seguintes.
+
+### Hierarquia de precedência no Elementor
+
+Do mais forte para o mais fraco:
+
+| # | Origem | Onde aparece |
+|---|---|---|
+| 1 | Inline com `!important` | — |
+| 2 | **Estilo inline** | SmartMenus escreve `style="width: auto"` no `<ul>` do submenu |
+| 3 | Folha de estilo com `!important` | CSS customizado |
+| 4 | **CSS gerado pelo painel** | `.elementor-367 .elementor-element.elementor-element-XXX ...` — 4 classes |
+| 5 | Folha de estilo normal | CSS customizado sem `!important` |
+
+**Consequências:**
+
+- CSS customizado com 3 classes **perde** para qualquer coisa configurada no
+  painel. Os seletores deste arquivo usam 5 classes por isso
+- Contra estilo inline, **nada em folha de estilo funciona** — nem
+  `!important`. A saída é mexer nos elementos filhos, que não recebem inline.
+  Foi o caso da largura do dropdown
+
+### Largura do dropdown: não controlar por CSS
+
+O SmartMenus dimensiona o `<ul>` do submenu em tempo de execução. Para alargar,
+usar **Widget de Menu → Estilo → Lista suspensa → Espaçamento horizontal** — o
+painel acompanha o conteúdo, então itens mais largos alargam o painel.
+
+### Barra vertical: pseudo-elemento, não `border-left`
+
+A borda do item herda o `border-radius` do painel e fica curvada nas pontas.
+Um pseudo-elemento (`::before`) é independente e permanece reto.
+
+O par `position: relative` no item + `position: absolute` no pseudo-elemento é
+obrigatório — sem o `relative`, a barra se posiciona em relação à página.
+
+E `content: ''` é obrigatório: sem ele o pseudo-elemento não é criado, mesmo
+com todas as outras propriedades declaradas.
+
+### `min-width` é piso, não teto
+
+| Propriedade | Comportamento |
+|---|---|
+| `min-width` | Nunca menor, mas **cresce** se o conteúdo pedir. Não limita |
+| `width` | Medida fixa — é o que controla |
+| `max-width` | Teto — pode ser menor, nunca maior |
+
+### Evitar deslocamento no hover
+
+O que muda no estado hover não pode alterar as medidas do elemento. Padding e
+borda existem no estado **normal**; o hover só troca cor ou opacidade. Uma
+borda que nasce no hover empurra o conteúdo.
+
+Pelo mesmo motivo, o chevron usa `opacity: 0` e não `display: none` — com
+`display: none` o ícone sai do fluxo e o texto pula quando ele aparece.
+
+### Cores: variável global, nunca hex literal
+
+O Elementor expõe as cores globais como variáveis CSS: `--e-global-color-primary`,
+`--e-global-color-accent`, e IDs gerados para as personalizadas. Usar
+`var(--e-global-color-primary)` mantém o vínculo — se a cor mudar no painel, o
+CSS acompanha.
+
+Mesmo princípio da largura herdada em vez de digitada.
+
+### Cache: três camadas independentes
+
+1. Elementor → Ferramentas → Limpar arquivos e dados
+2. WP Rocket → Esvaziar cache
+3. WP Rocket → **Limpar o CSS usado deste URL** — camada separada, não é limpa
+   pelo item 2
+4. `Ctrl+F5`
+
+Durante o desenvolvimento, vale desativar a otimização de CSS do WP Rocket e
+religar antes do go-live.
+
+### Quando o CSS não aplica: inspecionar, não supor
+
+Botão direito no elemento → Inspecionar → aba Styles. Ali aparece cada regra na
+ordem de precedência, com as perdedoras riscadas. **Propor hipótese sem essa
+informação multiplica o tempo de depuração** — aconteceu em 27 e 28/07.
 
 ---
 

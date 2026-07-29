@@ -1,7 +1,42 @@
 # Controle do Projeto — Site Fachini Máquinas
 
 **Documento vivo.** Atualizar a cada decisão tomada ou pendência resolvida.
-**Última atualização:** 27/07/2026 (fim da sessão 2)
+**Última atualização:** 28/07/2026
+
+---
+
+## 0. Regra de registro — status carrega método de verificação
+
+> Criada em 28/07, depois de um passo nunca executado ser marcado como
+> concluído em quatro documentos sem ninguém tropeçar.
+
+**Este documento registra duas coisas diferentes, e elas não podem se
+misturar:**
+
+| Tipo | O que é | Como registrar |
+|---|---|---|
+| **Decisão** | O que foi combinado | Data + o que foi decidido |
+| **Execução** | O que foi feito e está no ar | Data + **como foi verificado** |
+
+**Toda mudança de status de execução carrega o método de verificação.**
+Sem isso, status é intenção, não fato.
+
+Exemplos:
+
+- ❌ "Passo 6 concluído"
+- ✅ "Passo 6 concluído — verificado por inspeção do hover no navegador a 1366px"
+- ❌ "CSS aplicado"
+- ✅ "CSS aplicado — confirmado no código-fonte da página, busca por `.fachini-header`"
+
+**A segunda cara do mesmo problema:** arquivo atualizado não é site atualizado.
+O `header.css` é a fonte; o `.txt` consolidado é o que se cola no Elementor.
+Registrar que o arquivo mudou não prova que o site mudou.
+
+| Estado | Significado |
+|---|---|
+| Escrito | Está no repositório |
+| **Aplicado** | Foi colado no Elementor, salvo e publicado |
+| **Verificado** | Confirmado no site, com o método anotado |
 
 ---
 
@@ -11,15 +46,24 @@
 |---|---|---|
 | 26/07 | **POSICIONAMENTO: perfiladeira é fabricação Fachini** | Decisão da diretoria. Sustentado por capacidade instalada — insumos e estrutura para fabricar cada componente, histórico de refabricação completa. Finame em andamento. Ver seção 14 do dossiê |
 | 26/07 | **Árvore de navegação: seguir Figma por ora** | Foco na entrega. Ajustes de estrutura ficam para depois do lançamento |
-| 26/07 | **MÓDULO 1 CONCLUÍDO** | Global Colors, Global Fonts, Theme Style completo, Content Width 1280, Layout Full Width, variáveis de espaçamento. Teste de herança validado |
+| 26/07 | **MÓDULO 1 CONCLUÍDO** | Global Colors, Global Fonts, Theme Style completo, Content Width 1200, Layout Full Width, variáveis de espaçamento. Teste de herança validado |
 | 26/07 | **Ultimate Addons for Elementor removido** | Redundante com Elementor Pro. Templates de cabeçalho/rodapé apagados, ambiente limpo, cache limpo |
+| 28/07 | **CSS usa variáveis globais do Elementor, não hex** | `var(--e-global-color-primary)` em vez de `#15274E`. Mantém o vínculo com a paleta — se a cor mudar no painel, o CSS acompanha |
+| 28/07 | **Barra do dropdown por pseudo-elemento** | `border-left` herdava o `border-radius` do painel e ficava curvada. `::before` é independente e permanece reto |
+| 28/07 | **Largura do dropdown fica automática** | O SmartMenus escreve estilo inline no `<ul>`, que vence qualquer CSS. Ajuste via Espaçamento horizontal no painel |
+| 28/07 | **Rolagem suave adicionada ao global.css** | `scroll-behavior: smooth` com `prefers-reduced-motion`. ⚠ **Escrito, não verificado como aplicado no site** |
+| 28/07 | **"Máquinas" não terá página de categoria** | O item existe só para abrir o submenu. Exige que ele se comporte como botão e não como link — ver 4.0b |
+| 28/07 | **Dropdown por clique confirmado** | Caminho definido para o passo 7. O hover continua ativo até a execução |
+| 28/07 | **Arquitetura de conversas** | Central (dona do estado) + conversas de módulo (execução). Detalhe na Parte 0 do BRIEFING. **Exceção:** o Módulo 2 é executado pela central; a arquitetura vale a partir do Módulo 3 |
+| 28/07 | **Content Width: 1280 → 1200px** | Alinha ao novo layout da designer (tela 1366, conteúdo 1200). O container interno do header deve ficar com o campo VAZIO para herdar — valor digitado não acompanha mudanças |
+| 28/07 | **H2 fechado em 45px** | Confirmado pela designer. Substitui os 48px validados em 25/07 |
 | 27/07 | **Módulo 2 — passos 5 e 6 concluídos** | Fundo condicional, hover do menu, chevron, dropdown com deslizar e barra vermelha. CSS versionado em `css/header.css` |
 | 27/07 | **Largura do dropdown fica automática** | O SmartMenus escreve estilo inline no `<ul>`, que vence qualquer CSS. Ajuste via Espaçamento horizontal no painel do widget |
 | 27/07 | **Mitr em SemiBold 600** | O Bold da Mitr é visivelmente mais pesado que o de uma grotesca ocidental — origem tailandesa, contraste maior entre pesos. Em caixa alta ficava excessivo. Alinhado com a equipe |
 | 27/07 | **Escala tipográfica revista — razão 1.25** | H1 alinhado aos 56px do Figma (a 64px ficava desproporcional em notebook). H3 permanece em 36px. Novos valores: 56 · 45 · 36 · 29 · 23 |
 | 26/07 | **Botões sem sombra** | Superfícies planas. Sombra em cards de notícia segue pendente da designer |
 | 26/07 | **Header transparente sobre o hero** | Sólido navy nas páginas internas via `body.home`. Sticky pendente — recomendação é sem sticky no lançamento |
-| 26/07 | **Menu: "Máquinas" como guarda-chuva** | As categorias do mapa do dono ficam no dropdown. Oito itens soltos apertariam o header em 1280px |
+| 26/07 | **Menu: "Máquinas" como guarda-chuva** | As categorias do mapa do dono ficam no dropdown. Oito itens soltos apertariam o header em 1200px |
 | 26/07 | **JavaScript: foco no ensino** | Conceito explicado, Wilson escreve, revisão. Recalibra com "escreve" se comprometer o prazo |
 | 26/07 | **H3 sem transformação de caixa** | Aparece em caixa alta nos diferenciais e caixa baixa nos cards de notícia. Caixa alta aplicada por seção |
 | 23/07 | **Paleta de 8 cores** | Navy `#15274E` · Navy Sec. `#00224E` · Vermelho `#E01E26` · Verm. Hover `#B01319` · Onix `#0F0F0F` · Off-white `#FBFBFB` · Cinza Névoa `#F1F3F6` · Cinza Médio `#5C6675` |
@@ -27,7 +71,7 @@
 | 23/07 | **Archivo 400/600/700** para o resto | 4 arquivos de fonte no total, hospedados localmente |
 | 23/07 | **Toska exclusiva do logo**, em SVG | Não é webfont |
 | 23/07 | **Roboto descontinuada** | Página `3 - MARCA` do Figma desatualizada |
-| 23/07 | **Sistema de 4 camadas de largura** | Full-bleed 100% · Larga `min(94vw,1560px)` · Padrão 1280px · Texto 720px |
+| 23/07 | **Sistema de 4 camadas de largura** | Full-bleed 100% · Larga `min(94vw,1560px)` · Padrão 1200px · Texto 720px |
 | 23/07 | **Escala tipográfica razão 1.333** | H2 de 48px e line-height do H3 de 1.25 validados pela designer em 25/07 |
 | 23/07 | **Hierarquia de headings definida** | Um H1 por página; números de estatística não são heading |
 | 23/07 | **Vídeo fora do hero** | Remove o maior risco de CWV mobile |
@@ -94,6 +138,7 @@ e mudar a chave `enabled` para `false`.
 | 5 | 🔴 | **Papel do WhatsApp** — CTA secundário rastreado? Qual número por unidade? | Header, footer, instrumentação |
 | 6 | 🔴 | **Fronteira de conteúdo do Livro 1** — quem produz o material rico do Guia? Quantos artigos entram? | Blog e LP do Guia |
 | 7 | 🔴 | **Planilha de capacidade e fotos por modelo** | Páginas de produto |
+| 8b | 🔴 | **A designer já tem acesso ao painel do WordPress e já começou a montar no Elementor?** Se ainda não abriu o builder, o gargalo do prazo não é código (fonte: `relatorio-analise-homepage.md`, seção 8) | Cronograma da entrega |
 | 8 | 🔴 | **Números institucionais** — "+50 modelos" e "+300 máquinas/ano" batem com o dossiê? | Seção de estatísticas |
 
 ### 2.2 Com a designer
@@ -101,22 +146,25 @@ e mudar a chave `enabled` para `false`.
 | # | Status | Pendência |
 |---|---|---|
 | 1 | 🟡 23/07 | **Anotar a camada de largura de cada seção** (full-bleed / larga / padrão / texto) |
-| 2 | 🟢 25/07 | **H2 em 48px validado** pela designer (Figma marcava 58px — só 10% de diferença do H1) |
+| 2 | 🟢 28/07 | **H2 em 45px** — confirmado pela designer. Histórico: Figma marcava 58px; 48px validado em 25/07; revisto para 45px na escala de razão 1.25 em 27/07 |
 | 3 | 🟢 25/07 | **Line-height do H3 corrigido para 1.25**, validado pela designer (Figma marcava 75px sobre 36px = 2.08) |
-| 4 | 🟡 23/07 | **Conferir quebra do H1** a 1280px em vez de 1558px |
+| 4 | 🟡 23/07 | **Conferir quebra do H1** a 1200px em vez de 1558px |
 | 5 | 🟡 23/07 | **Breakpoints** — quais valores usou no Figma |
 | 6 | 🟡 23/07 | **Frames de 1366px e 390px** (wireframe basta) |
 | 7 | ⏸️ | **Rótulo da linha Lisa/Dentada** — adiado para teste A/B pós-lançamento (ver 6.4). "Serralheria" fica no ar por ora |
 | 8 | 🔴 | **Texto do mosaico visível no mobile** (hover não existe em toque) |
 | 9 | 🔴 | **Corrigir rótulo "DOBRADEIRA CNC"** sobre a máquina SF3015G (que é laser) |
-| 10 | 🔴 | **Desenhar página de resultados de busca** — ver 3.1 |
-| 11 | 🔴 | **Desenhar página de obrigado** — ver 3.2 |
-| 12 | 🔴 | **Desenhar template de post do blog** — ver 3.3 |
+| 10 | 🟡 28/07 | **Página de resultados de busca** — em processo de resolução |
+| 11 | 🟡 28/07 | **Página de obrigado** — em processo de resolução |
+| 12 | 🟡 28/07 | **Template de post do blog** — em processo de resolução |
 | 13 | 🔴 | **Desenhar o menu mobile (hamburguer)** — só existe desktop no Figma |
 | 14 | 🔴 | **Definir os estados dos componentes** — hover, foco, erro, carregando (ver análise 360, B.1) |
 | 15 | 🔴 | **Raio de borda de botões, cards e campos de formulário** — pendência de extração do Figma (fonte: `design-system/tokens.md`, seção 8) |
 | 16 | 🔴 | **Sombra nos cards de notícia** — pendência de extração do Figma (fonte: `design-system/tokens.md`, seção 8) |
 | 17 | 🔴 | **Medição dos espaçamentos reais seção a seção no Figma** — pendência de extração (fonte: `design-system/tokens.md`, seção 8) |
+| 19 | 🔴 | **Transição da busca expansível** — os itens do menu somem com transição suave ou seca? **Bloqueia o passo 8 do Módulo 2** (fonte: `relatorio-analise-homepage.md`, seção 8) |
+| 21 | 🟢 28/07 | **Destino do link "MÁQUINAS"** — decidido: **não haverá página de categoria por ora.** O item existe apenas para abrir o submenu. Isso cria uma exigência técnica no passo 7 — ver 4.0b |
+| 20 | 🔴 | **Camada "Larga" a 1200px** — com o padrão em 1200, `min(94vw, 1560px)` entrega 1284px numa tela de 1366, 84px acima do padrão. Ou ganha número novo, ou sai do sistema e o mosaico vira full-bleed |
 | 18 | 🔴 | **Hierarquia de headings** — alinhar a marcação semântica da Parte 3 antes da montagem (fonte: `docs/modulo-01-design-system.md`, "Pendências com a designer") |
 
 ### 2.3 Verificações técnicas
@@ -130,6 +178,10 @@ e mudar a chave `enabled` para `false`.
 | 🟢 H1 duplicado corrigido | Modelo de página trocado para Elementor Largura Total — o título da página deixou de gerar um segundo H1 |
 
 **Pendentes:**
+
+| Item | O que verificar |
+|---|---|
+| 🔴 **O CSS consolidado foi colado no Elementor?** | O `scroll-behavior` e o `prefers-reduced-motion` entraram no `global.css` em 28/07. Se o consolidado não foi recolado, a rolagem suave não existe no site. Verificar: código-fonte da página, buscar por `scroll-behavior` |
 
 | # | Status | Item |
 |---|---|---|
@@ -230,6 +282,57 @@ funciona com mouse é falha de qualidade.
 ## 4. Checklist de go-live
 
 > ⚠ **Item 1 é o erro mais caro que existe em lançamento de site.**
+
+### 4.0 ⚠ Risco PREVISTO — dependência de JavaScript no menu
+
+**Ainda não vigente.** O dropdown abre por hover (nativo). Este risco passa a
+valer quando o passo 7 do Módulo 2 for executado.
+
+Hover é comportamento nativo do Elementor e funciona sem JavaScript. Ao trocar
+para **clique**, a abertura passa a depender do script rodar.
+
+**Se o JavaScript falhar** (erro de sintaxe, conflito com outro plugin, bloqueio
+por otimização do WP Rocket), o submenu não abre. Como "MÁQUINAS" é o
+guarda-chuva de todas as categorias de produto, **a linha principal fica
+inalcançável pelo menu**.
+
+**Agravante:** o link do "MÁQUINAS" aponta para `#`. Mesmo que alguém clique
+esperando ir a uma página de categoria, não vai a lugar nenhum.
+
+**Mitigações a implementar:**
+
+- [ ] Dar destino real ao item "MÁQUINAS" — uma página de categoria que liste
+      todas as linhas. Assim o clique funciona mesmo sem JS
+- [ ] Testar o menu com JavaScript desativado no navegador antes do go-live
+- [ ] Confirmar que a minificação/adiamento de JS do WP Rocket não quebra o
+      script
+- [ ] Garantir que as categorias também estejam alcançáveis pelo footer
+
+---
+
+### 4.0b Exigência técnica — "Máquinas" como abridor, não como link
+
+**Decorre da decisão de 28/07** de não criar página de categoria.
+
+Hoje o item é um link customizado apontando para `#`. Com **hover** isso não
+incomoda — ninguém clica no pai. Com **clique**, o mesmo gesto dispara duas
+coisas: abre o submenu **e** navega para `#`, o que salta a página para o topo.
+
+E no teclado, link com `#` recebe Enter e navega. Para ser um abridor de
+submenu, ele precisa se comportar como **botão**, não como link.
+
+**O que o passo 7 precisa resolver:**
+
+- [ ] Impedir a navegação padrão do link ao clicar
+- [ ] Anunciar o estado para leitor de tela (`aria-expanded` alternando entre
+      `true` e `false`)
+- [ ] Enter e Espaço abrem o submenu, em vez de navegar
+- [ ] Esc fecha
+
+Sem isso, o passo 9 (acessibilidade de teclado) não tem o que fechar — o item
+principal do menu ficaria inalcançável por teclado.
+
+---
 
 ### 4.1 Antes de virar
 

@@ -40,7 +40,7 @@ e todas as combinações de texto foram verificadas contra o mínimo WCAG AA de
 **Regra de disciplina:** o vermelho é o recurso mais escasso da paleta. Se
 aparecer em tudo, para de significar "clique aqui".
 
-**Estados translúcidos não geram cor nova.** Hover do menu é branco a ~12%;
+**Estados translúcidos não geram cor nova.** Hover do menu é branco a 15%;
 texto de apoio sobre navy é off-white a ~80%; sobreposição de imagem é navy com
 opacidade.
 
@@ -221,12 +221,12 @@ camadas.
 |---|---|---|
 | **Full-bleed** | 100% | Hero, seções navy, banner de CTA, footer |
 | **Larga** | `min(94vw, 1560px)` | Mosaico de categorias, grid de notícias, estatísticas |
-| **Padrão** | **1280px** | Maioria das seções — é o Content Width do Elementor |
+| **Padrão** | **1200px** | Maioria das seções — é o Content Width do Elementor |
 | **Texto** | 720px | Parágrafo corrido |
 
 **No Elementor**, quase tudo é nativo:
 
-- **Padrão:** Site Settings → Layout → Content Width = 1280px
+- **Padrão:** Site Settings → Layout → Content Width = 1200px
 - **Full-bleed:** no container, Content Width = *Full Width*
 - **Larga:** container em Full Width com container interno de largura customizada
 - **Texto:** limite de 720px no próprio widget
@@ -248,7 +248,7 @@ distribuindo a sobra dos dois lados.
 
 Aplica adicionando `fachini-largo` no campo CSS Classes do container.
 
-> **Consequência a validar:** o H1 vai quebrar diferente a 1280px do que quebra
+> **Consequência a validar:** o H1 vai quebrar diferente a 1200px do que quebra
 > a 1558px no Figma. A designer precisa conferir se as três linhas continuam
 > bem distribuídas.
 
@@ -348,7 +348,7 @@ módulo existe para impedir.
 
 **Caminho:** Site Settings → **Layout**
 
-- Content Width: **1280px**
+- Content Width: **1200px**
 - Breakpoints: confirmar com a designer quais valores ela usou. Padrão do
   Elementor: Mobile até 767px, Tablet até 1024px.
 
@@ -381,7 +381,10 @@ aplicada a espaçamento.
 
 ## Parte 6 — Verificação
 
-**MÓDULO CONCLUÍDO em 26/07/2026.**
+**MÓDULO CONCLUÍDO em 26/07/2026**, com uma ressalva: o alinhamento dos
+breakpoints com o Figma continua pendente da designer (item 5 da lista 2.2 do
+controle). Não bloqueia a montagem — o padrão do Elementor funciona — mas se os
+valores dela divergirem, exige revisão das seções já montadas.
 
 - [x] Fontes hospedadas localmente — WP Rocket, opção "Auto-hospedar Fontes
       Google" ativa
@@ -390,13 +393,13 @@ aplicada a espaçamento.
 - [x] Theme Style → Typography: corpo e H1–H6
 - [x] Theme Style → Links: navy com sublinhado, hover vermelho
 - [x] Theme Style → Buttons com hover configurado
-- [x] Content Width em 1280px
+- [x] Content Width em 1200px
 - [x] Layout de página padrão: Elementor Largura Total (evita o H1 duplicado do
       título de página)
 - [x] Variáveis de espaçamento no Custom CSS
 - [x] **Teste final validado** — página de rascunho com H1, H2, H3, parágrafo e
       botão herdaram corretamente, sem configuração manual. Página apagada.
-- [ ] Breakpoints alinhados com o Figma — **pendente da designer**
+- Breakpoints alinhados com o Figma → ver pendência 5 em `controle-projeto.md` §2.2 (fonte única)
 
 ### Aprendizados da execução
 
@@ -418,7 +421,7 @@ aplicada a espaçamento.
 ## Pendências com a designer
 
 1. **Breakpoints** — quais valores ela usou no Figma
-2. **Quebra do H1 a 1280px** — conferir se as três linhas continuam distribuídas
+2. **Quebra do H1 a 1200px** — conferir se as três linhas continuam distribuídas
 3. **Hierarquia de headings** — alinhar a marcação semântica da Parte 3 antes da
    montagem
 

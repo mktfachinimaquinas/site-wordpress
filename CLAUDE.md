@@ -47,9 +47,15 @@ procedimento é documentar o conflito, não escolher um lado sozinho.
 
 **ÁRVORE DE NAVEGAÇÃO — em disputa.** O dono da empresa definiu uma árvore
 (ver `docs/conflito-arvore-navegacao.md`) que diverge da seção 7.1 do dossiê
-em pontos de SEO. A árvore do dono prevalece por enquanto. Não construir
-página sobre estrutura de navegação até a decisão fechar. Os conflitos estão
-documentados para defesa junto à diretoria.
+em pontos de SEO. Os conflitos estão documentados para defesa junto à diretoria.
+
+**O que está implementado (28/07):** o menu usa "MÁQUINAS" como guarda-chuva,
+com as categorias do mapa do dono dentro do dropdown — Perfiladeiras, Laser,
+Corte e Dobra, Serralheria. É a conciliação decidida no `modulo-02-header.md`
+§1.2: preserva as categorias do dono sem espalhar oito itens na barra.
+
+Não construir páginas de produto sobre estrutura em disputa até a decisão
+fechar.
 
 **POSICIONAMENTO — perfiladeira é FABRICAÇÃO Fachini.** Decisão da diretoria
 (26/07/2026, seção 14 do dossiê). Sustentado por capacidade instalada: a empresa
@@ -88,7 +94,7 @@ Evitar "100% nacional" até a conclusão do Finame. Keywords liberadas:
 **Slots do Elementor:** Primary = Navy Primário · Secondary = Cinza Médio ·
 Text = Onix · Accent = Vermelho. As outras quatro como personalizadas, com nome.
 
-**Estados translúcidos não geram cor nova.** Hover do menu = branco ~12%; texto
+**Estados translúcidos não geram cor nova.** Hover do menu = branco a 15%; texto
 sobre navy = off-white ~80%; sobreposição de imagem = navy com opacidade.
 
 **Botões sem sombra** (26/07/2026). Superfícies planas — coerente com o
@@ -178,7 +184,7 @@ entrega 1536px de viewport) são comuns.
 |---|---|---|
 | Full-bleed | 100% | Hero, seções navy, banner de CTA, footer |
 | Larga | `min(94vw, 1560px)` | Mosaico, grid de notícias, estatísticas |
-| Padrão | 1280px | Maioria das seções — **Content Width do Elementor** |
+| Padrão | 1200px | Maioria das seções — **Content Width do Elementor** |
 | Texto | 720px | Parágrafo corrido |
 
 Motivo das camadas: imagem e grid querem largura; texto corrido quer estreiteza
@@ -228,21 +234,26 @@ rebaixar para H4 só porque é menor.
 
 **Módulo 1 — Design System: CONCLUÍDO em 26/07/2026.** Executado no Elementor:
 Global Colors (8 cores), Global Fonts (4 slots), Theme Style completo
-(tipografia H1–H6, corpo, links, botões), Content Width 1280px, Layout padrão
+(tipografia H1–H6, corpo, links, botões), Content Width 1200px, Layout padrão
 Elementor Largura Total, variáveis de espaçamento no Custom CSS. Teste de
 herança validado em página de rascunho.
 
-**Módulo 2 — Header: EM EXECUÇÃO, passo 5 de 11.**
+**Módulo 2 — Header: EM EXECUÇÃO, passo 7 de 11.**
 
 Concluído: menu criado no WordPress, template de cabeçalho, containers
-aninhados (externo 100% + interno 1280px), widgets de menu e busca,
+aninhados (externo 100% + interno herdando o global), widgets de menu e busca,
 posicionamento absoluto funcionando — o header flutua sobre o hero.
 
-Classes CSS aplicadas: `fachini-header` (container externo), `fachini-menu`,
-`fachini-busca`.
+Classes CSS aplicadas: `fachini-header` (externo), `fachini-logo`,
+`fachini-menu`, `fachini-busca`.
 
-Próximo passo: CSS do fundo condicional — navy nas páginas internas,
-transparente na home via `body.home`.
+Concluído até o passo 6: fundo condicional por `body.home`, hover do menu em
+pílula, chevron por opacidade, dropdown com deslize e barra vermelha em
+pseudo-elemento. CSS versionado em `css/global.css` e `css/header.css`.
+
+Passo 7 (dropdown por clique) **ainda não foi feito** — o dropdown continua
+abrindo por hover, comportamento nativo do Elementor. Não existe JavaScript
+no projeto.
 
 Pendências do módulo: decisão sobre sticky. O rótulo da linha Lisa/Dentada
 ficou adiado para teste A/B pós-lançamento.
@@ -278,6 +289,23 @@ pressa — fora do caminho crítico).
 
 ---
 
+## Arquitetura de conversas
+
+O projeto usa uma conversa **central** (dona do estado, atualiza os documentos)
+e conversas de **módulo** (executam escopo fechado, reportam de volta).
+
+Conversas de módulo **não editam** `controle-projeto.md`, `BRIEFING.md` nem
+este arquivo. Se identificarem algo que precisa entrar, reportam — a central
+registra.
+
+Detalhamento na Parte 0 do `BRIEFING.md`.
+
+**A central segue o protocolo de blindagem da Parte 0B** — sete gatilhos com
+verificações obrigatórias, cada um existindo porque o erro correspondente já
+aconteceu neste projeto.
+
+---
+
 ## Como trabalhar comigo
 
 1. **Não escreva código por mim.** Explique o conceito, aponte a direção e
@@ -308,8 +336,16 @@ pressa — fora do caminho crítico).
   páginas e concorre com a meta de CWV verde no mobile. Verificar antes se o
   Elementor Pro já resolve nativamente. Descartado em 26/07/2026: Ultimate
   Addons for Elementor (redundante).
-- **Antes de sugerir CSS, verifique se o Elementor resolve no painel.** CSS que
-  duplica função nativa é manutenção sem motivo.
+- **Antes de sugerir CSS ou JS, verifique se o Elementor resolve no painel.**
+  Este projeto é quase todo painel: até 28/07 são 14 regras de CSS e nenhuma
+  linha de JavaScript. Todo o design system, a estrutura do header e a
+  aparência do dropdown foram feitos por controles, não por código.
+
+  CSS que duplica função nativa é manutenção sem motivo — e sai do alcance da
+  designer, que ajusta o painel sozinha.
+
+  Quando eu disser que resolvi algo, **não presuma que houve código.**
+  Pergunte como foi feito.
 
 ---
 

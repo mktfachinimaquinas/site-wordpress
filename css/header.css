@@ -6,12 +6,25 @@
 
    Classes definidas no Elementor:
      .fachini-header  container externo (barra do header)
+     .fachini-logo    container do logo
      .fachini-menu    container do menu de navegacao
      .fachini-busca   container do campo de pesquisa
 
-   Cores da paleta usadas aqui:
-     Navy Primario  #15274E
-     Off-white      #FBFBFB
+   CORES: usar as variaveis globais do Elementor, nunca hex literal.
+
+   O Elementor expoe as cores globais como variaveis CSS no <body>:
+     --e-global-color-primary     Navy Primario   #15274E
+     --e-global-color-secondary   Cinza Medio     #5C6675
+     --e-global-color-text        Onix            #0F0F0F
+     --e-global-color-accent      Vermelho        #E01E26
+
+   As personalizadas recebem ID gerado (ex: --e-global-color-5472bb2 para o
+   Off-white). Conferir os nomes reais em Configuracoes do Site > Cores
+   Globais, inspecionando o elemento.
+
+   Por que variavel e nao hex: se a cor global mudar, o CSS acompanha
+   sozinho. Hex digitado a mao fica para tras — mesmo problema da largura
+   digitada no container em vez de herdada.
    ========================================================================== */
 
 
@@ -24,7 +37,7 @@
    O WordPress adiciona a classe "home" ao body apenas na pagina inicial —
    por isso a negacao ancorada no body. */
 body:not(.home) .fachini-header {
-  background-color: #15274E;
+  background-color: var(--e-global-color-primary);
 }
 
 
@@ -190,7 +203,7 @@ body:not(.home) .fachini-header {
   top: 6px;
   bottom: 6px;
   width: 3px;
-  background-color: #E01E26;
+  background-color: var(--e-global-color-accent);
   opacity: 0;
   transition: opacity 200ms ease;
 }

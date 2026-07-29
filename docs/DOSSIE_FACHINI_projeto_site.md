@@ -408,7 +408,7 @@ Hover e os dois cinzas são **cores de sistema**, não de marca — existem por
 necessidade funcional (contraste e hierarquia) e todas as combinações de texto
 foram verificadas contra o mínimo WCAG AA de 4.5:1.
 
-**Estados translúcidos não geram cor nova.** Hover do menu é branco a ~12%;
+**Estados translúcidos não geram cor nova.** Hover do menu é branco a 15%;
 texto de apoio sobre navy é off-white a ~80%; sobreposição de imagem é navy com
 opacidade.
 
