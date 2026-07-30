@@ -238,7 +238,7 @@ Global Colors (8 cores), Global Fonts (4 slots), Theme Style completo
 Elementor Largura Total, variáveis de espaçamento no Custom CSS. Teste de
 herança validado em página de rascunho.
 
-**Módulo 2 — Header: EM EXECUÇÃO, passo 7 de 11.**
+**Módulo 2 — Header: EM EXECUÇÃO, passo 8 de 11.**
 
 Concluído: menu criado no WordPress, template de cabeçalho, containers
 aninhados (externo 100% + interno herdando o global), widgets de menu e busca,
@@ -251,9 +251,16 @@ Concluído até o passo 6: fundo condicional por `body.home`, hover do menu em
 pílula, chevron por opacidade, dropdown com deslize e barra vermelha em
 pseudo-elemento. CSS versionado em `css/global.css` e `css/header.css`.
 
-Passo 7 (dropdown por clique) **ainda não foi feito** — o dropdown continua
-abrindo por hover, comportamento nativo do Elementor. Não existe JavaScript
-no projeto.
+**Passo 7 (dropdown por clique) parcialmente aplicado.** No ar e **verificado**
+em 30/07/2026 (janela anônima): abre/fecha ao clicar em "MÁQUINAS",
+`aria-expanded` alternando, Enter funciona (nativo do link). **Verificado como
+quebrado:** Esc não fecha — não existe `keydown` no script que está de fato no
+site. A versão completa (Esc com devolução de foco + Espaço) está **escrita em
+`scripts/header.js`, não aplicada, não commitada** — ver
+`BRIEFING-conversa-03.md`.
+
+Passo 8 (busca expansível) é o próximo — bloqueado pela pendência 19 do
+`controle-projeto.md` (transição definida pela designer).
 
 Pendências do módulo: decisão sobre sticky. O rótulo da linha Lisa/Dentada
 ficou adiado para teste A/B pós-lançamento.
@@ -337,9 +344,13 @@ aconteceu neste projeto.
   Elementor Pro já resolve nativamente. Descartado em 26/07/2026: Ultimate
   Addons for Elementor (redundante).
 - **Antes de sugerir CSS ou JS, verifique se o Elementor resolve no painel.**
-  Este projeto é quase todo painel: até 28/07 são 14 regras de CSS e nenhuma
-  linha de JavaScript. Todo o design system, a estrutura do header e a
-  aparência do dropdown foram feitos por controles, não por código.
+  Este projeto é quase todo painel: o CSS customizado cobre design system e
+  header, e o único JavaScript é `scripts/header.js` (abertura do dropdown
+  por clique — o painel não oferece essa opção nativamente). No site hoje só
+  a parte de clique/`aria-expanded` está aplicada; a parte de teclado
+  (Esc/Espaço) está escrita no repositório mas não colada no Elementor. Todo
+  o resto — design system, estrutura do header, aparência do dropdown — foi
+  feito por controles, não por código.
 
   CSS que duplica função nativa é manutenção sem motivo — e sai do alcance da
   designer, que ajusta o painel sozinha.
@@ -359,5 +370,5 @@ site-wordpress/
 ├── design-system/         # tokens extraídos do Figma
 ├── css/                   # CSS customizado para o Elementor
 ├── seo/                   # mapa de páginas, keywords, titles
-└── scripts/               # automações em Node
+└── scripts/               # JS colado no Elementor (Código Personalizado)
 ```

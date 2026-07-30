@@ -3,9 +3,15 @@
 **Documento de continuidade.** Escrito para ser enviado no início de uma nova
 conversa, restaurando o contexto completo do projeto sem perda de calibragem.
 
-**Última atualização:** 28/07/2026
-**Onde parou:** Módulo 2 (Header), passo 7 — dropdown por clique. **Não
-iniciado.** O dropdown continua abrindo por hover.
+**Última atualização:** 30/07/2026
+**Onde parou:** Módulo 2 (Header), passo 7 — dropdown por clique, **aplicação
+parcial**. No site: clique abre/fecha, `aria-expanded` alterna, Enter
+funciona — verificado em janela anônima. **Esc verificado quebrado** (sem
+`keydown` no script publicado); Espaço nunca esteve no ar. A versão completa
+(Esc + Espaço) está escrita em `scripts/header.js`, não aplicada, não
+commitada. Ver `BRIEFING-conversa-03.md` para a fila de aplicação (C1) e para
+o que já foi levantado sobre o hero e outros achados (skip link quebrado,
+title/description da home vazios, logo com lazyload).
 
 ---
 
@@ -271,9 +277,10 @@ JavaScript básico. Node.js sem pressa — está fora do caminho crítico.
 
 > Leia antes de propor qualquer solução técnica.
 
-**Proporção real até aqui:** o projeto inteiro tem **14 regras de CSS** e
-**nenhuma linha de JavaScript escrita por mim**. Todo o resto foi configuração
-no painel do Elementor.
+**Proporção real até aqui:** a maior parte do projeto é configuração no painel
+do Elementor. O CSS customizado cobre design system e header; o único
+JavaScript é `scripts/header.js`, para o dropdown por clique — algo que o
+painel não oferece nativamente.
 
 | Feito no painel | Feito em código |
 |---|---|
@@ -282,7 +289,7 @@ no painel do Elementor.
 | Estrutura de containers do header | Chevron por opacidade |
 | Posicionamento absoluto, z-index | Deslize e barra do dropdown |
 | Widgets de menu e busca | Variáveis de espaçamento |
-| Aparência inteira do dropdown | — |
+| Aparência inteira do dropdown | Dropdown por clique + teclado (`scripts/header.js`) |
 
 **A regra:** antes de escrever CSS ou JS, verificar se o painel do Elementor
 resolve. CSS que duplica função nativa é manutenção sem motivo — e some do
@@ -383,7 +390,7 @@ ganho rápido; o orgânico é o ativo estrutural.
 
 ### 🔄 Em execução — Módulo 2 (Header)
 
-Progresso: **passos 1 a 4 de 11 concluídos.**
+Progresso: **passos 1 a 7 de 11 concluídos.**
 
 | # | Passo | Status |
 |---|---|---|
@@ -393,20 +400,34 @@ Progresso: **passos 1 a 4 de 11 concluídos.**
 | 4 | Posicionamento absoluto — header flutua sobre o hero | ✅ **funcionando** |
 | 5 | Fundo condicional (transparente na home, navy nas internas) | ✅ |
 | 6 | CSS dos hovers (3 comportamentos) | ✅ |
-| 7 | **Dropdown por clique** | ⬅ **PARAMOS AQUI** |
+| 7 | **Dropdown por clique** | 🟡 **PARAMOS AQUI** — clique/`aria-expanded` no ar; Esc/Espaço escritos, não aplicados |
 | 8 | Busca expansível (CSS + JS) | ⬜ bloqueado pela pendência 19 |
-| 9 | Acessibilidade de teclado | ⬜ |
+| 9 | Acessibilidade de teclado | ⬜ Esc verificado quebrado no site |
 | 10 | Mobile / hambúrguer | ⬜ |
 | 11 | Logo em SVG | ⬜ (por último, por decisão) |
 
-**Estado visual verificado (27/07):**
+**Estado visual verificado (27/07, ainda vale para os passos 1–6):**
 - Header atravessa a tela, flutua sobre o hero
 - Fundo condicional funcionando: transparente na home, navy nas internas
 - Menu com pílula translúcida no hover, sem deslocar os vizinhos
 - Chevron do "Máquinas" aparecendo no hover
 - Dropdown com navy translúcido, texto claro, cantos arredondados
 - Itens do dropdown deslizando 8px com barra vermelha reta
-- Dropdown **ainda abre por hover** — o clique é o passo 7, não iniciado
+
+**Passo 7 — dropdown por clique, aplicação parcial (30/07, verificado em
+janela anônima — ver `BRIEFING-conversa-03.md` Parte B):**
+- ✅ Abre e fecha ao clicar em "Máquinas", não mais por hover
+- ✅ `aria-expanded` alterna entre `true`/`false` no link — confirmado no inspetor
+- ✅ Enter funciona — nativo do link, não precisou de código
+- ✅ Atraso de JS do WP Rocket não engole o primeiro clique — testado
+- ❌ **Esc não fecha o dropdown** — verificado quebrado, não há `keydown` no
+  script que está no site
+- ❓ Espaço — não testado, mas não deve funcionar (não existe no script
+  publicado)
+- A versão completa, com Esc (devolvendo o foco) e Espaço, está **escrita em
+  `scripts/header.js` mas não aplicada nem commitada**
+- **Falta:** colar a versão nova no Código Personalizado do Elementor,
+  limpar cache, testar em 1200/1440/390px e com JS desativado (risco 4.0)
 
 **CSS escrito e versionado:** `css/global.css` (variáveis de espaçamento) e
 `css/header.css` (4 seções). O arquivo `elementor-css-completo.txt` é a junção
@@ -556,11 +577,12 @@ site-wordpress/
 ├── design-system/
 │   └── tokens.md
 ├── css/
-│   ├── global.css            variaveis de espacamento
-│   ├── header.css            CSS do cabecalho (4 secoes)
+│   ├── global.css            variaveis de espacamento + reduced motion
+│   ├── header.css            CSS do cabecalho (6 secoes)
 │   └── elementor-css-completo.txt   juncao dos dois, para colar no painel
 ├── seo/         (vazio — receberá o mapa de palavras-chave)
-└── scripts/     (vazio)
+└── scripts/
+    └── header.js  dropdown por clique + teclado (passo 7 do Módulo 2)
 ```
 
 ### O que há em cada um
@@ -654,7 +676,7 @@ Valores medidos no Figma vs. adotados, com a razão de cada divergência.
 | Módulo | Escopo | Status |
 |---|---|---|
 | 1 | Design System no Elementor | ✅ concluído 26/07 |
-| 2 | **Header** — menu, dropdown, busca expansível | 🔄 passo 7/11 |
+| 2 | **Header** — menu, dropdown, busca expansível | 🔄 passo 7/11, aplicação parcial |
 | 3 | Formulário qualificador e medição | 🔒 bloqueado pela spec |
 | 4 | Produção de páginas | ⬜ |
 | 5 | SEO on-page | ⬜ |
@@ -771,54 +793,53 @@ projeto: *"quero codar manualmente pra aprender"*, *"não achei de bom tom"*,
 
 ## PARTE 10 — A PRÓXIMA AÇÃO
 
-**Módulo 2, passo 7: dropdown por clique.** (confirmado em 28/07 — não iniciado)
+**Módulo 2, passo 7: aplicar a versão completa do dropdown por clique.**
+Detalhamento operacional em `BRIEFING-conversa-03.md`, Parte C1.
 
-### O que existe hoje
+### O que está no site hoje (verificado em 30/07, janela anônima)
 
-O dropdown abre por **hover** — comportamento padrão do Elementor. A
-especificação pede que abra por **clique**.
+Só a metade do script: clique abre/fecha "Máquinas" (não mais por hover),
+`aria-expanded` alterna, Enter funciona nativamente. **Esc verificado
+quebrado** — não há `keydown` no script publicado. Espaço nunca foi
+aplicado.
 
-**Antes de escrever JavaScript:** verificar se o widget de Menu de Navegação
-tem controle de abertura por clique no painel. Este projeto é quase todo
-painel (Parte 1B) — e a pergunta nunca foi respondida.
+### O que está escrito, esperando ser colado
 
-**Exigência técnica nova (28/07):** "Máquinas" não terá página de categoria. O
-item precisa se comportar como **botão**, não como link — impedir a navegação
-para `#`, alternar `aria-expanded`, responder a Enter/Espaço e fechar com Esc.
-Ver §4.0b do `controle-projeto.md`. Sem isso, o passo 9 não tem o que fechar.
+`scripts/header.js` já tem Esc (com devolução de foco ao item pai) e Espaço,
+cobrindo a exigência técnica de 28/07 (§4.0b do `controle-projeto.md`). Junto
+dele, `css/global.css` ganhou a Seção 3 (`prefers-reduced-motion` geral).
+**Nada disso foi colado no Elementor nem commitado.**
 
-### O que precisa acontecer
+A fila de aplicação (30 minutos, sem dependência — `BRIEFING-conversa-03.md`
+C1):
+1. Colar `scripts/header.js` em Código Personalizado → fim do `<body>`
+2. Colar o CSS consolidado em CSS Personalizado
+3. Limpar as três camadas de cache
+4. Verificar: Tab até "Máquinas" · Enter abre · Esc fecha e devolve o foco ·
+   Espaço abre sem rolar a página
+5. Commitar
 
-1. Impedir a abertura por hover
-2. Abrir e fechar ao clicar no item "Máquinas"
-3. Fechar ao clicar fora do menu
-4. Fechar com a tecla `Esc`
+### Depois disso — passo 8, busca expansível
 
-### Contexto técnico
+**Bloqueado pela pendência 19** (`controle-projeto.md` §2.2): falta a designer
+definir se a transição de "itens do menu somem" é suave ou seca.
 
-O Elementor usa a biblioteca **SmartMenus** para gerenciar o menu. Ela já
-controla a abertura por hover, então o JavaScript precisa ou desativar esse
-comportamento ou sobrepô-lo.
-
-O widget pode ter uma opção nativa de abertura por clique — **verificar o painel
-antes de escrever JavaScript.** É a regra do projeto e foi violada na sessão
-anterior, com custo alto de tempo.
-
-### Os três conceitos de JavaScript envolvidos
-
-Wilson quer aprender escrevendo. Ordem sugerida:
+Quando destravar, os três conceitos de JavaScript envolvidos (Wilson escreve,
+seguindo a Parte 1B):
 
 1. **`document.querySelector`** — encontrar um elemento na página
 2. **`addEventListener`** — executar código quando algo acontece
 3. **`classList.toggle`** — alternar uma classe
 
 **Princípio a fixar:** JavaScript controla estado, CSS controla aparência. O JS
-não pinta nada — adiciona ou remove uma classe, e o CSS reage.
+não pinta nada — adiciona ou remove uma classe, e o CSS reage. Mesmo padrão
+usado no passo 7, com a classe `.is-open`.
 
 ### Onde o JavaScript vive
 
 O campo de CSS Personalizado **não aceita JavaScript**. Alternativas:
-- Elementor → Configurações Avançadas → Código customizado (Elementor Pro)
+- Elementor → Configurações Avançadas → Código customizado (Elementor Pro) —
+  usado no passo 7
 - Widget HTML dentro do próprio header
 
 O arquivo fica versionado em `scripts/` no repositório de qualquer forma.

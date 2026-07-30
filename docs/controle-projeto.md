@@ -1,7 +1,7 @@
 # Controle do Projeto — Site Fachini Máquinas
 
 **Documento vivo.** Atualizar a cada decisão tomada ou pendência resolvida.
-**Última atualização:** 28/07/2026
+**Última atualização:** 30/07/2026
 
 ---
 
@@ -44,6 +44,7 @@ Registrar que o arquivo mudou não prova que o site mudou.
 
 | Data | Decisão | Observação |
 |---|---|---|
+| 30/07 | **Módulo 2 — passo 7 parcialmente aplicado: dropdown por clique** | **Corrigido depois de checar `BRIEFING-conversa-03.md`** — a entrada anterior deste registro dizia "aplicado", baseada num relato impreciso. O que está de fato no site, verificado em janela anônima: clique abre/fecha, `aria-expanded` alterna, Enter funciona (nativo). **Verificado como quebrado:** Esc não fecha — não há `keydown` no script publicado. A versão completa (Esc + Espaço), escrita em `scripts/header.js`, está **escrita, não aplicada, não commitada** |
 | 26/07 | **POSICIONAMENTO: perfiladeira é fabricação Fachini** | Decisão da diretoria. Sustentado por capacidade instalada — insumos e estrutura para fabricar cada componente, histórico de refabricação completa. Finame em andamento. Ver seção 14 do dossiê |
 | 26/07 | **Árvore de navegação: seguir Figma por ora** | Foco na entrega. Ajustes de estrutura ficam para depois do lançamento |
 | 26/07 | **MÓDULO 1 CONCLUÍDO** | Global Colors, Global Fonts, Theme Style completo, Content Width 1200, Layout Full Width, variáveis de espaçamento. Teste de herança validado |
@@ -283,13 +284,13 @@ funciona com mouse é falha de qualidade.
 
 > ⚠ **Item 1 é o erro mais caro que existe em lançamento de site.**
 
-### 4.0 ⚠ Risco PREVISTO — dependência de JavaScript no menu
+### 4.0 ⚠ Risco VIGENTE — dependência de JavaScript no menu
 
-**Ainda não vigente.** O dropdown abre por hover (nativo). Este risco passa a
-valer quando o passo 7 do Módulo 2 for executado.
+**Passou a valer em 30/07/2026.** O passo 7 do Módulo 2 foi executado: o
+dropdown de "MÁQUINAS" agora abre por **clique**, via `scripts/header.js`,
+não mais por hover nativo.
 
-Hover é comportamento nativo do Elementor e funciona sem JavaScript. Ao trocar
-para **clique**, a abertura passa a depender do script rodar.
+A abertura do submenu passou a depender do script rodar sem erro.
 
 **Se o JavaScript falhar** (erro de sintaxe, conflito com outro plugin, bloqueio
 por otimização do WP Rocket), o submenu não abre. Como "MÁQUINAS" é o
@@ -304,9 +305,12 @@ esperando ir a uma página de categoria, não vai a lugar nenhum.
 - [ ] Dar destino real ao item "MÁQUINAS" — uma página de categoria que liste
       todas as linhas. Assim o clique funciona mesmo sem JS
 - [ ] Testar o menu com JavaScript desativado no navegador antes do go-live
-- [ ] Confirmar que a minificação/adiamento de JS do WP Rocket não quebra o
-      script
+- [x] Confirmar que a minificação/adiamento de JS do WP Rocket não quebra o
+      script — testado em janela anônima, o atraso não engole o primeiro
+      clique (`BRIEFING-conversa-03.md`, B1)
 - [ ] Garantir que as categorias também estejam alcançáveis pelo footer
+
+**Nenhuma das pendentes foi verificada ainda.**
 
 ---
 
@@ -323,14 +327,23 @@ submenu, ele precisa se comportar como **botão**, não como link.
 
 **O que o passo 7 precisa resolver:**
 
-- [ ] Impedir a navegação padrão do link ao clicar
-- [ ] Anunciar o estado para leitor de tela (`aria-expanded` alternando entre
-      `true` e `false`)
-- [ ] Enter e Espaço abrem o submenu, em vez de navegar
-- [ ] Esc fecha
+- [x] Impedir a navegação padrão do link ao clicar — `e.preventDefault()` —
+      **verificado no site** em 30/07 (janela anônima)
+- [x] Anunciar o estado para leitor de tela (`aria-expanded` alternando entre
+      `true` e `false`) — **verificado no site**, inspetor confirma a troca
+- [ ] Enter e Espaço abrem o submenu, em vez de navegar — Enter **verificado
+      no site** (nativo do link); Espaço só existe na versão **escrita, não
+      aplicada** de `scripts/header.js`
+- [ ] Esc fecha — **verificado como quebrado no site**: não há `keydown` no
+      script publicado. A devolução de foco ao fechar só existe na versão
+      **escrita, não aplicada**
 
-Sem isso, o passo 9 (acessibilidade de teclado) não tem o que fechar — o item
-principal do menu ficaria inalcançável por teclado.
+**Escrito em 30/07/2026, em `scripts/header.js`. Aplicação parcial** — só o
+clique está no ar. Falta colar a versão com teclado no Código Personalizado
+do Elementor e testar (ver `BRIEFING-conversa-03.md`, C1).
+
+Sem Esc/Espaço aplicados, o passo 9 (acessibilidade de teclado) continua sem
+o que fechar — o item principal do menu ainda não é alcançável por teclado.
 
 ---
 

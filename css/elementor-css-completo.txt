@@ -1,4 +1,88 @@
 /* ==========================================================================
+   GLOBAL — Site Fachini Maquinas
+   --------------------------------------------------------------------------
+   CSS que vale para o site inteiro. Variaveis, ajustes de base.
+   Colado em: Elementor > Configuracoes do Site > CSS Personalizado
+
+   CSS de componente vive em arquivos proprios (header.css, footer.css...)
+   e e colado abaixo deste bloco no mesmo campo.
+   ========================================================================== */
+
+
+/* ==========================================================================
+   1. ESCALA DE ESPACAMENTO
+   --------------------------------------------------------------------------
+   Base 8px. Toda medida de espacamento do site sai desta lista.
+   Uso: padding: var(--esp-5);  em vez de  padding: 48px;
+
+   Se a escala mudar, muda aqui e propaga para todo o CSS customizado.
+   Mesma logica das cores globais, aplicada a espacamento.
+   ========================================================================== */
+
+:root {
+  --esp-1: 8px;
+  --esp-2: 16px;
+  --esp-3: 24px;
+  --esp-4: 32px;
+  --esp-5: 48px;
+  --esp-6: 64px;
+  --esp-7: 96px;
+  --esp-8: 128px;
+}
+
+
+/* ==========================================================================
+   2. ROLAGEM SUAVE
+   --------------------------------------------------------------------------
+   Faz ancoras internas rolarem suave em vez de saltar. Aplicado no elemento
+   raiz (html), nao no body — a rolagem da pagina e gerenciada pelo html.
+
+   Usado pelos CTAs que levam ao formulario, como "Seja Cliente Fachini".
+
+   A segunda regra respeita quem configurou no sistema operacional que
+   prefere menos animacao. Ignorar isso pode causar nausea e tontura em
+   pessoas com sensibilidade a movimento. auto e o comportamento padrao.
+   ========================================================================== */
+
+:root {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    scroll-behavior: auto;
+  }
+}
+
+
+/* ==========================================================================
+   3. MOVIMENTO REDUZIDO — REGRA GERAL
+   --------------------------------------------------------------------------
+   A secao 2 respeita a preferencia do sistema apenas na rolagem. Esta regra
+   estende isso a TODA transicao e animacao do site, incluindo as que o
+   Elementor gera pelo painel e as que ainda serao criadas.
+
+   Por que existe: pessoas com sensibilidade vestibular podem ter nausea e
+   tontura com movimento na tela. Quem configurou "reduzir movimento" no
+   sistema operacional esta pedindo explicitamente para nao receber isso.
+
+   Por que 0.01ms e nao 0: uma duracao de exatamente zero faz alguns
+   navegadores nao dispararem o evento de fim de transicao, e codigo que
+   espera esse evento trava. 0.01ms e imperceptivel e mantem o evento.
+
+   Origem: item 8.3 da revisao de blindagem de 28/07.
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+/* ==========================================================================
    HEADER — Site Fachini Maquinas
    --------------------------------------------------------------------------
    Este arquivo e a fonte de verdade do CSS do cabecalho.

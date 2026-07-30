@@ -53,3 +53,32 @@
     scroll-behavior: auto;
   }
 }
+
+
+/* ==========================================================================
+   3. MOVIMENTO REDUZIDO — REGRA GERAL
+   --------------------------------------------------------------------------
+   A secao 2 respeita a preferencia do sistema apenas na rolagem. Esta regra
+   estende isso a TODA transicao e animacao do site, incluindo as que o
+   Elementor gera pelo painel e as que ainda serao criadas.
+
+   Por que existe: pessoas com sensibilidade vestibular podem ter nausea e
+   tontura com movimento na tela. Quem configurou "reduzir movimento" no
+   sistema operacional esta pedindo explicitamente para nao receber isso.
+
+   Por que 0.01ms e nao 0: uma duracao de exatamente zero faz alguns
+   navegadores nao dispararem o evento de fim de transicao, e codigo que
+   espera esse evento trava. 0.01ms e imperceptivel e mantem o evento.
+
+   Origem: item 8.3 da revisao de blindagem de 28/07.
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

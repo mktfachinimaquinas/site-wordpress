@@ -5,7 +5,8 @@
 **Objetivo:** construir o cabeçalho do site — a peça que aparece em todas as
 páginas e concentra a maior parte do código customizado do projeto.
 
-**Status: passo 7 de 11** (atualizado em 28/07/2026)
+**Status: passo 7 de 11, aplicação parcial** (atualizado em 30/07/2026 —
+ver `BRIEFING-conversa-03.md` para a fila imediata)
 
 | # | Passo | Status |
 |---|---|---|
@@ -15,9 +16,9 @@ páginas e concentra a maior parte do código customizado do projeto.
 | 4 | Posicionamento absoluto — flutua sobre o hero | ✅ |
 | 5 | Fundo condicional | ✅ |
 | 6 | CSS dos hovers | ✅ |
-| 7 | **Dropdown por clique (JS)** | ⬅ atual |
-| 8 | Busca expansível | ⬜ |
-| 9 | Acessibilidade de teclado | ⬜ |
+| 7 | **Dropdown por clique (JS)** | 🟡 parcial — clique/`aria-expanded` verificados no site; Esc/Espaço escritos, não aplicados |
+| 8 | Busca expansível | ⬅ atual — bloqueado pela pendência 19 |
+| 9 | Acessibilidade de teclado | ⬜ Esc verificado quebrado no site; falta aplicar a versão com teclado, depois Tab e leitor de tela |
 | 10 | Mobile | ⬜ |
 | 11 | Logo em SVG | ⬜ |
 
@@ -112,6 +113,13 @@ Os itens 3 a 6 vêm da decisão de não ter página. Sem eles, o passo 9
 ficaria inalcançável por teclado.
 
 Ver §4.0b do `controle-projeto.md`.
+
+**Escrito em `scripts/header.js`, 30/07/2026 — aplicação parcial.** No site,
+verificado: impedir navegação padrão (1) e `aria-expanded` (2). Enter (3)
+funciona nativamente. **Verificado como quebrado:** Esc (4) — não há
+`keydown` no script publicado. Espaço (3) só existe na versão escrita, ainda
+não colada no Elementor. Ver `BRIEFING-conversa-03.md`, C1, para o passo de
+aplicação.
 
 ---
 
@@ -552,19 +560,24 @@ trabalho é estilizar o painel que abre para respeitar o design system.
 - [ ] Alinhamento vertical central em todos os elementos
 
 **Comportamentos:**
-- [ ] Hover dos itens com retângulo translúcido e transição
-- [ ] Chevron aparecendo no hover do "MÁQUINAS"
-- [ ] Dropdown abrindo por clique
-- [ ] Subitens com deslocamento e marcador vermelho
+- [x] Hover dos itens com retângulo translúcido e transição
+- [x] Chevron aparecendo no hover do "MÁQUINAS"
+- [x] Dropdown abrindo por clique — verificado no site em 30/07/2026
+      (janela anônima). Teclado (Esc/Espaço) ainda não aplicado — ver
+      `BRIEFING-conversa-03.md`
+- [x] Subitens com deslocamento e marcador vermelho
 - [ ] Busca expandindo e ocultando o menu
 - [ ] "X" restaurando o estado normal
 
 **Qualidade:**
-- [ ] Navegação por teclado completa
+- [ ] Navegação por teclado completa — Esc verificado quebrado no site;
+      versão com Esc/Espaço escrita mas não aplicada; falta ainda Tab pelos
+      subitens e o hambúrguer do mobile
 - [ ] Foco visível
 - [ ] Hambúrguer funcional no mobile
 - [ ] Testado em 1200, 1440 e 390px de largura
-- [ ] CSS versionado em `css/header.css` no repositório
+- [x] CSS versionado em `css/header.css` no repositório
+- [x] JS versionado em `scripts/header.js` no repositório
 
 ---
 
