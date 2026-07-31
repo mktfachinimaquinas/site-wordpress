@@ -1,0 +1,14 @@
+# Configuração exclusiva deste repositório.
+# Preferências pessoais e plugins permanecem em ~/.codex/config.toml.
+
+approval_policy = "on-request"
+sandbox_mode = "workspace-write"
+web_search = "cached"
+model_reasoning_effort = "high"
+personality = "pragmatic"
+
+[sandbox_workspace_write]
+network_access = false
+
+[features]
+multi_agent = false
