@@ -16,15 +16,32 @@ documentos de estado sem autorização explícita.
 Antes de agir:
 
 1. Leia `docs/controle-projeto.md`.
-2. Consulte a Parte 10 do `BRIEFING.md` para a ação imediata.
-3. Leia apenas os documentos técnicos relacionados ao item.
-4. Comece a resposta com `ITEM DA FILA: <item>`.
+2. Identifique exclusivamente nesse arquivo o item corrente da fila.
+3. Use `BRIEFING.md` somente como contexto e continuidade, nunca como fonte da
+   ação imediata.
+4. Leia apenas os documentos técnicos relacionados ao item.
+5. Comece a resposta com `ITEM DA FILA: <item>`.
 
-Se controle e briefing divergirem, informe o conflito. Não escolha uma versão
-sozinho.
+`docs/controle-projeto.md` é a única fonte do item corrente. Se outro documento
+divergir dele, informe o conflito sem substituir a fila por conta própria.
 
-Se o pedido estiver fora da fila, sinalize o desvio. A própria mensagem do
-Wilson pode autorizar que ele seja executado.
+Se `docs/controle-projeto.md` não identificar inequivocamente o item corrente,
+comece a resposta com `ITEM DA FILA: não sei`.
+
+Não deduza o item pelo `BRIEFING.md`, `CLAUDE.md`, histórico do Git, memória,
+conversas anteriores ou documentos técnicos. A ausência de item explícito não
+autoriza o agente a escolher uma prioridade.
+
+Se a própria mensagem do usuário autorizar explicitamente um trabalho fora da
+fila, essa autorização é suficiente para o trabalho delimitado. Declare o
+desvio na primeira linha, respeite exatamente os arquivos e ações autorizados
+e não peça uma segunda confirmação redundante.
+
+Se o pedido estiver fora do item corrente e a mensagem não trouxer autorização
+explícita, escreva: “Isso está fora do item da fila, que hoje é X. Sigo mesmo
+assim?” Só prossiga depois da autorização do usuário. Quando o item corrente
+for desconhecido, não invente X: informe que a fila não está definida e peça
+autorização para o trabalho específico.
 
 O item corrente nunca deve ser copiado para este arquivo: estado muda; regras
 duráveis ficam aqui.
@@ -97,21 +114,33 @@ Leia `design-system/tokens.md` antes de citar valores.
 
 Antes de editar:
 
-- mostre o plano e o diff proposto;
-- aguarde autorização;
-- preserve mudanças existentes;
+- pedido de revisão significa somente leitura;
+- mostre o diff proposto e aguarde autorização explícita;
+- confirme que a autorização indica os arquivos permitidos;
+- preserve mudanças preexistentes e não as descarte;
 - não use substituição em lote sem revisar linhas vizinhas;
-- procure ocorrências antigas depois da alteração.
+- procure ocorrências antigas depois da alteração;
+- salve os arquivos em UTF-8 conforme `.editorconfig`.
 
 ## Claude Code e Codex
 
 Existe um único escritor por item.
 
-- Se Claude Code escreve, Codex revisa sem editar.
-- Se Codex escreve, Claude Code revisa sem editar.
-- Não editem simultaneamente o mesmo arquivo ou seletor.
-- Em pedidos de revisão, Codex não altera arquivos.
-- Conversas e agentes reportam mudanças; não atualizam o estado central.
+- Se Work escreve, Codex e Claude Code revisam sem editar.
+- Se Codex escreve, Work e Claude Code revisam sem editar.
+- Se Claude Code escreve, Work e Codex revisam sem editar.
+- Agentes não alteram simultaneamente o mesmo arquivo ou seletor.
+- Pedido de revisão significa somente leitura.
+- Codex, Claude Code, Work e conversas de módulo podem reportar evidências e
+  propor diffs, mas não atualizam documentos de estado sem autorização.
+
+A conversa central é somente a conversa que Wilson designar expressamente como
+responsável pelo estado do projeto. Nenhuma conversa pode se autodeclarar
+central.
+
+Mesmo a conversa central somente pode alterar um documento de estado quando
+Wilson autorizar especificamente o documento, o objetivo da atualização e os
+arquivos que podem ser tocados.
 
 ### Indisponibilidade do agente escritor
 
@@ -141,7 +170,8 @@ Não alterar sem autorização específica:
 - `CLAUDE.md`
 - `AGENTS.md`
 
-Não publicar no WordPress, fazer deploy ou criar commit sem autorização.
+Publicação no WordPress, commit e `git push` exigem cada qual autorização
+específica.
 
 ## Segurança
 
