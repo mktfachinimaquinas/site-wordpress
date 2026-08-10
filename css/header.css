@@ -40,7 +40,7 @@
    O WordPress adiciona a classe "home" ao body apenas na pagina inicial —
    por isso a negacao ancorada no body. */
 body:not(.home) .fachini-header {
-  background-color: var(--e-global-color-primary);
+  background-color: var(--e-global-color-5472bb2);
 }
 
 
@@ -315,4 +315,237 @@ body:not(.home) .fachini-header {
    ID automatico gerado pelo Elementor e sem atingir o Off Canvas. */
 .fachini-header > .e-con-inner > .e-con:has(.fachini-logo) {
   padding-block: 0;
+}
+
+/* ==========================================================================
+   8. ALTERNÂNCIA DOS LOGOTIPOS
+   --------------------------------------------------------------------------
+   Home: versão negativa sobre os fundos escuros.
+   Páginas internas: versão positiva sobre o fundo off-white.
+
+   display: none remove a versão oculta do layout e também da árvore de
+   acessibilidade. A regra atende o header normal e o Off Canvas.
+   ========================================================================== */
+
+body.home .fachini-header .fachini-logo-positiva {
+  display: none;
+}
+
+body:not(.home) .fachini-header .fachini-logo-negativa {
+  display: none;
+}
+/* ==========================================================================
+   9. PALETA CONDICIONAL DO HEADER E DA BUSCA
+   --------------------------------------------------------------------------
+   Home:
+     - header transparente;
+     - Off Canvas Onix;
+     - textos claros;
+     - pilula da busca branca translucida.
+
+   Paginas internas:
+     - header e Off Canvas off-white;
+     - navegacao e controles escuros;
+     - resultados adaptados ao fundo claro.
+   ========================================================================== */
+
+
+/* HOME — pilula clara sobre o hero. */
+body.home .fachini-header .fachini-busca .elementor-button {
+  color: var(--e-global-color-5472bb2);
+  background-color: rgba(255, 255, 255, 0.20);
+}
+
+
+/* PÁGINAS INTERNAS — dropdown Off-white com links Navy. */
+body:not(.home) .fachini-header
+.fachini-menu
+.elementor-widget-nav-menu
+.sub-menu.elementor-nav-menu--dropdown,
+body:not(.home) .fachini-header
+.fachini-menu-offcanvas
+.elementor-widget-nav-menu
+.sub-menu.elementor-nav-menu--dropdown {
+  background-color: var(--e-global-color-5472bb2);
+}
+
+body:not(.home) .fachini-header
+.fachini-menu
+.elementor-widget-nav-menu
+.elementor-nav-menu--dropdown
+a.elementor-sub-item,
+body:not(.home) .fachini-header
+.fachini-menu
+.elementor-widget-nav-menu
+.elementor-nav-menu--dropdown
+a.elementor-sub-item:hover,
+body:not(.home) .fachini-header
+.fachini-menu
+.elementor-widget-nav-menu
+.elementor-nav-menu--dropdown
+a.elementor-sub-item:focus,
+body:not(.home) .fachini-header
+.fachini-menu-offcanvas
+.elementor-widget-nav-menu
+.elementor-nav-menu--dropdown
+a.elementor-sub-item,
+body:not(.home) .fachini-header
+.fachini-menu-offcanvas
+.elementor-widget-nav-menu
+.elementor-nav-menu--dropdown
+a.elementor-sub-item:hover,
+body:not(.home) .fachini-header
+.fachini-menu-offcanvas
+.elementor-widget-nav-menu
+.elementor-nav-menu--dropdown
+a.elementor-sub-item:focus {
+  color: var(--e-global-color-primary);
+}
+
+
+/* PÁGINAS INTERNAS — links da lista EXPLORAR em Navy. */
+body:not(.home) .fachini-header
+.fachini-header-offcanvas
+.elementor-widget-icon-list
+.elementor-icon-list-text {
+  color: var(--e-global-color-primary);
+}
+
+
+/* PÁGINAS INTERNAS — resultados sobre fundo Off-white. */
+body:not(.home) .fachini-header
+.fachini-busca-offcanvas
+.elementor-widget-search
+.e-search-results-container {
+  color: var(--e-global-color-primary);
+  background-color: var(--e-global-color-5472bb2);
+  border-color: var(--e-global-color-5472bb2);
+}
+
+
+/* Título e seta dos cards em Navy. */
+body:not(.home) .fachini-header
+.fachini-busca-offcanvas
+.fachini-busca-card
+.elementor-heading-title,
+body:not(.home) .fachini-header
+.fachini-busca-offcanvas
+.fachini-busca-card-cta
+.elementor-icon {
+  color: var(--e-global-color-primary);
+}
+/* PÁGINAS INTERNAS — menu principal e menu do Off Canvas em Navy. */
+body:not(.home) .fachini-header
+.fachini-menu
+.elementor-widget-nav-menu
+.elementor-nav-menu--main
+> ul > li > a.elementor-item,
+body:not(.home) .fachini-header
+.fachini-menu-offcanvas
+.elementor-widget-nav-menu
+.elementor-nav-menu--main
+> ul > li > a.elementor-item {
+  color: var(--e-global-color-primary);
+  fill: var(--e-global-color-primary);
+}
+
+
+/* PÁGINAS INTERNAS — pílula Navy translúcida no hover e no foco. */
+body:not(.home) .fachini-header
+.fachini-menu
+.elementor-widget-nav-menu
+.elementor-nav-menu--main
+> ul > li > a.elementor-item:hover,
+body:not(.home) .fachini-header
+.fachini-menu
+.elementor-widget-nav-menu
+.elementor-nav-menu--main
+> ul > li > a.elementor-item:focus,
+body:not(.home) .fachini-header
+.fachini-menu
+.elementor-widget-nav-menu
+.elementor-nav-menu--main
+> ul > li > a.elementor-item.elementor-item-active,
+body:not(.home) .fachini-header
+.fachini-menu
+.elementor-widget-nav-menu
+.elementor-nav-menu--main
+> ul > li > a.elementor-item.highlighted,
+body:not(.home) .fachini-header
+.fachini-menu-offcanvas
+.elementor-widget-nav-menu
+.elementor-nav-menu--main
+> ul > li > a.elementor-item:hover,
+body:not(.home) .fachini-header
+.fachini-menu-offcanvas
+.elementor-widget-nav-menu
+.elementor-nav-menu--main
+> ul > li > a.elementor-item:focus,
+body:not(.home) .fachini-header
+.fachini-menu-offcanvas
+.elementor-widget-nav-menu
+.elementor-nav-menu--main
+> ul > li > a.elementor-item.elementor-item-active,
+body:not(.home) .fachini-header
+.fachini-menu-offcanvas
+.elementor-widget-nav-menu
+.elementor-nav-menu--main
+> ul > li > a.elementor-item.highlighted {
+  color: var(--e-global-color-primary);
+  fill: var(--e-global-color-primary);
+  background-color: color-mix(
+    in srgb,
+    var(--e-global-color-primary) 15%,
+    transparent
+  );
+}
+
+
+/* PÁGINAS INTERNAS — superfície real do Off Canvas em Off-white. */
+body:not(.home) .fachini-header
+.elementor-widget-off-canvas
+.e-off-canvas__content {
+  color: var(--e-global-color-primary);
+  background-color: var(--e-global-color-5472bb2);
+  border-color: var(--e-global-color-5472bb2);
+}
+
+
+/* PÁGINAS INTERNAS — botão X em Navy. */
+body:not(.home) .fachini-header
+.fachini-exit-offcanvas
+.elementor-button {
+  color: var(--e-global-color-primary);
+  fill: var(--e-global-color-primary);
+}
+
+body:not(.home) .fachini-header
+.fachini-exit-offcanvas
+.elementor-button
+svg path {
+  fill: var(--e-global-color-primary);
+  stroke: var(--e-global-color-primary);
+}
+
+
+/* PÁGINAS INTERNAS — campo da pesquisa adaptado ao fundo Off-white. */
+body:not(.home) .fachini-header
+.fachini-busca-offcanvas
+.e-search-input {
+  color: var(--e-global-color-primary);
+  background-color: transparent;
+  border-bottom-color: var(--e-global-color-primary);
+}
+
+body:not(.home) .fachini-header
+.fachini-busca-offcanvas
+.e-search-input::placeholder {
+  color: var(--e-global-color-secondary);
+  opacity: 1;
+}
+
+body:not(.home) .fachini-header
+.fachini-busca-offcanvas
+.e-search-input:focus {
+  border-bottom-color: var(--e-global-color-primary);
 }
