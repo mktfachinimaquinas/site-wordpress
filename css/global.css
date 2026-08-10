@@ -82,3 +82,15 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+
+/* ==========================================================================
+   4. ESTABILIDADE DA BARRA DE ROLAGEM
+   --------------------------------------------------------------------------
+   Reserva o espaço da barra de rolagem quando o Off Canvas bloqueia a página.
+   Evita o deslocamento horizontal do conteúdo durante abertura e fechamento.
+   ========================================================================== */
+
+:root {
+  scrollbar-gutter: stable;
+}
