@@ -549,3 +549,55 @@ body:not(.home) .fachini-header
 .e-search-input:focus {
   border-bottom-color: var(--e-global-color-primary);
 }
+
+/* ==========================================================================
+   10. ALINHAMENTO INTERNO DO BOTAO DE BUSCA
+   --------------------------------------------------------------------------
+   Mantem o texto centralizado nos 178px completos da pilula e posiciona a
+   lupa independentemente, conforme as medidas do Figma.
+
+   Pilula: 178 x 35px
+   Lupa: 20.74 x 21px
+   Posicao relativa da lupa: 16.42px da esquerda e 7.5px do topo
+   ========================================================================== */
+
+.fachini-header
+.fachini-busca
+.elementor-button {
+  position: relative;
+}
+
+.fachini-header
+.fachini-busca
+.elementor-button-content-wrapper {
+  position: static;
+  display: block;
+  width: 100%;
+}
+
+.fachini-header
+.fachini-busca
+.elementor-button-text {
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+
+.fachini-header
+.fachini-busca
+.elementor-button-icon {
+  position: absolute;
+  top: 7.5px;
+  left: 16.42px;
+  width: 20.74px;
+  height: 21px;
+  margin: 0;
+}
+
+.fachini-header
+.fachini-busca
+.elementor-button-icon svg {
+  display: block;
+  width: 20.74px;
+  height: 21px;
+}
