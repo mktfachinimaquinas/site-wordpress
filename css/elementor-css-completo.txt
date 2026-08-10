@@ -82,6 +82,20 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+
+/* ==========================================================================
+   4. ESTABILIDADE DA BARRA DE ROLAGEM
+   --------------------------------------------------------------------------
+   Reserva o espaço da barra de rolagem quando o Off Canvas bloqueia a página.
+   Evita o deslocamento horizontal do conteúdo durante abertura e fechamento.
+   ========================================================================== */
+
+:root {
+  scrollbar-gutter: stable;
+}
+
+
 /* ==========================================================================
    HEADER — Site Fachini Maquinas
    --------------------------------------------------------------------------
@@ -217,7 +231,7 @@ body:not(.home) .fachini-header {
 
 
 /* ==========================================================================
-   4. ITENS DO DROPDOWN
+   5. ITENS DO DROPDOWN
    --------------------------------------------------------------------------
    NAO controlar a largura do painel por CSS.
 
@@ -324,7 +338,7 @@ body:not(.home) .fachini-header {
 
 
 /* ==========================================================================
-   5. ABERTURA DO DROPDOWN POR CLIQUE
+   6. ABERTURA DO DROPDOWN POR CLIQUE
    --------------------------------------------------------------------------
    Par de scripts/header.js. O script liga e desliga a classe .is-open no
    <li>; estas duas regras traduzem a classe em visibilidade.
@@ -377,7 +391,26 @@ body:not(.home) .fachini-header {
 
 
 /* ==========================================================================
-   6. BUSCA EXPANSIVEL
+   7. ALTURA E ALINHAMENTO VERTICAL DO HEADER
+   --------------------------------------------------------------------------
+   O header normal possui duas camadas intermediarias com 10px de
+   preenchimento vertical cada. Isso desloca seu conteudo 20px para baixo
+   e aumenta a altura total de 86px para 126px.
+
+   Estas regras removem somente o preenchimento superior e inferior.
+   O alinhamento horizontal, a largura de 1200px e o Off Canvas permanecem
+   inalterados.
    ========================================================================== */
 
-/* a implementar — passo 8 */
+/* Remove o preenchimento vertical do container interno automatico que o
+   Elementor gera por causa da largura encaixotada da .fachini-header. */
+.fachini-header.e-con-boxed > .e-con-inner {
+  padding-block: 0;
+}
+
+/* Remove o segundo preenchimento vertical somente do ramo do header normal.
+   :has(.fachini-logo) identifica o container intermediario sem depender do
+   ID automatico gerado pelo Elementor e sem atingir o Off Canvas. */
+.fachini-header > .e-con-inner > .e-con:has(.fachini-logo) {
+  padding-block: 0;
+}
