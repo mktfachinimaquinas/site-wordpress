@@ -1,7 +1,12 @@
 # Controle do Projeto — Site Fachini Máquinas
 
 **Documento vivo.** Atualizar a cada decisão tomada ou pendência resolvida.
-**Última atualização:** 30/07/2026
+**Última atualização:** 31/07/2026
+
+## ITEM ATUAL
+
+**Módulo 2 — estruturar a busca em Off Canvas e preparar o esqueleto da
+pesquisa.**
 
 ---
 
@@ -44,7 +49,8 @@ Registrar que o arquivo mudou não prova que o site mudou.
 
 | Data | Decisão | Observação |
 |---|---|---|
-| 30/07 | **Módulo 2 — passo 7 parcialmente aplicado: dropdown por clique** | **Corrigido depois de checar `BRIEFING-conversa-03.md`** — a entrada anterior deste registro dizia "aplicado", baseada num relato impreciso. O que está de fato no site, verificado em janela anônima: clique abre/fecha, `aria-expanded` alterna, Enter funciona (nativo). **Verificado como quebrado:** Esc não fecha — não há `keydown` no script publicado. A versão completa (Esc + Espaço), escrita em `scripts/header.js`, está **escrita, não aplicada, não commitada** |
+| 31/07 | **Dropdown “MÁQUINAS” aplicado e verificado** | JavaScript completo publicado no Elementor. Clique, Enter, Espaço, Escape e devolução de foco foram testados; ver registro detalhado abaixo |
+| 31/07 | **Busca do header: arquitetura Off Canvas** | A busca expansível inline foi substituída pela estrutura Off Canvas. A etapa atual prepara a interface; integração e resultados reais ficam pendentes |
 | 26/07 | **POSICIONAMENTO: perfiladeira é fabricação Fachini** | Decisão da diretoria. Sustentado por capacidade instalada — insumos e estrutura para fabricar cada componente, histórico de refabricação completa. Finame em andamento. Ver seção 14 do dossiê |
 | 26/07 | **Árvore de navegação: seguir Figma por ora** | Foco na entrega. Ajustes de estrutura ficam para depois do lançamento |
 | 26/07 | **MÓDULO 1 CONCLUÍDO** | Global Colors, Global Fonts, Theme Style completo, Content Width 1200, Layout Full Width, variáveis de espaçamento. Teste de herança validado |
@@ -79,6 +85,41 @@ Registrar que o arquivo mudou não prova que o site mudou.
 | 23/07 | **Scrollytelling adiado** | Versão intermediária no lançamento: sticky + fade |
 | 23/07 → 27/07 | **Rótulo da linha Lisa/Dentada** | Decisão revista: "Serralheria" é segmento e não produto, mas "Calhas" subdimensiona a máquina. **Adiado para teste A/B pós-lançamento** (ver 6.4) |
 | 23/07 | **Country Blocking do Loginizer DESATIVADO** | Ver 1.1 abaixo |
+
+### Estado comprovado — dropdown “MÁQUINAS” (31/07/2026)
+
+**ESCRITO:**
+
+- `scripts/header.js` contém somente JavaScript;
+- o arquivo do repositório não contém tags HTML;
+- o comentário informa que o conteúdo deve ser envolvido por `<script>` ao
+  aplicar no Elementor.
+
+**APLICADO:**
+
+- o código foi envolvido por `<script>...</script>`;
+- foi inserido em WordPress → Elementor → Código Personalizado;
+- foi salvo e publicado.
+
+**VERIFICADO:**
+
+- Tab posiciona o foco em “MÁQUINAS”;
+- Enter abre o submenu;
+- Espaço abre sem rolar quando “MÁQUINAS” está focado;
+- Escape fecha;
+- Escape devolve o foco ao item pai;
+- fora do menu, Espaço mantém a rolagem normal da página;
+- `aria-expanded` alterna entre `true` e `false`, verificado no Inspetor;
+- o JavaScript não aparece mais escrito no rodapé;
+- o menu voltou a funcionar após a correção da forma de aplicação.
+
+**Convenção definitiva:**
+
+- no repositório, `scripts/header.js` contém somente JavaScript;
+- no Elementor → Código Personalizado, o conteúdo fica envolvido por
+  `<script>...</script>`;
+- não colocar tags HTML dentro do arquivo `.js`;
+- não retirar as tags da versão aplicada no Elementor.
 
 ### 1.1 Registro — Loginizer Country Blocking
 
@@ -163,7 +204,7 @@ e mudar a chave `enabled` para `false`.
 | 15 | 🔴 | **Raio de borda de botões, cards e campos de formulário** — pendência de extração do Figma (fonte: `design-system/tokens.md`, seção 8) |
 | 16 | 🔴 | **Sombra nos cards de notícia** — pendência de extração do Figma (fonte: `design-system/tokens.md`, seção 8) |
 | 17 | 🔴 | **Medição dos espaçamentos reais seção a seção no Figma** — pendência de extração (fonte: `design-system/tokens.md`, seção 8) |
-| 19 | 🔴 | **Transição da busca expansível** — os itens do menu somem com transição suave ou seca? **Bloqueia o passo 8 do Módulo 2** (fonte: `relatorio-analise-homepage.md`, seção 8) |
+| 19 | 🟢 31/07 | **Arquitetura da busca** — a busca expansível inline foi superada pela decisão de usar Off Canvas. A antiga transição dos itens do menu não bloqueia mais a etapa atual |
 | 21 | 🟢 28/07 | **Destino do link "MÁQUINAS"** — decidido: **não haverá página de categoria por ora.** O item existe apenas para abrir o submenu. Isso cria uma exigência técnica no passo 7 — ver 4.0b |
 | 20 | 🔴 | **Camada "Larga" a 1200px** — com o padrão em 1200, `min(94vw, 1560px)` entrega 1284px numa tela de 1366, 84px acima do padrão. Ou ganha número novo, ou sai do sistema e o mosaico vira full-bleed |
 | 18 | 🔴 | **Hierarquia de headings** — alinhar a marcação semântica da Parte 3 antes da montagem (fonte: `docs/modulo-01-design-system.md`, "Pendências com a designer") |
@@ -192,21 +233,54 @@ e mudar a chave `enabled` para `false`.
 | 4 | 🟡 24/07 | **noindex do subdomínio de dev** — Wilson marcou "desencorajar indexação". Confirmar que está ativo em dev e DESMARCAR no go-live |
 | 5 | 🔴 | **Plugins da véspera** — GoSMTP, CookieAdmin, ACF, reCAPTCHA já aparecem instalados. Confirmar configuração de cada um |
 
+### 2.4 Busca Off Canvas — estrutura e integração
+
+**Arquitetura decidida:**
+
+- a solução atual usa o widget Off Canvas;
+- descrições antigas de busca expansível inline estão superadas;
+- o Off Canvas será usado como estrutura da interface de pesquisa;
+- o campo de pesquisa permanece dentro do Off Canvas;
+- a estrutura pode ser preparada antes da integração completa dos resultados;
+- links, campos retornados e consulta real ficam para etapa posterior.
+
+**Pendências — não classificadas como aplicadas ou verificadas:**
+
+- Off Canvas encavalando ou afetando o header;
+- hierarquia correta dos containers;
+- foco inicial ao abrir;
+- fechamento por Escape;
+- devolução de foco ao acionador;
+- ordem do Tab;
+- comportamento de `aria-modal`;
+- comportamento de `inert`;
+- bloqueio de rolagem;
+- conteúdo real dos resultados;
+- links dos resultados;
+- campos exibidos;
+- Loop Item final;
+- template final de resultados;
+- teste de uma pesquisa real.
+
+**Estado atual:** arquitetura decidida; aplicação e verificação estrutural
+pendentes. A integração dos resultados não faz parte da verificação funcional
+desta etapa.
+
 ---
 
 ## 3. Achados novos — o que tinha passado
 
-### 3.1 ⚠ Não existe página de resultados de busca
+### 3.1 ⚠ Integração e fallback de resultados de busca pendentes
 
-A busca expansível está especificada em detalhe — expansão ao clique, itens
-somem, "X" para fechar. **Mas não existe tela para onde os resultados vão.**
+A experiência principal escolhida usa Off Canvas. O campo de pesquisa e a área
+destinada aos resultados podem ser estruturados antes de a consulta real, os
+campos retornados e os links estarem finalizados.
 
-O Elementor não gera essa página; ela vem do tema. Com Hello Elementor (casca
-vazia), o resultado sai sem estilo nenhum — fundo branco, Times New Roman,
-lista crua. É a primeira coisa que o usuário vê depois de usar uma
-funcionalidade que a gente investiu tempo construindo.
+Isso não torna a pesquisa funcional. O Loop Item, o template final de
+resultados, o estado sem resultado e uma pesquisa real continuam pendentes.
 
-**Ação:** desenhar a página de resultados e montar como template no Elementor.
+**Ação atual:** preparar a estrutura do Off Canvas.
+**Ação posterior:** integrar e verificar os resultados e o fallback.
 
 ### 3.2 ⚠ Não existe página de obrigado
 
@@ -328,22 +402,24 @@ submenu, ele precisa se comportar como **botão**, não como link.
 **O que o passo 7 precisa resolver:**
 
 - [x] Impedir a navegação padrão do link ao clicar — `e.preventDefault()` —
-      **verificado no site** em 30/07 (janela anônima)
+      **verificado no site**
 - [x] Anunciar o estado para leitor de tela (`aria-expanded` alternando entre
       `true` e `false`) — **verificado no site**, inspetor confirma a troca
-- [ ] Enter e Espaço abrem o submenu, em vez de navegar — Enter **verificado
-      no site** (nativo do link); Espaço só existe na versão **escrita, não
-      aplicada** de `scripts/header.js`
-- [ ] Esc fecha — **verificado como quebrado no site**: não há `keydown` no
-      script publicado. A devolução de foco ao fechar só existe na versão
-      **escrita, não aplicada**
+- [x] Enter e Espaço abrem o submenu, em vez de navegar — Enter funciona pelo
+      clique nativo do link; Espaço foi testado com o item em foco e não rola
+      a página
+- [x] Escape fecha e devolve o foco ao item pai — **verificado no site**
+- [x] Fora do menu, Espaço preserva a rolagem normal — **verificado no site**
 
-**Escrito em 30/07/2026, em `scripts/header.js`. Aplicação parcial** — só o
-clique está no ar. Falta colar a versão com teclado no Código Personalizado
-do Elementor e testar (ver `BRIEFING-conversa-03.md`, C1).
+**Escrito:** `scripts/header.js` contém o clique e o tratamento de teclado,
+sem tags HTML.
 
-Sem Esc/Espaço aplicados, o passo 9 (acessibilidade de teclado) continua sem
-o que fechar — o item principal do menu ainda não é alcançável por teclado.
+**Aplicado:** conteúdo envolvido por `<script>...</script>` no Código
+Personalizado do Elementor, salvo e publicado.
+
+**Verificado:** clique, Enter, Espaço, Escape e devolução de foco foram
+testados. O código não aparece como texto no rodapé e o menu funciona após a
+correção da forma de aplicação.
 
 ---
 
@@ -437,20 +513,23 @@ instrumentado desde o dia 1" que consta como métrica de sucesso do Livro 1.
 
 ### 6.2 Página de resultados de busca
 
-**Prioridade: alta se a busca subir no lançamento.**
+**Prioridade: alta antes do lançamento da busca completa.**
 
-A busca expansível está especificada em detalhe — expansão ao clique, itens do
-menu somem, "X" para fechar. Mas o Elementor não gera a página de resultados;
-ela vem do tema. Com Hello Elementor (casca vazia), o resultado sai sem estilo
-nenhum: fundo branco, fonte serifada, lista crua.
+A experiência principal escolhida é o Off Canvas. A etapa atual prepara o
+diálogo, o campo de pesquisa e a área onde resultados poderão ser apresentados.
 
-É a primeira coisa que o usuário vê depois de usar a funcionalidade que mais
-deu trabalho construir.
+Não é requisito desta etapa retornar conteúdo real, definir os campos finais,
+conectar links, concluir o Loop Item ou finalizar o template de resultados.
 
-**Precisa ter:**
-- Template no Elementor com o design system aplicado
-- Estado de "nenhum resultado encontrado" com sugestão de navegação
-- Exibição do termo buscado
+**Para a integração final:**
+
+- consulta real configurada e testada;
+- conteúdo e links dos resultados;
+- Loop Item final;
+- template no Elementor com o design system aplicado;
+- estado de "nenhum resultado encontrado" com sugestão de navegação;
+- exibição do termo buscado;
+- teste de pesquisa real.
 
 **Alternativa se o prazo apertar:** não subir a busca no lançamento. Melhor
 ausente que quebrada.
