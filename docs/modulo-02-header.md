@@ -5,8 +5,8 @@
 **Objetivo:** construir o cabeçalho do site — a peça que aparece em todas as
 páginas e concentra a maior parte do código customizado do projeto.
 
-**Status: passo 7 de 11, aplicação parcial** (atualizado em 30/07/2026 —
-ver `BRIEFING-conversa-03.md` para a fila imediata)
+**Status: desktop aplicado e verificado; responsividade em execução**
+(atualizado em 11/08/2026)
 
 | # | Passo | Status |
 |---|---|---|
@@ -14,15 +14,20 @@ ver `BRIEFING-conversa-03.md` para a fila imediata)
 | 2 | Template + containers aninhados | ✅ |
 | 3 | Widgets de menu e busca | ✅ |
 | 4 | Posicionamento absoluto — flutua sobre o hero | ✅ |
-| 5 | Fundo condicional | ✅ |
+| 5 | Fundo e paleta condicionais | ✅ desktop verificado |
 | 6 | CSS dos hovers | ✅ |
-| 7 | **Dropdown por clique (JS)** | 🟡 parcial — clique/`aria-expanded` verificados no site; Esc/Espaço escritos, não aplicados |
-| 8 | Busca expansível | ⬅ atual — bloqueado pela pendência 19 |
-| 9 | Acessibilidade de teclado | ⬜ Esc verificado quebrado no site; falta aplicar a versão com teclado, depois Tab e leitor de tela |
-| 10 | Mobile | ⬜ |
-| 11 | Logo em SVG | ⬜ |
+| 7 | **Dropdown por clique (JS)** | ✅ clique, Enter, Espaço, Escape, foco e `aria-expanded` verificados |
+| 8 | **Busca em Off Canvas** | ✅ desktop aplicado e verificado |
+| 9 | Acessibilidade de teclado | ✅ desktop verificado no menu e no Off Canvas |
+| 10 | Tablet e mobile | ⬅ atual — falta validar e ajustar |
+| 11 | Logos SVG condicionais | ✅ negativo na Home; positivo nas internas |
 
-**Classes aplicadas:** `fachini-header` · `fachini-menu` · `fachini-busca`
+**Classes do header:** `fachini-header` · `fachini-logo` · `fachini-menu` ·
+`fachini-busca`
+
+**Classes do Off Canvas:** `fachini-header-offcanvas` ·
+`fachini-logo-offcanvas` · `fachini-menu-offcanvas` ·
+`fachini-exit-offcanvas` · `fachini-busca-offcanvas`
 
 **Rótulo "Serralheria":** mantido por ora. A decisão de 27/07 adiou a troca
 para teste A/B pós-lançamento — "Serralheria" é segmento e não produto, mas
@@ -34,9 +39,10 @@ inox, faz painel elétrico e duto de refrigeração). Ver seção 6.4 do
 
 ## Por que o header é o módulo mais difícil
 
-Ele reúne os dois únicos itens que sobreviveram à triagem de código customizado:
-o **dropdown por clique** e a **busca expansível**. Nenhum dos dois existe pronto
-no Elementor.
+Ele reúne o dropdown por clique e a busca em Off Canvas. O Off Canvas, a busca,
+a consulta, os acionadores e a maior parte da aparência foram resolvidos pelo
+painel do Elementor. O código customizado ficou restrito ao comportamento do
+dropdown e à gestão de foco do diálogo.
 
 É também onde você aprende **flexbox** — o sistema que organiza praticamente
 todo layout na web moderna, e que o próprio Elementor usa por baixo dos
@@ -114,12 +120,11 @@ ficaria inalcançável por teclado.
 
 Ver §4.0b do `controle-projeto.md`.
 
-**Escrito em `scripts/header.js`, 30/07/2026 — aplicação parcial.** No site,
-verificado: impedir navegação padrão (1) e `aria-expanded` (2). Enter (3)
-funciona nativamente. **Verificado como quebrado:** Esc (4) — não há
-`keydown` no script publicado. Espaço (3) só existe na versão escrita, ainda
-não colada no Elementor. Ver `BRIEFING-conversa-03.md`, C1, para o passo de
-aplicação.
+**Aplicado e verificado no site.** `scripts/header.js` está versionado como
+JavaScript puro e publicado no Elementor dentro de `<script>...</script>`.
+Clique, Enter, Espaço, Escape, clique fora, devolução de foco e alternância de
+`aria-expanded` foram testados. O primeiro clique também foi verificado em
+janela anônima após o ajuste do WP Rocket.
 
 ---
 
@@ -136,9 +141,9 @@ aplicação.
 | 2 | "MÁQUINAS": chevron ▾ aparece no hover | CSS |
 | 3 | Dropdown abre por **clique**, não por hover — **ver 1.4** | JS |
 | 4 | Itens do dropdown: deslocamento lateral no hover, marcador vermelho | CSS |
-| 5 | Busca expande ocupando o header; itens do menu somem | CSS + JS |
-| 6 | "X" fecha a busca e restaura o menu | JS |
-| 7 | Navegação por teclado: Tab, Enter/Espaço abre, Esc fecha | JS |
+| 5 | Botão de busca abre o Off Canvas nativo | Painel |
+| 6 | X, Escape e clique fora fecham a busca | Painel + gestão de foco em JS |
+| 7 | Navegação por teclado e devolução de foco | JS |
 
 ---
 
@@ -447,68 +452,66 @@ vídeo, sem recalcular a página.
 
 ---
 
-## Parte 5 — A busca expansível
+## Parte 5 — A busca em Off Canvas
 
-Esta é a parte mais complexa do módulo e a única que exige JavaScript.
+> A arquitetura anterior de busca expansível dentro da linha do header foi
+> superada. A implementação atual usa o widget nativo **Fora da Tela** do
+> Elementor.
 
-### 5.1 A lógica
+### 5.1 Estrutura atual
 
-O estado é binário: **fechado** ou **aberto**.
-
-| | Fechado | Aberto |
-|---|---|---|
-| Itens do menu | visíveis | ocultos |
-| Campo de busca | ícone só | largura total |
-| Botão | lupa | X |
-
-A técnica: o JavaScript não altera estilo diretamente. Ele **adiciona ou remove
-uma classe** no header — algo como `busca-ativa` — e o CSS reage a essa classe.
-
-Isso é um padrão importante e vale internalizar: **JavaScript controla estado,
-CSS controla aparência.** Misturar os dois deixa o código impossível de manter.
-
-```
-CSS define:
-  .header .menu           → visível
-  .header.busca-ativa .menu → oculto
-
-JS faz apenas:
-  header.classList.toggle('busca-ativa')
+```text
+fachini-header
+├── linha do header
+│   ├── fachini-logo
+│   ├── fachini-menu
+│   └── fachini-busca
+└── Fora da Tela
+    └── fachini-header-offcanvas
+        ├── linha interna
+        │   ├── fachini-logo-offcanvas
+        │   ├── fachini-menu-offcanvas
+        │   └── fachini-exit-offcanvas
+        └── fachini-busca-offcanvas
 ```
 
-### 5.2 O que você escreve e o que eu escrevo
+O header e o Off Canvas repetem a navegação visualmente porque são contextos
+distintos do Elementor, mas usam o mesmo Menu Principal do WordPress. As classes
+são diferentes para impedir que o CSS e o JavaScript do dropdown do header
+afetem a cópia dentro do diálogo.
 
-**Você escreve o CSS:** as regras dos dois estados, com transição.
+### 5.2 O que foi resolvido pelo painel
 
-**O JavaScript:** decisão tomada (26/07/2026) — **foco no ensino.** Eu explico
-o conceito em passos pequenos, você escreve, eu reviso. Se em algum momento o
-ritmo comprometer o prazo, você recalibra pedindo com "escreve".
+- abertura e fechamento do Off Canvas;
+- botão de abertura, botão X e clique fora;
+- animação de 0,4s;
+- bloqueio de rolagem;
+- busca ao vivo com fonte Páginas, mínimo de 3 caracteres, 3 colunas e 3 itens;
+- Loop Item `Busca — Card de resultado`;
+- estado sem resultado;
+- paletas e logos condicionais.
 
-Os três conceitos que você vai aprender aqui, em ordem:
+### 5.3 Código pontual
 
-1. **Selecionar um elemento** — como o JavaScript encontra um pedaço da página
-   para trabalhar (`document.querySelector`)
-2. **Escutar um evento** — como fazer código rodar quando alguém clica
-   (`addEventListener`)
-3. **Alternar uma classe** — como mudar o estado sem tocar em estilo
-   (`classList.toggle`)
-4. **Impedir o comportamento padrão** — como fazer um link não navegar
-   (`preventDefault`). É uma linha, e é o que transforma o "Máquinas" de link
-   em abridor de submenu — ver §1.4
+`scripts/search-offcanvas.js` cuida somente do que o painel não entregou:
 
-São três conceitos, não três linhas — mas com eles você resolve o dropdown, a
-busca e qualquer interação futura do site. É a base de JavaScript no navegador.
+- foco automático no campo;
+- contenção de Tab e Shift+Tab dentro do diálogo;
+- fechamento por Escape com devolução de foco;
+- uso de `inert` para retirar o fundo da ordem de foco;
+- convivência com a interface do CookieAdmin.
 
-### 5.3 Onde o JS vive
+O arquivo é JavaScript puro no repositório. No Elementor, foi publicado no fim
+do `<body>`, para todo o site, envolvido por `<script>...</script>`.
 
-Elementor → Configurações do Site → **CSS Personalizado** não aceita JavaScript.
-Duas alternativas:
+### 5.4 Estado verificado e pendências
 
-- **Elementor → Configurações Avançadas → Código customizado** (Elementor Pro)
-- Widget **HTML** dentro do próprio header
+No desktop, foram verificados: primeiro clique em janela anônima, X, Escape,
+clique fora, foco, Tab/Shift+Tab, devolução de foco, ausência de deslocamento da
+barra de rolagem, pesquisa por `home`, navegação do card e estado sem resultado.
 
-A primeira é mais limpa. O arquivo fica versionado em `css/` ou `scripts/` no
-repositório de qualquer forma.
+Pendente: tablet/mobile, páginas reais das máquinas, links do EXPLORAR,
+exclusões da consulta, fallback final e testes com termos/códigos reais.
 
 ---
 
@@ -519,9 +522,9 @@ que o Google mede, além de excluir quem depende de teclado.
 
 | Tecla | Comportamento esperado |
 |---|---|
-| `Tab` | Percorre logo → itens do menu → busca |
+| `Tab` | No header, percorre os controles; no Off Canvas, permanece no diálogo |
 | `Enter` ou `Espaço` | Abre o dropdown de Máquinas |
-| `Esc` | Fecha o dropdown ou a busca |
+| `Esc` | Fecha o dropdown ou o Off Canvas e devolve o foco |
 | `Tab` dentro do dropdown | Percorre os subitens |
 
 **Foco visível:** quem navega por teclado precisa ver onde está. O contorno
@@ -553,31 +556,28 @@ trabalho é estilizar o painel que abre para respeitar o design system.
 ## Parte 8 — Checklist
 
 **Estrutura:**
-- [ ] Template de cabeçalho criado no Construtor de Temas, condição "Todo o site"
-- [ ] Menu criado em Aparência → Menus com a hierarquia da seção 1.2
-- [ ] Container externo full width + interno herdando o Content Width global
-- [ ] Logo em SVG, com link para a home
-- [ ] Alinhamento vertical central em todos os elementos
+- [x] Template de cabeçalho criado no Construtor de Temas, condição "Todo o site"
+- [x] Menu criado em Aparência → Menus com a hierarquia da seção 1.2
+- [x] Container externo full width + interno herdando o Content Width global
+- [x] Logos SVG condicionais, com link para a Home
+- [x] Alinhamento vertical central no desktop
 
 **Comportamentos:**
 - [x] Hover dos itens com retângulo translúcido e transição
 - [x] Chevron aparecendo no hover do "MÁQUINAS"
-- [x] Dropdown abrindo por clique — verificado no site em 30/07/2026
-      (janela anônima). Teclado (Esc/Espaço) ainda não aplicado — ver
-      `BRIEFING-conversa-03.md`
+- [x] Dropdown abrindo por clique e teclado; Escape e foco verificados
 - [x] Subitens com deslocamento e marcador vermelho
-- [ ] Busca expandindo e ocultando o menu
-- [ ] "X" restaurando o estado normal
+- [x] Busca abrindo no Off Canvas nativo
+- [x] X, Escape e clique fora fechando; foco devolvido ao acionador
 
 **Qualidade:**
-- [ ] Navegação por teclado completa — Esc verificado quebrado no site;
-      versão com Esc/Espaço escrita mas não aplicada; falta ainda Tab pelos
-      subitens e o hambúrguer do mobile
-- [ ] Foco visível
+- [x] Navegação por teclado verificada no desktop
+- [x] Foco contido no Off Canvas e devolvido ao acionador
 - [ ] Hambúrguer funcional no mobile
-- [ ] Testado em 1200, 1440 e 390px de largura
+- [ ] Tablet e mobile testados e ajustados
 - [x] CSS versionado em `css/header.css` no repositório
 - [x] JS versionado em `scripts/header.js` no repositório
+- [x] JS do foco versionado em `scripts/search-offcanvas.js`
 
 ---
 
@@ -672,8 +672,8 @@ informação multiplica o tempo de depuração** — aconteceu em 27 e 28/07.
 
 | Decisão | Definição |
 |---|---|
-| Fundo do header | **Transparente sobre o hero**, sólido navy nas páginas internas |
-| Logo | SVG existe. **Tratamento do logo fica para o fim do módulo** |
+| Fundo e paleta | Home: header transparente e Off Canvas Onix. Internas: header e Off Canvas off-white com controles Navy |
+| Logo | SVG negativo na Home e positivo nas páginas internas |
 | JavaScript | **Foco no ensino** — conceito explicado, Wilson escreve, revisão |
 | Sticky | **Pendente.** Recomendação: sem sticky no lançamento |
 
@@ -688,7 +688,7 @@ Do mais estrutural ao mais delicado, para que cada passo valide o anterior:
 5. Fundo condicional (transparente na home, sólido nas internas)
 6. CSS dos hovers — comportamentos 1, 2 e 3 da Parte 4
 7. Dropdown por clique — primeiro conceito de JavaScript
-8. Busca expansível — CSS e depois JavaScript
-9. Acessibilidade de teclado
-10. Mobile
-11. **Logo em SVG** — por último, conforme decidido
+8. Busca em Off Canvas — estrutura nativa e consulta
+9. Acessibilidade de teclado e gestão de foco
+10. **Tablet e mobile — etapa atual**
+11. Logos SVG condicionais

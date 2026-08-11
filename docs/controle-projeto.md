@@ -1,12 +1,11 @@
 # Controle do Projeto — Site Fachini Máquinas
 
 **Documento vivo.** Atualizar a cada decisão tomada ou pendência resolvida.
-**Última atualização:** 31/07/2026
+**Última atualização:** 11/08/2026
 
 ## ITEM ATUAL
 
-**Módulo 2 — estruturar a busca em Off Canvas e preparar o esqueleto da
-pesquisa.**
+**Módulo 2 — validar a responsividade do header e da busca Off Canvas.**
 
 ---
 
@@ -49,8 +48,10 @@ Registrar que o arquivo mudou não prova que o site mudou.
 
 | Data | Decisão | Observação |
 |---|---|---|
+| 11/08 | **Header e busca: desktop aplicado e verificado** | Header, Off Canvas, busca ao vivo, Loop Item, navegação dos cards, estado sem resultado e acessibilidade de teclado foram publicados e testados no site. A próxima validação é tablet/mobile |
+| 11/08 | **Paleta e logos condicionais por contexto** | Home: header transparente, logo negativo e Off Canvas Onix. Páginas internas: header e Off Canvas off-white, logo positivo e textos/controles Navy. Verificado na Home e em `/elementor-499/` |
 | 31/07 | **Dropdown “MÁQUINAS” aplicado e verificado** | JavaScript completo publicado no Elementor. Clique, Enter, Espaço, Escape e devolução de foco foram testados; ver registro detalhado abaixo |
-| 31/07 | **Busca do header: arquitetura Off Canvas** | A busca expansível inline foi substituída pela estrutura Off Canvas. A etapa atual prepara a interface; integração e resultados reais ficam pendentes |
+| 31/07 | **Busca do header: arquitetura Off Canvas** | A busca expansível inline foi substituída pela estrutura Off Canvas. A estrutura desktop foi aplicada e verificada em 11/08; conteúdo real das máquinas e fallback final continuam pendentes |
 | 26/07 | **POSICIONAMENTO: perfiladeira é fabricação Fachini** | Decisão da diretoria. Sustentado por capacidade instalada — insumos e estrutura para fabricar cada componente, histórico de refabricação completa. Finame em andamento. Ver seção 14 do dossiê |
 | 26/07 | **Árvore de navegação: seguir Figma por ora** | Foco na entrega. Ajustes de estrutura ficam para depois do lançamento |
 | 26/07 | **MÓDULO 1 CONCLUÍDO** | Global Colors, Global Fonts, Theme Style completo, Content Width 1200, Layout Full Width, variáveis de espaçamento. Teste de herança validado |
@@ -235,52 +236,68 @@ e mudar a chave `enabled` para `false`.
 
 ### 2.4 Busca Off Canvas — estrutura e integração
 
-**Arquitetura decidida:**
+**ESCRITO:**
 
-- a solução atual usa o widget Off Canvas;
-- descrições antigas de busca expansível inline estão superadas;
-- o Off Canvas será usado como estrutura da interface de pesquisa;
-- o campo de pesquisa permanece dentro do Off Canvas;
-- a estrutura pode ser preparada antes da integração completa dos resultados;
-- links, campos retornados e consulta real ficam para etapa posterior.
+- `css/header.css` contém as regras de alinhamento, paleta condicional, logos e
+  busca do header/Off Canvas;
+- `scripts/search-offcanvas.js` contém foco inicial, contenção do Tab,
+  fechamento e devolução do foco;
+- a busca expansível inline descrita em documentos antigos foi superada.
 
-**Pendências — não classificadas como aplicadas ou verificadas:**
+**APLICADO:**
 
-- Off Canvas encavalando ou afetando o header;
-- hierarquia correta dos containers;
-- foco inicial ao abrir;
-- fechamento por Escape;
-- devolução de foco ao acionador;
-- ordem do Tab;
-- comportamento de `aria-modal`;
-- comportamento de `inert`;
-- bloqueio de rolagem;
-- conteúdo real dos resultados;
-- links dos resultados;
-- campos exibidos;
-- Loop Item final;
-- template final de resultados;
-- teste de uma pesquisa real.
+- Off Canvas nativo do Elementor inserido no header e publicado;
+- botão de abertura e botão de fechamento conectados pelo painel;
+- `scripts/search-offcanvas.js` publicado no fim do `<body>` para todo o site;
+- resultados ao vivo ativados, consulta limitada a Páginas, mínimo de 3
+  caracteres, 3 colunas e 3 itens no desktop;
+- Loop Item `Busca — Card de resultado` conectado;
+- paletas e logos condicionais aplicados para Home e páginas internas.
 
-**Estado atual:** arquitetura decidida; aplicação e verificação estrutural
-pendentes. A integração dos resultados não faz parte da verificação funcional
-desta etapa.
+**VERIFICADO no site pelo usuário:**
+
+- abre no primeiro clique, inclusive em janela anônima após o ajuste do
+  WP Rocket;
+- fecha pelo X, por Escape e por clique fora;
+- foco entra no campo, Tab e Shift+Tab permanecem no diálogo e o foco retorna
+  ao acionador ao fechar;
+- o bloqueio de rolagem não desloca horizontalmente a página;
+- pesquisa real por `home` retorna o card, inclusive quando feita na própria
+  Home, e o card navega para a URL correta;
+- estado sem resultado funciona;
+- Home usa header transparente, logo negativo e Off Canvas Onix;
+- páginas internas usam header/Off Canvas off-white, logo positivo e controles
+  Navy;
+- header aberto e Off Canvas mantêm o alinhamento desktop de 1200px, altura de
+  86px e acionador de busca de 178 × 35px.
+
+**Pendências:**
+
+- validar e ajustar tablet e mobile; não existe prancheta mobile aprovada;
+- criar as páginas reais de categoria e de máquina, com imagem destacada;
+- inserir os links reais do bloco EXPLORAR;
+- excluir da consulta as páginas institucionais inadequadas quando existirem;
+- finalizar e testar o template `Resultados de pesquisa — Fallback`;
+- testar termos e códigos reais das máquinas.
 
 ---
 
 ## 3. Achados novos — o que tinha passado
 
-### 3.1 ⚠ Integração e fallback de resultados de busca pendentes
+### 3.1 ⚠ Conteúdo real e fallback de resultados de busca pendentes
 
-A experiência principal escolhida usa Off Canvas. O campo de pesquisa e a área
-destinada aos resultados podem ser estruturados antes de a consulta real, os
-campos retornados e os links estarem finalizados.
+A experiência principal em Off Canvas está aplicada e funcional no desktop. O
+Loop Item está conectado, o estado sem resultado foi configurado e uma pesquisa
+por `home` foi testada com navegação correta.
 
-Isso não torna a pesquisa funcional. O Loop Item, o template final de
-resultados, o estado sem resultado e uma pesquisa real continuam pendentes.
+Isso ainda não valida a busca para o catálogo final: as páginas das máquinas
+não existem, as exclusões da consulta não podem ser fechadas, os links do bloco
+EXPLORAR aguardam seus destinos e o template `Resultados de pesquisa —
+Fallback` ainda precisa ser concluído e testado.
 
-**Ação atual:** preparar a estrutura do Off Canvas.
-**Ação posterior:** integrar e verificar os resultados e o fallback.
+**Ação atual:** validar a responsividade do header e da busca Off Canvas.
+**Ação posterior:** cadastrar o conteúdo real, fechar a consulta e validar o
+fallback.
 
 ### 3.2 ⚠ Não existe página de obrigado
 
@@ -342,15 +359,17 @@ do subdomínio antigo e os links internos apontam para o lugar errado.
 
 **Ação:** definir o método antes do go-live. Não é tarefa de véspera.
 
-### 3.7 Acessibilidade de teclado no menu
+### 3.7 Acessibilidade de teclado no menu e na busca — verificada no desktop
 
-O dropdown de "Máquinas" abre por clique. Precisa funcionar também por teclado
-(Tab para navegar, Enter ou Espaço para abrir, Esc para fechar).
+O dropdown de "Máquinas" foi verificado com Tab, Enter, Espaço, Escape,
+devolução de foco e alternância de `aria-expanded` no Inspetor.
 
-Não é só acessibilidade: o Google usa sinais de usabilidade, e navegação que só
-funciona com mouse é falha de qualidade.
+O Off Canvas foi verificado com foco inicial no campo, contenção de Tab e
+Shift+Tab, Escape para fechar e devolução de foco ao acionador. O tratamento
+considera a interface do CookieAdmin para não disputar o foco quando o aviso de
+consentimento está ativo.
 
-**Ação:** incluir no Módulo 2, junto do CSS do header.
+**Pendente:** repetir a validação nos breakpoints tablet e mobile.
 
 ---
 
@@ -515,21 +534,19 @@ instrumentado desde o dia 1" que consta como métrica de sucesso do Livro 1.
 
 **Prioridade: alta antes do lançamento da busca completa.**
 
-A experiência principal escolhida é o Off Canvas. A etapa atual prepara o
-diálogo, o campo de pesquisa e a área onde resultados poderão ser apresentados.
-
-Não é requisito desta etapa retornar conteúdo real, definir os campos finais,
-conectar links, concluir o Loop Item ou finalizar o template de resultados.
+A experiência principal escolhida é o Off Canvas. No desktop, diálogo, campo,
+resultados ao vivo, Loop Item, navegação do card e estado sem resultado estão
+aplicados e foram testados com a página Home.
 
 **Para a integração final:**
 
-- consulta real configurada e testada;
-- conteúdo e links dos resultados;
-- Loop Item final;
-- template no Elementor com o design system aplicado;
-- estado de "nenhum resultado encontrado" com sugestão de navegação;
-- exibição do termo buscado;
-- teste de pesquisa real.
+- criar as páginas de categoria e de máquina com imagem destacada;
+- conectar os links do bloco EXPLORAR;
+- excluir da consulta as páginas institucionais inadequadas;
+- concluir o template `Resultados de pesquisa — Fallback` e sua condição de
+  exibição;
+- testar termos comerciais e códigos reais das máquinas;
+- validar a experiência em tablet e mobile.
 
 **Alternativa se o prazo apertar:** não subir a busca no lançamento. Melhor
 ausente que quebrada.

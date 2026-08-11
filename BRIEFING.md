@@ -3,15 +3,14 @@
 **Documento de continuidade.** Escrito para ser enviado no início de uma nova
 conversa, restaurando o contexto completo do projeto sem perda de calibragem.
 
-**Última atualização:** 30/07/2026
-**Onde parou:** Módulo 2 (Header), passo 7 — dropdown por clique, **aplicação
-parcial**. No site: clique abre/fecha, `aria-expanded` alterna, Enter
-funciona — verificado em janela anônima. **Esc verificado quebrado** (sem
-`keydown` no script publicado); Espaço nunca esteve no ar. A versão completa
-(Esc + Espaço) está escrita em `scripts/header.js`, não aplicada, não
-commitada. Ver `BRIEFING-conversa-03.md` para a fila de aplicação (C1) e para
-o que já foi levantado sobre o hero e outros achados (skip link quebrado,
-title/description da home vazios, logo com lazyload).
+**Última atualização:** 11/08/2026
+**Onde parou:** Módulo 2 (Header) — versão desktop do header, dropdown e busca
+em Off Canvas aplicada e verificada. Dropdown: clique, Enter, Espaço, Escape,
+devolução de foco e `aria-expanded` testados. Off Canvas: primeiro clique,
+fechamento, foco, contenção do Tab, devolução de foco, busca ao vivo, Loop Item,
+estado sem resultado, paletas e logos condicionais verificados. **Próxima ação:**
+validar tablet e mobile. Conteúdo real das máquinas, links do EXPLORAR,
+exclusões da consulta e fallback final continuam pendentes.
 
 ---
 
@@ -390,7 +389,7 @@ ganho rápido; o orgânico é o ativo estrutural.
 
 ### 🔄 Em execução — Módulo 2 (Header)
 
-Progresso: **passos 1 a 7 de 11 concluídos.**
+Progresso: **desktop aplicado e verificado; responsividade em execução.**
 
 | # | Passo | Status |
 |---|---|---|
@@ -398,36 +397,43 @@ Progresso: **passos 1 a 7 de 11 concluídos.**
 | 2 | Template de cabeçalho + containers aninhados | ✅ criado |
 | 3 | Widgets (menu, busca) | ✅ inseridos |
 | 4 | Posicionamento absoluto — header flutua sobre o hero | ✅ **funcionando** |
-| 5 | Fundo condicional (transparente na home, navy nas internas) | ✅ |
+| 5 | Fundo condicional (Home transparente; internas off-white) | ✅ verificado |
 | 6 | CSS dos hovers (3 comportamentos) | ✅ |
-| 7 | **Dropdown por clique** | 🟡 **PARAMOS AQUI** — clique/`aria-expanded` no ar; Esc/Espaço escritos, não aplicados |
-| 8 | Busca expansível (CSS + JS) | ⬜ bloqueado pela pendência 19 |
-| 9 | Acessibilidade de teclado | ⬜ Esc verificado quebrado no site |
-| 10 | Mobile / hambúrguer | ⬜ |
-| 11 | Logo em SVG | ⬜ (por último, por decisão) |
+| 7 | **Dropdown por clique** | ✅ clique, Enter, Espaço, Escape, foco e `aria-expanded` verificados |
+| 8 | **Busca em Off Canvas** | ✅ desktop aplicado e verificado; substitui a busca expansível inline |
+| 9 | Acessibilidade de teclado | ✅ desktop verificado no menu e no Off Canvas |
+| 10 | Mobile / hambúrguer | ⬅ **ATUAL** — falta validar e ajustar tablet/mobile |
+| 11 | Logos SVG condicionais | ✅ negativo na Home; positivo nas internas |
 
-**Estado visual verificado (27/07, ainda vale para os passos 1–6):**
+**Estado visual e funcional verificado no desktop (11/08):**
 - Header atravessa a tela, flutua sobre o hero
-- Fundo condicional funcionando: transparente na home, navy nas internas
+- Home: header transparente, logo negativo e Off Canvas Onix
+- Internas: header e Off Canvas off-white, logo positivo e controles Navy
 - Menu com pílula translúcida no hover, sem deslocar os vizinhos
 - Chevron do "Máquinas" aparecendo no hover
-- Dropdown com navy translúcido, texto claro, cantos arredondados
+- Dropdown legível nos dois contextos, com cantos arredondados
 - Itens do dropdown deslizando 8px com barra vermelha reta
+- Header e Off Canvas alinhados em 1200px, altura de 86px; busca 178 × 35px
 
-**Passo 7 — dropdown por clique, aplicação parcial (30/07, verificado em
-janela anônima — ver `BRIEFING-conversa-03.md` Parte B):**
+**Passo 7 — dropdown por clique, aplicado e verificado:**
 - ✅ Abre e fecha ao clicar em "Máquinas", não mais por hover
 - ✅ `aria-expanded` alterna entre `true`/`false` no link — confirmado no inspetor
-- ✅ Enter funciona — nativo do link, não precisou de código
+- ✅ Enter e Espaço abrem sem rolar a página
+- ✅ Escape fecha e devolve o foco ao item pai
 - ✅ Atraso de JS do WP Rocket não engole o primeiro clique — testado
-- ❌ **Esc não fecha o dropdown** — verificado quebrado, não há `keydown` no
-  script que está no site
-- ❓ Espaço — não testado, mas não deve funcionar (não existe no script
-  publicado)
-- A versão completa, com Esc (devolvendo o foco) e Espaço, está **escrita em
-  `scripts/header.js` mas não aplicada nem commitada**
-- **Falta:** colar a versão nova no Código Personalizado do Elementor,
-  limpar cache, testar em 1200/1440/390px e com JS desativado (risco 4.0)
+- ✅ `scripts/header.js` está versionado e publicado no Elementor dentro de
+  `<script>...</script>`
+
+**Busca em Off Canvas — desktop aplicado e verificado:**
+- abre no primeiro clique e fecha pelo X, por Escape e por clique fora;
+- foco entra no campo; Tab e Shift+Tab permanecem no diálogo; ao fechar, o foco
+  retorna ao acionador;
+- busca ao vivo usa Páginas, mínimo de 3 caracteres, 3 colunas e 3 itens;
+- Loop Item `Busca — Card de resultado`, navegação do card e estado sem
+  resultado testados com a página Home;
+- `scripts/search-offcanvas.js` está publicado no fim do `<body>` para todo o
+  site;
+- falta validar tablet/mobile e integrar as páginas reais das máquinas.
 
 **CSS escrito e versionado:** `css/global.css` (variáveis de espaçamento) e
 `css/header.css` (4 seções). O arquivo `elementor-css-completo.txt` é a junção
@@ -435,9 +441,12 @@ dos dois, para colar no campo do Elementor.
 
 **Classes CSS aplicadas no Elementor:**
 - Container externo: `fachini-header`
-- Container do logo: `fachini-logo` (ainda vazio — logo é o passo 11)
+- Container do logo: `fachini-logo`
 - Container do menu: `fachini-menu`
 - Container da busca: `fachini-busca`
+- Off Canvas: `fachini-header-offcanvas`, `fachini-logo-offcanvas`,
+  `fachini-menu-offcanvas`, `fachini-exit-offcanvas` e
+  `fachini-busca-offcanvas`
 
 **Menu criado (Aparência → Menus, "Menu Principal"):**
 ```
@@ -617,9 +626,9 @@ com argumento de negócio para defesa junto à diretoria.
 **`modulo-01-design-system.md` (413 linhas) — CONCLUÍDO**
 Guia de execução do design system + seção de aprendizados da execução.
 
-**`modulo-02-header.md` (526 linhas) — EM EXECUÇÃO**
+**`modulo-02-header.md` — EM EXECUÇÃO**
 Anatomia do header, teoria de flexbox, montagem no Elementor, o CSS a escrever,
-busca expansível, acessibilidade, mobile, checklist, ordem de execução.
+busca em Off Canvas, acessibilidade, mobile, checklist, ordem de execução.
 
 **`tokens.md` (205 linhas)**
 Valores medidos no Figma vs. adotados, com a razão de cada divergência.
@@ -676,7 +685,7 @@ Valores medidos no Figma vs. adotados, com a razão de cada divergência.
 | Módulo | Escopo | Status |
 |---|---|---|
 | 1 | Design System no Elementor | ✅ concluído 26/07 |
-| 2 | **Header** — menu, dropdown, busca expansível | 🔄 passo 7/11, aplicação parcial |
+| 2 | **Header** — menu, dropdown e busca em Off Canvas | 🔄 desktop verificado; responsividade em execução |
 | 3 | Formulário qualificador e medição | 🔒 bloqueado pela spec |
 | 4 | Produção de páginas | ⬜ |
 | 5 | SEO on-page | ⬜ |
@@ -793,56 +802,33 @@ projeto: *"quero codar manualmente pra aprender"*, *"não achei de bom tom"*,
 
 ## PARTE 10 — A PRÓXIMA AÇÃO
 
-**Módulo 2, passo 7: aplicar a versão completa do dropdown por clique.**
-Detalhamento operacional em `BRIEFING-conversa-03.md`, Parte C1.
+**Módulo 2: validar a responsividade do header e da busca em Off Canvas.**
 
-### O que está no site hoje (verificado em 30/07, janela anônima)
+### O que está verificado no desktop
 
-Só a metade do script: clique abre/fecha "Máquinas" (não mais por hover),
-`aria-expanded` alterna, Enter funciona nativamente. **Esc verificado
-quebrado** — não há `keydown` no script publicado. Espaço nunca foi
-aplicado.
+- dropdown por clique e teclado, inclusive foco e `aria-expanded`;
+- Off Canvas nativo abrindo no primeiro clique e fechando por X, Escape e clique
+  fora;
+- contenção do foco e devolução ao acionador;
+- busca ao vivo, Loop Item, card navegável e estado sem resultado;
+- paletas e logos condicionais na Home e em páginas internas;
+- alinhamento de 1200px, header de 86px e busca de 178 × 35px.
 
-### O que está escrito, esperando ser colado
+### Ação atual
 
-`scripts/header.js` já tem Esc (com devolução de foco ao item pai) e Espaço,
-cobrindo a exigência técnica de 28/07 (§4.0b do `controle-projeto.md`). Junto
-dele, `css/global.css` ganhou a Seção 3 (`prefers-reduced-motion` geral).
-**Nada disso foi colado no Elementor nem commitado.**
+1. Testar o header e o Off Canvas nos breakpoints tablet e mobile.
+2. Validar menu/hambúrguer, submenu, abertura e fechamento da busca.
+3. Verificar Tab, Shift+Tab, Escape, devolução de foco e teclado virtual.
+4. Ajustar pelo painel antes de qualquer CSS; não existe prancheta mobile
+   aprovada, portanto nenhuma medida visual nova pode ser inventada.
 
-A fila de aplicação (30 minutos, sem dependência — `BRIEFING-conversa-03.md`
-C1):
-1. Colar `scripts/header.js` em Código Personalizado → fim do `<body>`
-2. Colar o CSS consolidado em CSS Personalizado
-3. Limpar as três camadas de cache
-4. Verificar: Tab até "Máquinas" · Enter abre · Esc fecha e devolve o foco ·
-   Espaço abre sem rolar a página
-5. Commitar
+### Depois da responsividade
 
-### Depois disso — passo 8, busca expansível
-
-**Bloqueado pela pendência 19** (`controle-projeto.md` §2.2): falta a designer
-definir se a transição de "itens do menu somem" é suave ou seca.
-
-Quando destravar, os três conceitos de JavaScript envolvidos (Wilson escreve,
-seguindo a Parte 1B):
-
-1. **`document.querySelector`** — encontrar um elemento na página
-2. **`addEventListener`** — executar código quando algo acontece
-3. **`classList.toggle`** — alternar uma classe
-
-**Princípio a fixar:** JavaScript controla estado, CSS controla aparência. O JS
-não pinta nada — adiciona ou remove uma classe, e o CSS reage. Mesmo padrão
-usado no passo 7, com a classe `.is-open`.
-
-### Onde o JavaScript vive
-
-O campo de CSS Personalizado **não aceita JavaScript**. Alternativas:
-- Elementor → Configurações Avançadas → Código customizado (Elementor Pro) —
-  usado no passo 7
-- Widget HTML dentro do próprio header
-
-O arquivo fica versionado em `scripts/` no repositório de qualquer forma.
+- criar as páginas reais de categoria e de máquina, com imagem destacada;
+- conectar os links do bloco EXPLORAR;
+- excluir da consulta páginas institucionais inadequadas;
+- concluir e testar `Resultados de pesquisa — Fallback`;
+- testar palavras comerciais e códigos reais das máquinas.
 
 ---
 
