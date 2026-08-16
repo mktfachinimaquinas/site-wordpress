@@ -11,6 +11,33 @@ que depois são aplicados manualmente no WordPress/Elementor.
 Você não decide prioridades, não marca etapas como concluídas e não altera
 documentos de estado sem autorização explícita.
 
+## Arquitetura de uso de IA
+
+Português do Brasil é o idioma operacional padrão. Comandos, APIs, seletores,
+propriedades, identificadores e mensagens técnicas podem permanecer no idioma
+original quando isso preservar precisão.
+
+`docs/ARQUITETURA-IA.md` é o manual canônico para contratos das superfícies,
+modelo e raciocínio, Normal/Plan/Goal/`/fast`, Preflight, ciclo e Health de
+sessões, Scope Exit, handoff, diff e review, mídia e automação. Quando uma
+dessas decisões afetar a tarefa, siga o documento em vez de reconstruir a
+política por memória.
+
+O usuário é a autoridade final sobre prioridade, item da fila, decisões,
+aplicação e publicação, promoção de estado, aprovação de diff, commit e push.
+
+Quando complexidade ou risco afetarem superfície, modelo, modo, permissões,
+review ou handoff, classifique a tarefa conforme C0–C4 e R0–R4 do manual. Não
+repita essa classificação mecanicamente a cada turno.
+
+Plan investiga e propõe; não autoriza implementação. Goal não amplia escopo,
+não substitui autorização do usuário e só pode ser usado conforme os critérios
+do manual.
+
+Ao atingir aparentemente o critério de parada, a IA pode recomendar Scope Exit
+e próxima sessão, mas o usuário confirma o encerramento. Use o menor protocolo
+suficiente para controlar o risco; não crie sessão ou handoff por formalidade.
+
 ## Abertura e item da fila
 
 Antes de agir:
@@ -20,7 +47,7 @@ Antes de agir:
 3. Use `BRIEFING.md` somente como contexto e continuidade, nunca como fonte da
    ação imediata.
 4. Leia apenas os documentos técnicos relacionados ao item.
-5. Comece a resposta com `ITEM DA FILA: <item>`.
+5. Comece toda resposta com `ITEM DA FILA: <item>`.
 
 `docs/controle-projeto.md` é a única fonte do item corrente. Se outro documento
 divergir dele, informe o conflito sem substituir a fila por conta própria.
@@ -33,9 +60,10 @@ conversas anteriores ou documentos técnicos. A ausência de item explícito nã
 autoriza o agente a escolher uma prioridade.
 
 Se a própria mensagem do usuário autorizar explicitamente um trabalho fora da
-fila, essa autorização é suficiente para o trabalho delimitado. Declare o
-desvio na primeira linha, respeite exatamente os arquivos e ações autorizados
-e não peça uma segunda confirmação redundante.
+fila, essa autorização é suficiente para o trabalho delimitado. A primeira
+linha continua sendo `ITEM DA FILA: <item>` e a segunda é `DESVIO AUTORIZADO:
+<escopo delimitado>`. Respeite exatamente os arquivos e ações autorizados e
+não peça uma segunda confirmação redundante.
 
 Se o pedido estiver fora do item corrente e a mensagem não trouxer autorização
 explícita, escreva: “Isso está fora do item da fila, que hoje é X. Sigo mesmo
@@ -51,7 +79,8 @@ duráveis ficam aqui.
 - Negócio e posicionamento: `docs/DOSSIE_FACHINI_projeto_site.md`
 - Estado e pendências: `docs/controle-projeto.md`
 - Design system: `design-system/tokens.md`
-- Visual aprovado: Figma/SVG fornecido pela designer
+- Visual aprovado: Figma e arquivos fornecidos pela designer, usando o formato
+  definido em `docs/ARQUITETURA-IA.md`
 - Execução do módulo: guia correspondente em `docs/`
 - Regras de trabalho: este arquivo
 
@@ -60,9 +89,11 @@ confirmado no painel, site, código-fonte ou teste correspondente.
 
 ## Estados — nunca resumir como “pronto”
 
-- **Escrito:** existe no repositório.
-- **Aplicado:** foi inserido no Elementor, salvo e publicado.
-- **Verificado:** foi testado no site, com método informado.
+- **Escrito:** existe no arquivo local autorizado.
+- **Aplicado:** inserido ou configurado no Elementor, salvo e publicado.
+- **Verificado:** confirmado no site pelo método informado.
+
+Escrito não significa rastreado pelo Git, commitado, aplicado ou verificado.
 
 Toda afirmação de execução deve trazer o método de verificação.
 
@@ -115,32 +146,48 @@ Leia `design-system/tokens.md` antes de citar valores.
 Antes de editar:
 
 - pedido de revisão significa somente leitura;
-- mostre o diff proposto e aguarde autorização explícita;
-- confirme que a autorização indica os arquivos permitidos;
+- escrita exige autorização explícita do objetivo e dos arquivos;
+- se a escrita ainda não estiver autorizada, apresente a proposta e aguarde
+  autorização;
+- quando a própria mensagem do usuário já trouxer autorização suficiente, não
+  peça confirmação redundante;
+- depois da edição, apresente o diff real;
 - preserve mudanças preexistentes e não as descarte;
+- não descarte alterações fora do escopo;
 - não use substituição em lote sem revisar linhas vizinhas;
 - procure ocorrências antigas depois da alteração;
 - salve os arquivos em UTF-8 conforme `.editorconfig`.
 
 ## Claude Code e Codex
 
-Existe um único escritor por item.
+Existe um único escritor por arquivo, seletor ou unidade de trabalho
+autorizada, em cada momento.
 
-- Se Work escreve, Codex e Claude Code revisam sem editar.
-- Se Codex escreve, Work e Claude Code revisam sem editar.
-- Se Claude Code escreve, Work e Codex revisam sem editar.
-- Agentes não alteram simultaneamente o mesmo arquivo ou seletor.
+- Se Work escreve determinado arquivo ou escopo, Codex e Claude Code revisam
+  sem editar esse mesmo arquivo ou escopo.
+- Se Codex escreve determinado arquivo ou escopo, Work e Claude Code revisam
+  sem editar esse mesmo arquivo ou escopo.
+- Se Claude Code escreve determinado arquivo ou escopo, Work e Codex revisam
+  sem editar esse mesmo arquivo ou escopo.
+- Agentes não alteram simultaneamente o mesmo arquivo, seletor ou escopo de
+  alteração.
+- Uma transferência explícita de escritor ou um novo escopo autorizado permite
+  que outro agente assuma.
+- A existência de um único item da fila não impede que sessões diferentes
+  escrevam arquivos distintos em fases distintas.
 - Pedido de revisão significa somente leitura.
 - Codex, Claude Code, Work e conversas de módulo podem reportar evidências e
   propor diffs, mas não atualizam documentos de estado sem autorização.
 
-A conversa central é somente a conversa que Wilson designar expressamente como
-responsável pelo estado do projeto. Nenhuma conversa pode se autodeclarar
-central.
+Nenhuma conversa é fonte canônica do estado do projeto. A fonte canônica do
+item da fila, estados e pendências é `docs/controle-projeto.md`. A Central de
+Arquitetura não recebe autoridade para alterar estado apenas por ser chamada de
+Central.
 
-Mesmo a conversa central somente pode alterar um documento de estado quando
-Wilson autorizar especificamente o documento, o objetivo da atualização e os
-arquivos que podem ser tocados.
+O usuário pode autorizar uma sessão documental específica a atualizar um
+documento de estado, indicando explicitamente o documento, o objetivo e os
+arquivos permitidos. Nenhuma sessão pode se autodeclarar responsável pelo
+estado.
 
 ### Indisponibilidade do agente escritor
 
@@ -155,7 +202,10 @@ Se o agente escritor estiver indisponível, travar ou perder contexto:
 5. Depois da transferência, o novo escritor pode continuar o mesmo item.
 6. Preserve alterações existentes; não recomece nem sobrescreva código
    parcialmente produzido sem revisão.
-7. Ao terminar, gere um relatório de continuidade para o outro agente.
+7. Se houver transferência de escritor ou uma sessão sucessora que precise
+   continuar o trabalho, gere relatório de continuidade somente com as
+   informações aplicáveis. Não gere handoff ou relatório por ritual quando não
+   houver sucessor nem continuidade necessária.
 
 Se Claude Code estiver indisponível e Wilson autorizar o Codex a assumir, o
 Codex passa a ser o escritor do item. Ele continua sujeito ao diff prévio, às
@@ -169,6 +219,7 @@ Não alterar sem autorização específica:
 - `BRIEFING.md`
 - `CLAUDE.md`
 - `AGENTS.md`
+- `docs/ARQUITETURA-IA.md`
 
 Publicação no WordPress, commit e `git push` exigem cada qual autorização
 específica.

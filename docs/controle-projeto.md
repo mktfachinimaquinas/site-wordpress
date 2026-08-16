@@ -5,7 +5,11 @@
 
 ## ITEM ATUAL
 
-**Módulo 2 — validar a responsividade do header e da busca Off Canvas.**
+**Footer — construir e validar a versão desktop.**
+
+A versão mobile do footer ainda não foi finalizada pela designer. A validação
+responsiva do header e da busca Off Canvas permanece pendente e será retomada
+quando os respectivos layouts mobile estiverem aprovados.
 
 ---
 
@@ -209,6 +213,7 @@ e mudar a chave `enabled` para `false`.
 | 21 | 🟢 28/07 | **Destino do link "MÁQUINAS"** — decidido: **não haverá página de categoria por ora.** O item existe apenas para abrir o submenu. Isso cria uma exigência técnica no passo 7 — ver 4.0b |
 | 20 | 🔴 | **Camada "Larga" a 1200px** — com o padrão em 1200, `min(94vw, 1560px)` entrega 1284px numa tela de 1366, 84px acima do padrão. Ou ganha número novo, ou sai do sistema e o mosaico vira full-bleed |
 | 18 | 🔴 | **Hierarquia de headings** — alinhar a marcação semântica da Parte 3 antes da montagem (fonte: `docs/modulo-01-design-system.md`, "Pendências com a designer") |
+| 22 | 🟡 11/08 | **Finalizar o layout mobile do footer** — a versão desktop será executada primeiro; não implementar a versão mobile antes do frame aprovado |
 
 ### 2.3 Verificações técnicas
 
@@ -254,7 +259,7 @@ e mudar a chave `enabled` para `false`.
 - Loop Item `Busca — Card de resultado` conectado;
 - paletas e logos condicionais aplicados para Home e páginas internas.
 
-**VERIFICADO no site pelo usuário:**
+**VERIFICADO no desktop pelo usuário:**
 
 - abre no primeiro clique, inclusive em janela anônima após o ajuste do
   WP Rocket;
@@ -262,8 +267,9 @@ e mudar a chave `enabled` para `false`.
 - foco entra no campo, Tab e Shift+Tab permanecem no diálogo e o foco retorna
   ao acionador ao fechar;
 - o bloqueio de rolagem não desloca horizontalmente a página;
-- pesquisa real por `home` retorna o card, inclusive quando feita na própria
-  Home, e o card navega para a URL correta;
+- com conteúdo de teste, os resultados ao vivo e o Loop Item foram confirmados:
+  a pesquisa por `home` retorna o card, inclusive quando feita na própria Home,
+  e o card navega para a URL correta;
 - estado sem resultado funciona;
 - Home usa header transparente, logo negativo e Off Canvas Onix;
 - páginas internas usam header/Off Canvas off-white, logo positivo e controles
@@ -271,7 +277,7 @@ e mudar a chave `enabled` para `false`.
 - header aberto e Off Canvas mantêm o alinhamento desktop de 1200px, altura de
   86px e acionador de busca de 178 × 35px.
 
-**Pendências:**
+**PENDENTE:**
 
 - validar e ajustar tablet e mobile; não existe prancheta mobile aprovada;
 - criar as páginas reais de categoria e de máquina, com imagem destacada;
@@ -295,7 +301,8 @@ não existem, as exclusões da consulta não podem ser fechadas, os links do blo
 EXPLORAR aguardam seus destinos e o template `Resultados de pesquisa —
 Fallback` ainda precisa ser concluído e testado.
 
-**Ação atual:** validar a responsividade do header e da busca Off Canvas.
+**Aguardando layout mobile:** validar a responsividade do header e da busca Off
+Canvas.
 **Ação posterior:** cadastrar o conteúdo real, fechar a consulta e validar o
 fallback.
 
@@ -370,6 +377,19 @@ considera a interface do CookieAdmin para não disputar o foco quando o aviso de
 consentimento está ativo.
 
 **Pendente:** repetir a validação nos breakpoints tablet e mobile.
+
+### 3.8 ⚠ Revisão documental do Dossiê — assunto mapeado
+
+**ESTADO:** mapeado; não executado. Existe necessidade de decisão futura antes
+de iniciar qualquer revisão documental.
+
+**PROPOSTAS FUTURAS AGUARDANDO DECISÃO:** possível errata do dossiê original,
+possível versão v2 e possível sincronização posterior dos documentos derivados.
+Essas propostas não são pendências ativas e não foram adicionadas ao índice da
+seção 2.
+
+Nenhum novo arquivo foi criado e nenhuma proposta foi promovida a decisão ou
+pendência ativa nesta etapa.
 
 ---
 
