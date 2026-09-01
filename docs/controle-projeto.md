@@ -1,15 +1,15 @@
 # Controle do Projeto — Site Fachini Máquinas
 
 **Documento vivo.** Atualizar a cada decisão tomada ou pendência resolvida.
-**Última atualização:** 11/08/2026
+**Última atualização:** 01/09/2026
 
 ## ITEM ATUAL
 
 **Footer — construir e validar a versão desktop.**
 
-A versão mobile do footer ainda não foi finalizada pela designer. A validação
-responsiva do header e da busca Off Canvas permanece pendente e será retomada
-quando os respectivos layouts mobile estiverem aprovados.
+O Footer desktop está aplicado e verificado. O item permanece corrente somente
+até seu fechamento formal, handoff e autorização para a troca da fila. O
+Footer mobile continua pendente e separado do encerramento desktop.
 
 ---
 
@@ -36,6 +36,34 @@ Exemplos:
 - ❌ "CSS aplicado"
 - ✅ "CSS aplicado — confirmado no código-fonte da página, busca por `.fachini-header`"
 
+### Regra de datas — preservar origem e registrar atualização separadamente
+
+Uma decisão, pendência ou evidência conserva a data em que foi originalmente
+registrada ou comprovada.
+
+Revisão posterior **não substitui silenciosamente** essa data. Quando houver
+mudança posterior, registrar separadamente, conforme o caso:
+
+- `criada em <data>`;
+- `decidida em <data>`;
+- `verificada em <data>`;
+- `reconfirmada em <data>`;
+- `atualizada em <data>`;
+- `resolvida em <data>`.
+
+Exemplo:
+
+- ❌ `🟡 01/09 — Footer mobile`, quando a pendência já existia em 11/08;
+- ✅ `🟡 11/08 — Footer mobile — estado reconfirmado em 01/09`.
+
+A data original só pode ser corrigida se houver evidência de que estava
+factualmente errada. Nesse caso, registrar explicitamente a correção; não
+reescrever a história sem nota.
+
+O objetivo é preservar cronologia, causalidade e rastreabilidade do projeto,
+sem criar sistema adicional de versionamento ou colunas obrigatórias. Aplicar
+a regra proporcionalmente ao tipo de registro.
+
 **A segunda cara do mesmo problema:** arquivo atualizado não é site atualizado.
 O `header.css` é a fonte; o `.txt` consolidado é o que se cola no Elementor.
 Registrar que o arquivo mudou não prova que o site mudou.
@@ -52,6 +80,7 @@ Registrar que o arquivo mudou não prova que o site mudou.
 
 | Data | Decisão | Observação |
 |---|---|---|
+| 01/09 | **Footer desktop aplicado e verificado** | Estrutura, CSS personalizado e assets sociais publicados no Elementor; inspeção visual, comparação com o Figma e testes de teclado confirmados exclusivamente no desktop. Ver registro detalhado abaixo |
 | 11/08 | **Header e busca: desktop aplicado e verificado** | Header, Off Canvas, busca ao vivo, Loop Item, navegação dos cards, estado sem resultado e acessibilidade de teclado foram publicados e testados no site. A próxima validação é tablet/mobile |
 | 11/08 | **Paleta e logos condicionais por contexto** | Home: header transparente, logo negativo e Off Canvas Onix. Páginas internas: header e Off Canvas off-white, logo positivo e textos/controles Navy. Verificado na Home e em `/elementor-499/` |
 | 31/07 | **Dropdown “MÁQUINAS” aplicado e verificado** | JavaScript completo publicado no Elementor. Clique, Enter, Espaço, Escape e devolução de foco foram testados; ver registro detalhado abaixo |
@@ -90,6 +119,42 @@ Registrar que o arquivo mudou não prova que o site mudou.
 | 23/07 | **Scrollytelling adiado** | Versão intermediária no lançamento: sticky + fade |
 | 23/07 → 27/07 | **Rótulo da linha Lisa/Dentada** | Decisão revista: "Serralheria" é segmento e não produto, mas "Calhas" subdimensiona a máquina. **Adiado para teste A/B pós-lançamento** (ver 6.4) |
 | 23/07 | **Country Blocking do Loginizer DESATIVADO** | Ver 1.1 abaixo |
+
+### Estado comprovado — Footer desktop (01/09/2026)
+
+**Escopo:** exclusivamente desktop. Este registro não constitui evidência de
+tablet ou mobile.
+
+**ESCRITO:**
+
+- `css/footer.css` foi reconciliado textualmente com o bloco Footer vigente em
+  `css/elementor-css-completo.txt`;
+- ambos os arquivos foram versionados no commit `53cf5e1`;
+- a comparação final retornou conteúdo textual exato;
+- o CSS legado focal procurado não estava presente;
+- a sintaxe básica estava balanceada.
+
+**APLICADO:** confirmado no painel do Elementor pelo template publicado, pelo
+CSS Personalizado vigente e pela seleção dos SVGs sociais nos respectivos
+widgets.
+
+**VERIFICADO no desktop:**
+
+- inspeção visual e comparação com o Figma;
+- alinhamento interno de 1200px, geometria e divisórias;
+- quatro endereços e quatro redes sociais;
+- SVGs, hover e logo;
+- ausência de cortes e sobreposições;
+- foco visível, ordem de Tab e Shift+Tab;
+- Enter nos links sociais e abertura correta dos respectivos perfis.
+
+**PENDÊNCIAS PRESERVADAS — não bloqueiam o Footer desktop:**
+
+- layout e implementação mobile do Footer — ver 2.2, item 22;
+- links internos do Footer permanecem em `#` até as páginas existirem — ver
+  2.5;
+- Política de Privacidade: texto pronto, revisão jurídica em andamento e
+  página/link funcional ainda pendentes — ver 2.5.
 
 ### Estado comprovado — dropdown “MÁQUINAS” (31/07/2026)
 
@@ -213,7 +278,7 @@ e mudar a chave `enabled` para `false`.
 | 21 | 🟢 28/07 | **Destino do link "MÁQUINAS"** — decidido: **não haverá página de categoria por ora.** O item existe apenas para abrir o submenu. Isso cria uma exigência técnica no passo 7 — ver 4.0b |
 | 20 | 🔴 | **Camada "Larga" a 1200px** — com o padrão em 1200, `min(94vw, 1560px)` entrega 1284px numa tela de 1366, 84px acima do padrão. Ou ganha número novo, ou sai do sistema e o mosaico vira full-bleed |
 | 18 | 🔴 | **Hierarquia de headings** — alinhar a marcação semântica da Parte 3 antes da montagem (fonte: `docs/modulo-01-design-system.md`, "Pendências com a designer") |
-| 22 | 🟡 11/08 | **Finalizar o layout mobile do footer** — a versão desktop será executada primeiro; não implementar a versão mobile antes do frame aprovado |
+| 22 | 🟡 11/08 | **Footer mobile — finalizar layout e implementação** — pendência separada do encerramento desktop; layout mobile ainda depende da designer. Estado reconfirmado em 01/09/2026 |
 
 ### 2.3 Verificações técnicas
 
@@ -285,6 +350,16 @@ e mudar a chave `enabled` para `false`.
 - excluir da consulta as páginas institucionais inadequadas quando existirem;
 - finalizar e testar o template `Resultados de pesquisa — Fallback`;
 - testar termos e códigos reais das máquinas.
+
+### 2.5 Footer — pendências remanescentes
+
+Estas pendências não bloqueiam o estado aplicado e verificado do Footer
+desktop. O Footer mobile permanece registrado separadamente em 2.2, item 22.
+
+| # | Status | Pendência |
+|---|---|---|
+| 1 | 🔴 | **Links internos do Footer** — permanecem em `#` até as páginas de destino existirem |
+| 2 | 🟡 01/09 | **Política de Privacidade** — texto pronto; revisão jurídica em andamento; página publicada e link funcional ainda pendentes |
 
 ---
 
