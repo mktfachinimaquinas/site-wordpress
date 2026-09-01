@@ -14,15 +14,17 @@ A Central de Arquitetura interpreta a arquitetura aprovada, roteia tarefas segun
 2. Conversas não são memória canônica.
 3. Escrito, aplicado e verificado são estados diferentes; toda verificação exige método.
 4. Arquivo local não prova aplicação no Elementor, e aplicação no Elementor não prova funcionamento publicado.
-5. Painel vem antes de CSS ou JavaScript.
-6. Diagnóstico trabalha com uma hipótese por rodada. Hipótese que falha exige nova evidência antes de outra hipótese.
+5. Elementor-first parte da necessidade e do elemento real, observa o controle nativo na versão instalada, confirma sua consequência e só então usa CSS ou JavaScript para o que permanecer sem solução adequada.
+6. Diagnóstico trabalha com uma hipótese causal por rodada. A hipótese pode exigir coleta multivariável relacionada; se falhar, exige nova evidência antes de outra hipótese.
 7. Não pedir o Ctrl+U inteiro. Evitar DOM, HTML ou SVG com Base64 pesado quando desnecessário.
 8. Mudança de fase, superfície, autoridade ou escopo pode exigir nova sessão.
 9. Handoff transmite resultado operacional, não reproduz conversa.
 10. Nenhuma automação pode apagar sessões, rollouts ou arquivos automaticamente.
 11. Contratos são descritos por capacidades, não por personagens.
 12. Português do Brasil é o idioma operacional padrão. Termos técnicos podem permanecer no original quando isso aumenta a precisão.
-13. A governança deve usar o menor protocolo suficiente para controlar o risco da tarefa, reduzindo erro e retrabalho sem criar burocracia desproporcional.
+13. A governança deve usar o menor protocolo suficiente para controlar o risco da tarefa e buscar a máxima informação útil por rodada, reduzindo erro e retrabalho sem diminuir a evidência exigida pelo risco.
+14. Painel, configuração gerada, estado entregue ao navegador, Computed e resultado visual são camadas diferentes; cada uma prova apenas seu próprio estado.
+15. Quando painel ou intenção divergirem do navegador, a entrega do estado novo deve ser comprovada antes de compensar visualmente o sintoma. Freshness é uma pré-condição condicional, não um ritual universal.
 
 ## 3. Contratos das superfícies
 
@@ -35,6 +37,16 @@ A Central de Arquitetura interpreta a arquitetura aprovada, roteia tarefas segun
 | **Codex Review** | Revisar diff e escopo, buscar regressões, verificar evidência e retornar findings ou ausência deles. | Modificar o working tree. |
 | **Codex CLI** | Atuar em contingência, terminal e automação quando apropriado. | Registrar caminho versionado de runtime. A pendência não bloqueante da instalação standalone no PATH é tratada separadamente. |
 | **Meta-governança** | Calibrar modelo e raciocínio, revisar prompts, analisar plataforma e saúde de sessões e propor melhorias de protocolo. | Substituir a Central, manter memória canônica ou alterar estado do projeto. |
+
+### Diagnóstico técnico no Elementor
+
+O encadeamento geral é: **necessidade → elemento real → controle nativo observado → consequência no DOM/CSS → verificação → código somente se necessário**. A existência de um controle não deve ser presumida por memória; ela é confirmada na versão instalada e confrontada com o comportamento real.
+
+Painel configurado não prova configuração gerada; configuração gerada não prova entrega ao navegador; entrega não prova valor final em Computed; Computed não prova sozinho o resultado visual. Quando houver divergência entre essas camadas, freshness é verificada antes de introduzir compensação de layout ou estilo.
+
+CSS customizado não recebe autoridade por antiguidade. Cada regra deve justificar qual problema atual ainda resolve. Se a justificativa desaparecer, a regra torna-se candidata à reconciliação, nunca à remoção automática; remoção continua sujeita a evidência, diff, autorização e Review compatíveis com o risco.
+
+O procedimento operacional, incluindo coleta read-only, Styles versus Computed e comparação antes/depois, está em `docs/manual-diagnostico-devtools-elementor.md`.
 
 ## 4. Preflight
 
@@ -219,7 +231,9 @@ Review independente é obrigatório quando houver R2 ou superior, mais de um arq
 
 Pode ser dispensado em C0/R1 somente se todos forem verdadeiros: um arquivo, diff pequeno, determinístico e reversível, sem mudança comportamental relevante, verificação externa objetiva e aprovação do diff pelo usuário. Mesmo nessa exceção, o diff continua obrigatório. Não há commit automático; commit e push exigem autorizações separadas.
 
-## 13. Estados escrito, aplicado e verificado
+## 13. Estados de execução e classificações de fluxo
+
+Estados de execução:
 
 | Estado | Significado |
 |---|---|
@@ -228,6 +242,10 @@ Pode ser dispensado em C0/R1 somente se todos forem verdadeiros: um arquivo, dif
 | **Verificado** | Foi confirmado no site pelo método registrado. |
 
 Esses estados nunca devem ser colapsados em “pronto”.
+
+`DECIDIDO` e `PENDENTE` são classificações de fluxo ou decisão, não estados de execução. Uma decisão aprovada pode ainda não estar escrita, aplicada ou verificada. Quando a ambiguidade for material, `PENDENTE` deve ser qualificado como de decisão, de aplicação ou de verificação.
+
+Relatório executivo, resumo ou snapshot temporal é uma leitura derivada. Quando o corte temporal for material, deve declarar data, hora e fuso; não substitui a fonte canônica nem promove estado automaticamente, mesmo que represente a melhor leitura disponível naquele corte.
 
 ## 14. Arquivos canônicos e transitórios
 
@@ -239,7 +257,11 @@ Esses estados nunca devem ser colapsados em “pronto”.
 | Decisões de design vigentes | `design-system/` |
 | Fontes locais de código, quando reconciliadas e aprovadas | `css/*.css` e `scripts/*.js` |
 
-Conversas, handoffs, screenshots, logs, rollouts, relatórios forenses, recovery e temporários são transitórios por padrão. A promoção para canônico exige extrair a informação, identificar sua natureza, obter aprovação e escrevê-la no arquivo correto. Copiar uma transcrição não é promoção válida.
+Conversas, handoffs operacionais comuns, screenshots, logs, rollouts, relatórios forenses, recovery e temporários são transitórios por padrão. A promoção para canônico exige extrair a informação, identificar sua natureza, obter aprovação e escrevê-la no arquivo correto. Copiar uma transcrição não é promoção válida.
+
+Os handoffs da frente de Design System usados para registrar evidência factual do Figma são uma exceção funcional a essa regra de transitoriedade: preservam evidência durável, proveniência e supersessões conforme `docs/protocolo-evidencia-figma.md`. Continuam não canônicos para decisões de design; a decisão aprovada pertence ao Design System ou documento canônico correspondente.
+
+Conversa e memória da LLM preservam método, continuidade e contexto, não geometria densa como fonte factual. Handoffs e evidência factual estruturada preservam fatos densos e sua proveniência. O documento canônico preserva somente a decisão aprovada. Essas funções não devem ser fundidas.
 
 `AGENTS.md` deve continuar pequeno. Pode conter futuramente o padrão pt-BR, autoridade, referência para este documento, classificação C/R quando afeta o contrato, resumo de Plan/Goal e regra resumida de Scope Exit/Handoff. Não deve conter thresholds completos, matriz extensa de modelos, item da fila, histórico, troubleshooting transitório, incidente do CLI, narrativa do projeto ou logs.
 
@@ -299,6 +321,8 @@ São permitidos screenshots normais, recortes, imagens anexadas normalmente, SVG
 ### Figma e layout
 
 Para frame ou layout completo, preferir PNG ou screenshot da frame com as medidas relevantes do Figma. Para detalhe visual, preferir crop PNG. Para logo, ícone ou geometria vetorial, preferir SVG limpo. Antes de usar SVG grande em Work ou Codex, verificar se contém raster ou Base64 incorporado.
+
+Medida do Figma que dependa de interpretação deve declarar o referente, o tipo de medida, o espaço de coordenadas, o método e o que prova ou não prova. A evidência factual continua nos handoffs da frente de Design System; a decisão aprovada vai para o Design System ou documento canônico correspondente. O método de registro está em `docs/protocolo-evidencia-figma.md`; ele não cria um ledger separado.
 
 Quando uma sessão solicitar SVG grande do Figma e houver risco de raster incorporado, ela deve reapresentar ao usuário este checklist; o usuário não precisa memorizar o procedimento:
 

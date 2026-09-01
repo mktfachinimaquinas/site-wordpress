@@ -102,15 +102,25 @@ entregue pelo servidor. Um não substitui o outro.
 
 ## Método técnico obrigatório
 
-1. Painel do WordPress/Elementor antes de CSS ou JavaScript.
+1. Antes de CSS ou JavaScript, parta da necessidade, identifique o elemento
+   real, observe o controle nativo na versão instalada, confirme sua
+   consequência no DOM/CSS e verifique o resultado. Use código somente para o
+   que permanecer sem solução adequada no painel.
 2. Não afirme que um controle existe sem vê-lo na versão instalada.
-3. Uma hipótese por sintoma. Se falhar, peça Elementos → Styles.
-4. Não peça o `Ctrl+U` inteiro; peça apenas o trecho necessário.
-5. Não introduza elemento, camada, sombra, animação ou espaçamento ausente do
+3. Trabalhe com uma hipótese causal por rodada; isso não limita a coleta a uma
+   propriedade por turno. Se a hipótese exigir grandezas relacionadas,
+   colete-as em lote. Se falhar, obtenha nova evidência em Elementos → Styles
+   ou Computed antes da próxima hipótese.
+4. Quando painel ou intenção divergirem do navegador, confirme primeiro que a
+   versão nova foi entregue antes de compensar visualmente o sintoma. Limpeza
+   de cache não é ritual obrigatório.
+5. Não peça o `Ctrl+U` inteiro; peça apenas o trecho necessário.
+6. Não introduza elemento, camada, sombra, animação ou espaçamento ausente do
    Figma. Sugestões visuais devem ser identificadas como sugestões.
-6. Antes de overlay, modal, sticky ou `z-index`, avalie foco, Tab, Escape,
-   leitor de tela e conteúdo escondido.
-7. Explique onde cada tela fica no WordPress/Elementor.
+7. Antes de `transform`, `order`, `position`, overlay, modal, sticky ou
+   `z-index`, avalie, quando aplicável, ordem de foco e leitura, Tab, Escape,
+   leitor de tela e conteúdo visível mas logicamente inalcançável.
+8. Explique onde cada tela fica no WordPress/Elementor.
 
 ## Regras comerciais
 
@@ -134,7 +144,7 @@ Leia `design-system/tokens.md` antes de citar valores.
 
 - Não introduza React, Vue, Next, Tailwind ou build tools.
 - Não instale plugins ou dependências sem avaliação e autorização.
-- CSS-fonte: `css/global.css` e `css/header.css`.
+- CSS-fonte: `css/global.css`, `css/header.css` e `css/footer.css`.
 - CSS aplicado: Elementor → Configurações do Site → CSS Personalizado.
 - JavaScript-fonte: `scripts/`.
 - JavaScript aplicado: WordPress → Elementor → Código Personalizado.
