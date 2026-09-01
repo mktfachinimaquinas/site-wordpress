@@ -168,6 +168,18 @@ Antes de editar:
 - procure ocorrências antigas depois da alteração;
 - salve os arquivos em UTF-8 conforme `.editorconfig`.
 
+No fechamento de uma unidade versionável:
+
+- enquanto o delta estiver em revisão ou ainda houver alteração planejada no
+  mesmo objetivo, não interrompa o fluxo apenas para criar commit;
+- quando a unidade estiver finalizada e aprovada, recomende explicitamente o
+  commit e peça a autorização correspondente;
+- confirmado o commit, recomende explicitamente o push e peça uma autorização
+  específica e separada;
+- se o usuário adiar deliberadamente commit ou push, preserve o adiamento e
+  reporte `COMMIT PENDENTE` ou `PUSH PENDENTE` no próximo fechamento natural,
+  sem afirmar que o versionamento foi concluído.
+
 ## Claude Code e Codex
 
 Existe um único escritor por arquivo, seletor ou unidade de trabalho

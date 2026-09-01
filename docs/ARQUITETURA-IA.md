@@ -106,6 +106,10 @@ Complexidade intelectual não é risco operacional.
 | **R3** | Aplicação ou publicação em Elementor/site. |
 | **R4** | Promoção de estado canônico, commit ou push. |
 
+Classificar commit ou push como R4 significa exigir autoridade explícita; não
+significa que a IA deva permanecer silenciosa quando o checkpoint de
+versionamento se torna devido. Recomendar a ação não equivale a autorizá-la.
+
 Exemplos: C2/R0 é diagnóstico difícil sem escrita; C0/R3 é alteração mecanicamente simples que será publicada.
 
 ## 7. Modelos e intensidade de raciocínio
@@ -136,9 +140,9 @@ Goal é proibido em escopo aberto, publicação não autorizada, ação destruti
 
 ## 9. Ciclo de vida da sessão
 
-**Preflight → Health Baseline → Execução delimitada → Critério de parada → Scope Exit → Handoff → Health Close → Próxima sessão.**
+**Preflight → Health Baseline → Execução delimitada → Diff/Review quando aplicável → Critério de aceite → Checkpoint de versionamento quando aplicável → Scope Exit → Handoff → Health Close → Próxima sessão.**
 
-O preflight fixa o contrato. O health baseline mede a saúde inicial. A execução fica limitada ao escopo aprovado; ao atingir o critério de parada, a IA avalia e recomenda o scope exit. O usuário confirma o encerramento. O handoff transfere apenas o resultado necessário. O health close registra a condição final para orientar a próxima sessão.
+O preflight fixa o contrato. O health baseline mede a saúde inicial. A execução fica limitada ao escopo aprovado; quando houver artefato versionável, diff, Review, aceite e checkpoint de versionamento entram conforme o risco e o estado da unidade. Sessões somente leitura, análise ou arquitetura sem artefato versionável não exigem commit ou push. Ao atingir o critério de parada, a IA avalia e recomenda o scope exit. O usuário confirma o encerramento. O handoff transfere apenas o resultado necessário. O health close registra a condição final para orientar a próxima sessão.
 
 ## 10. Critério de parada e Scope Exit
 
@@ -171,6 +175,8 @@ depende do usuário
 ```
 
 Quando aplicável, avisar: “Continuar este trabalho nesta conversa sai do escopo definido pela matriz de arquitetura.” A IA pode avaliar se o critério de parada parece atingido, recomendar Scope Exit, informar se continuar é permitido, não recomendado ou fora do contrato atual e recomendar a próxima sessão. Ela não decide sozinha o encerramento definitivo: somente o usuário o confirma na árvore de trabalho.
+
+Se houver delta versionável finalizado e aprovado ainda sem commit ou push, a recomendação de Scope Exit deve tornar o checkpoint pendente visível e recomendar a próxima ação de versionamento; não pode omitir Git como se a unidade já estivesse preservada no remoto.
 
 ## 11. Handoffs semântico e preventivo
 
@@ -223,13 +229,47 @@ INPUT MÍNIMO:
 
 Não conter Base64, logs completos, código integral, conversa reproduzida ou promoção automática de estado. Handoffs comuns são transitórios e ignorados pelo Git por padrão. A área física ainda não está decidida; `.work/handoffs/` é apenas candidata e não deve ser criada sem decisão posterior do usuário.
 
-## 12. Diff, worktree e Review
+O fluxo preferencial conclui o checkpoint de versionamento aplicável antes do handoff final. Um handoff operacional pode excepcionalmente ocorrer antes quando a superfície escritora precisa encerrar, o usuário determina o encerramento ou outra restrição exige transferência. Nesse caso, deve registrar `COMMIT PENDENTE` ou `PUSH PENDENTE` conforme o estado real e recomendar explicitamente o passo devido.
+
+## 12. Diff, Review e checkpoint de versionamento
 
 Alteração de arquivo existente exige diff obrigatório. Em worktree previamente sujo, registrar status antes, fazer alteração focal, registrar status depois e preservar mudanças anteriores. O relato do executor não substitui diff externo.
 
 Review independente é obrigatório quando houver R2 ou superior, mais de um arquivo, documento canônico, CSS global ou compartilhado, JavaScript comportamental, acessibilidade, segurança, configuração/build, refatoração estrutural, mudança destinada à publicação, alteração difícil de verificar objetivamente ou worktree sujo com risco de mistura.
 
 Pode ser dispensado em C0/R1 somente se todos forem verdadeiros: um arquivo, diff pequeno, determinístico e reversível, sem mudança comportamental relevante, verificação externa objetiva e aprovação do diff pelo usuário. Mesmo nessa exceção, o diff continua obrigatório. Não há commit automático; commit e push exigem autorizações separadas.
+
+### Unidade versionável
+
+Unidade versionável é um conjunto coerente de alterações que atende a um objetivo delimitado, atingiu o critério de aceite, passou pelo diff e pelo Review exigido, recebeu a aprovação necessária e não tem nova edição planejada antes de seu fechamento. Pode ser uma correção documental focal, um componente CSS finalizado, uma atualização canônica de estado ou um patch funcional coerente.
+
+Não existe regra de um commit por arquivo ou por turno. Pequenas alterações do mesmo objetivo podem formar um único commit; objetivos diferentes não devem ser agrupados apenas porque coexistem no worktree.
+
+### Checkpoint de versionamento
+
+A proibição de commit ou push automático não elimina a responsabilidade da IA de recomendar esses passos. Quando a unidade versionável tiver diff final, Review exigido concluído, aprovação e nenhuma nova edição planejada antes do fechamento, a IA deve iniciar proativamente o checkpoint:
+
+**delta aprovado → recomendar commit → usuário autoriza → executar e confirmar o commit → recomendar push → usuário autoriza → executar o push → confirmar sincronização com o remoto.**
+
+A recomendação não equivale à autorização. Não recomendar commit a cada turno, a cada pequena edição, no meio do Review, antes da correção dos findings ou enquanto houver alteração planejada dentro da mesma unidade. O gatilho é o encerramento lógico da unidade versionável.
+
+### Worktree sujo e stage focal
+
+Alteração fora do escopo não impede versionamento focal. Antes do commit, identificar o que pertence à unidade, fazer stage somente do escopo aprovado, preservar mudanças preexistentes, não adicionar untracked lateral por conveniência e confirmar o staged diff antes de commitar.
+
+### Estado canônico e outros artefatos
+
+Uma alteração aprovada em documento de estado canônico deve, por padrão, chegar a commit e push antes do handoff final do item, do encerramento formal da frente ou da troca da fila, salvo adiamento explícito do usuário. Se houver adiamento, registrar o checkpoint pendente para não confundir estado canônico atualizado localmente com estado canônico preservado no remoto.
+
+Código e documentação não canônica seguem o mesmo checkpoint quando a unidade estiver finalizada e aprovada. O usuário pode agrupar o delta com outro objetivo coerente, adiar ou decidir não versionar determinado artefato; a IA não deve inferir nenhuma dessas decisões silenciosamente.
+
+### Push, falha e adiamento
+
+Commit local não equivale a sincronização remota. Depois do push, quando possível, confirmar por evidência como a saída do próprio `git push`, a branch sincronizada com o upstream ou o `git status`; a existência do commit não autoriza afirmar que o conteúdo foi enviado ao remoto.
+
+Se o commit existir mas o push falhar, preservar o commit, não executar ação destrutiva, registrar `PUSH PENDENTE` e tratar a unidade como versionada localmente, mas ainda não sincronizada.
+
+Se o usuário adiar deliberadamente commit ou push, respeitar sem insistir a cada turno. No próximo ponto natural de fechamento, manter `COMMIT PENDENTE` ou `PUSH PENDENTE` visível até o checkpoint ser resolvido ou o usuário decidir deliberadamente não versionar o artefato.
 
 ## 13. Estados de execução e classificações de fluxo
 
@@ -242,6 +282,8 @@ Estados de execução:
 | **Verificado** | Foi confirmado no site pelo método registrado. |
 
 Esses estados nunca devem ser colapsados em “pronto”.
+
+`COMMITADO` e `PUSHED`/`SINCRONIZADO` são checkpoints de preservação Git, não estados de execução do site, e não integram a tríade acima.
 
 `DECIDIDO` e `PENDENTE` são classificações de fluxo ou decisão, não estados de execução. Uma decisão aprovada pode ainda não estar escrita, aplicada ou verificada. Quando a ambiguidade for material, `PENDENTE` deve ser qualificado como de decisão, de aplicação ou de verificação.
 
@@ -347,25 +389,37 @@ Não recomendar Image Trace como solução automática para remover Base64, pois
 | Codex | Fonte local. |
 | Elementor | Estado aplicado. |
 
-## 17. Footer como piloto
+## 17. Footer — resultado do piloto
 
-Um arquivo de componente não deve ser promovido a fonte oficial antes de ser reconciliado com o Elementor, aprovado, aplicado e verificado. No piloto atual, essa regra será validada com o Footer.
+O piloto do Footer foi executado e confirmou que uma fonte local de componente só deve ser promovida depois da reconciliação com o Elementor e da distinção rigorosa entre **ESCRITO**, **APLICADO** e **VERIFICADO**. A aplicação humana no Elementor permanece separada da fonte local.
 
-O piloto segue: Preflight → Health Baseline → Chat comum/painel → handoff semântico → diagnóstico → Scope Exit → implementação focal → diff → Review → aplicação humana no Elementor → publicação → verificação → atualização de estado autorizada → Health Close → retrospectiva.
+O resultado também confirmou:
 
-Goal não é esperado no piloto, pois Elementor exige intervenção humana. Os critérios mínimos são: zero arquivo fora do escopo; uma hipótese por rodada; painel antes de código; nenhum estado presumido; diff focal; review conforme a matriz; aplicação separada de verificação; Scope Exit respeitado; handoff curto; rollout medido; ausência de crescimento anormal; nenhuma promoção automática de estado.
+- Elementor-first baseado no controle efetivamente observado;
+- uma hipótese causal por rodada, com coleta multivariável quando as grandezas relacionadas forem necessárias para testar a mesma hipótese;
+- painel, CSS gerado, conteúdo entregue, Computed e resultado visual como camadas distintas;
+- freshness como pré-condição quando essas camadas divergem;
+- diff focal e Review independente;
+- Health Baseline e Health Close;
+- Scope Exit e handoff somente quando materialmente necessários.
 
-### Experimento de modelo
+A retrospectiva mostrou a necessidade de reduzir protocolo excessivamente granular. Prevalece o menor protocolo suficiente para controlar o risco, com a máxima informação útil por rodada.
 
-Testar GPT-5.3-Codex-Spark em pelo menos uma tarefa focal C0/C1 de CSS ou JavaScript no piloto do Footer. Registrar latência, aderência ao escopo, qualidade do diff e necessidade de correção. O teste não promove Spark automaticamente à matriz permanente e não deve ser usado para arquitetura, diagnóstico difícil ou review sensível. A decisão sobre incorporá-lo à matriz ocorre somente após a retrospectiva do piloto.
+O piloto originou `docs/manual-diagnostico-devtools-elementor.md` e `docs/protocolo-evidencia-figma.md`, além de clarificações já incorporadas em `AGENTS.md` e neste documento.
+
+### Experimento de modelo — não executado e retirado do critério de encerramento
+
+O experimento com GPT-5.3-Codex-Spark não foi executado no Footer. Por decisão do usuário em 01/09/2026, não será criada uma alteração artificial em CSS ou JavaScript de um componente já aplicado e verificado apenas para cumprir um experimento metodológico.
+
+Essa ausência não bloqueia o encerramento do piloto, não permanece como pendência do Footer e não promove Spark à matriz permanente. O teste poderá ser reconsiderado quando surgir uma tarefa C0/C1 real e adequada, mediante decisão própria no momento apropriado. Como o experimento não ocorreu, não há resultado de latência, aderência ao escopo, qualidade de diff ou necessidade de correção a registrar.
 
 ## 18. Automação futura
 
-Automação não entra antes desta sequência: **piloto do Footer → retrospectiva do piloto → 02 — Infra IA — Saúde de Sessões — automação**. O MVP é manual. Depois do piloto e de sua retrospectiva, a próxima tarefa relevante é **02 — Infra IA — Saúde de Sessões — automação**.
+A automação de Health continua sendo uma frente futura de Infra IA. O piloto e sua retrospectiva eram pré-condições metodológicas para reconsiderá-la; cumprir essa pré-condição não altera prioridade. A próxima tarefa ou item continua sendo definida exclusivamente por `docs/controle-projeto.md` e por decisão do usuário.
 
-O objetivo futuro é automatizar a medição rotineira de saúde, desenvolver e manter um monitor de rollout e separar a medição rotineira do diagnóstico excepcional. O candidato é `tools/codex-session-health.ps1`, que poderá localizar rollouts, medir tamanho, comparar medições, calcular delta e fator, classificar thresholds e sinalizar anomalias. Nunca poderá excluir, mover automaticamente, matar processo, encerrar sessão, alterar estado, publicar, fazer commit/push ou promover decisão.
+Quando Infra IA for explicitamente priorizada, `tools/codex-session-health.ps1` continua válido como candidato para automatizar a medição rotineira de saúde, desenvolver e manter um monitor de rollout e separar a medição rotineira do diagnóstico excepcional. A automação nunca poderá apagar, mover automaticamente, matar processo, encerrar sessão, alterar estado, publicar, fazer commit/push ou promover decisão.
 
-Sessão normal mede rotineiramente; anomalia vai para sessão especializada de Infra IA; Meta-governança calibra thresholds e protocolo; a Central só intervém se a política precisar mudar. Outras automações futuras, também após piloto e retrospectiva, são `tools/new-handoff.ps1`, checklist/skill de abertura, checklist/skill de encerramento e template de review.
+Sessão normal mede rotineiramente; anomalia vai para sessão especializada de Infra IA; Meta-governança calibra thresholds e protocolo; a Central só intervém se a política precisar mudar. A mesma regra de prioridade vale para outros candidatos futuros: `tools/new-handoff.ps1`, checklist/skill de abertura, checklist/skill de encerramento e template de review.
 
 ## 19. Pendências técnicas não bloqueantes
 
