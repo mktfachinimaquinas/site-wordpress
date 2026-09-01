@@ -95,7 +95,6 @@
   scrollbar-gutter: stable;
 }
 
-
 /* ==========================================================================
    HEADER — Site Fachini Maquinas
    --------------------------------------------------------------------------
@@ -698,4 +697,94 @@ body:not(.home) .fachini-header
   display: block;
   width: 20.74px;
   height: 21px;
+}
+
+/* ==========================================================================
+   FOOTER — Site Fachini Maquinas
+   --------------------------------------------------------------------------
+   Complementos do rodape global criado no Elementor.
+   O painel continua responsavel por cores, tipografia e conteudo.
+   Este arquivo corrige somente a geometria do desktop validada no Figma.
+   ========================================================================== */
+
+
+/* ==========================================================================
+   1. GEOMETRIA DO CONTEUDO — DESKTOP
+   --------------------------------------------------------------------------
+   Organiza as quatro colunas do rodape dentro da faixa de 1200px:
+   marca, navegacao, redes sociais e unidades.
+
+   As larguras seguem as medidas do Figma, mas a distribuicao usa Flexbox
+   para respeitar a estrutura real gerada pelos containers do Elementor.
+   As unidades mantêm uma grade interna independente de duas colunas.
+
+   O breakpoint mobile ainda nao foi finalizado pela designer. Por isso esta
+   regra fica restrita ao desktop e nao antecipa a composicao responsiva.
+   ========================================================================== */
+
+@media (min-width: 1025px) {
+
+  /* Linha principal: ocupa efetivamente os 1200px do container pai. */
+  .fachini-footer-conteudo > .e-con-inner {
+    --width: 100%;
+    --flex-grow: 0;
+    --flex-shrink: 0;
+    --flex-direction: row;
+    --flex-wrap: nowrap;
+    --align-items: center;
+    --gap: 0px;
+
+    display: flex !important;
+    flex: 0 0 100% !important;
+    flex-flow: row nowrap !important;
+    align-items: center !important;
+    gap: 0 !important;
+
+    width: 100% !important;
+    max-width: 1200px !important;
+    min-width: 1200px !important;
+    margin-inline: auto !important;
+  }
+
+  /* Impede o Elementor de comprimir individualmente as quatro colunas. */
+  .fachini-footer-marca,
+  .fachini-footer-navegacao,
+  .fachini-footer-social,
+  .fachini-footer-unidades {
+    --flex-grow: 0;
+    --flex-shrink: 0;
+
+    flex-grow: 0 !important;
+    flex-shrink: 0 !important;
+    min-width: 0 !important;
+    box-sizing: border-box;
+  }
+
+  .fachini-footer-marca {
+    --width: 129px;
+    flex-basis: 129px !important;
+    width: 129px !important;
+  }
+
+  /* Divisórias reproduzidas pelo CSS, sempre com 162px. */
+  .fachini-footer-navegacao,
+  .fachini-footer-social {
+    height: 162px !important;
+    display: flex !important;
+    justify-content: flex-start !important;
+  }
+
+  .fachini-footer-navegacao .elementor-item,
+  .fachini-footer-social .elementor-icon-list-text {
+    white-space: nowrap !important;
+  }
+
+/* Redes sociais: o Theme Style global sublinha links no hover.
+   No Footer, o destaque é controlado pelo próprio componente. */
+.fachini-footer-social .elementor-icon-list-item a:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--e-global-color-5472bb2);
+}
+
+
 }
