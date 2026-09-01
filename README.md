@@ -29,6 +29,8 @@ site-wordpress/
 ├── BRIEFING.md                       # contexto e continuidade, não estado canônico
 ├── docs/
 │   ├── ARQUITETURA-IA.md             # arquitetura detalhada de uso de IA
+│   ├── manual-diagnostico-devtools-elementor.md # diagnóstico operacional Elementor/DevTools
+│   ├── protocolo-evidencia-figma.md   # aquisição e registro de evidência factual do Figma
 │   ├── DOSSIE_FACHINI_projeto_site.md # negócio e posicionamento
 │   ├── controle-projeto.md           # item corrente, estados e pendências
 │   ├── analise-360-ux-seo.md         # análise de UX/UI e SEO
@@ -66,6 +68,10 @@ estado aplicado deve ser confirmado pelo método registrado no projeto.
 - **Para seguir as regras universais de execução:** `AGENTS.md`.
 - **Para consultar a arquitetura detalhada de uso de IA:**
   `docs/ARQUITETURA-IA.md`.
+- **Para diagnóstico operacional no Elementor/DevTools:**
+  `docs/manual-diagnostico-devtools-elementor.md`.
+- **Para adquirir e registrar evidência factual do Figma:**
+  `docs/protocolo-evidencia-figma.md`.
 - **Para trabalhar com o design:** `design-system/tokens.md` e o guia técnico
   relacionado em `docs/`.
 
@@ -100,6 +106,8 @@ duplicado aqui.
   feita em WordPress → Elementor → Código Personalizado.
 - A confirmação do estado publicado ocorre no painel, no site, no código-fonte
   ou no teste correspondente, conforme o caso.
+- Diagnóstico de painel, CSS entregue, Styles, Computed e comportamento visual
+  segue `docs/manual-diagnostico-devtools-elementor.md`.
 
 ---
 
