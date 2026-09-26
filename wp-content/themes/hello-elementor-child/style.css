@@ -1,0 +1,30 @@
+/*
+Theme Name:   Hello Elementor Child - Fachini
+Theme URI:    https://github.com/mktfachinimaquinas/site-wordpress
+Description:  Tema filho do Hello Elementor para o site da Fachini Máquinas. Todo código personalizado (CSS, scripts, SMTP, scripts de marketing) mora aqui, para que o tema pai possa ser atualizado sem perder nada.
+Author:       Fachini Máquinas
+Template:     hello-elementor
+Version:      1.0.0
+License:      GPL-2.0-or-later
+Text Domain:  hello-elementor-child
+*/
+
+/* -------------------------------------------------------------------------
+   Variáveis do design system.
+   Fonte: design-system/tokens.md do repositório (medições do Figma).
+   As cores e fontes também são cadastradas no kit global do Elementor; elas
+   ficam aqui para uso em CSS e em componentes feitos em código.
+   ------------------------------------------------------------------------- */
+:root {
+	--fachini-navy: #15274E;
+	--fachini-navy-escuro: #00224E;
+	--fachini-vermelho: #E01E26;
+	--fachini-vermelho-hover: #B01319;
+	--fachini-onix: #0F0F0F;
+	--fachini-offwhite: #FBFBFB;
+	--fachini-cinza-nevoa: #F1F3F6;
+	--fachini-cinza-medio: #5C6675;
+
+	--fachini-largura-padrao: 1200px;
+	--fachini-largura-texto: 720px;
+}
