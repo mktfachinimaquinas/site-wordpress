@@ -3,7 +3,7 @@
  * Plugin Name:       Fachini Core
  * Plugin URI:        https://github.com/mktfachinimaquinas/site-wordpress
  * Description:       Estrutura de conteúdo do site da Fachini Máquinas: tipo de conteúdo "Máquinas", taxonomias e campos. Independente do tema e do Elementor, de forma que trocar o visual do site não apaga nenhum cadastro.
- * Version:           1.0.0
+ * Version:           1.2.1
  * Requires at least: 6.5
  * Requires PHP:      8.0
  * Author:            Fachini Máquinas
@@ -16,15 +16,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'FACHINI_CORE_VERSION', '1.0.0' );
+define( 'FACHINI_CORE_VERSION', '1.2.1' );
 define( 'FACHINI_CORE_PATH', plugin_dir_path( __FILE__ ) );
 
 /**
- * Slugs das URLs.
+ * Slugs base das URLs.
  *
- * Ficam aqui em cima de propósito: a arquitetura de URLs ainda depende da
- * aprovação da planilha pelo cliente. Quando ela for aprovada, muda-se o valor
- * aqui e nada mais no código precisa ser tocado.
+ * FACHINI_SLUG_MAQUINAS é o endereço da listagem geral (/maquinas/).
+ * FACHINI_SLUG_CATEGORIAS é o prefixo interno da taxonomia; ele é removido do
+ * endereço final em includes/permalinks.php, porque a planilha aprovada usa
+ * /calhas/ e não /categorias/calhas/.
  *
  * ATENÇÃO: ao alterar qualquer um destes valores, é obrigatório salvar os
  * links permanentes novamente (Configurações > Links permanentes) para o
@@ -35,6 +36,8 @@ define( 'FACHINI_SLUG_CATEGORIAS', 'categorias' );
 
 require_once FACHINI_CORE_PATH . 'includes/post-types.php';
 require_once FACHINI_CORE_PATH . 'includes/taxonomies.php';
+require_once FACHINI_CORE_PATH . 'includes/permalinks.php';
+require_once FACHINI_CORE_PATH . 'includes/seed-categorias.php';
 require_once FACHINI_CORE_PATH . 'includes/acf-fields.php';
 
 /**

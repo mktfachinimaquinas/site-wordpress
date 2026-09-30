@@ -38,8 +38,10 @@ function fachini_core_register_post_types() {
 		'labels'             => $labels,
 		'public'             => true,
 		'has_archive'        => FACHINI_SLUG_MAQUINAS,
+		// O marcador abaixo é trocado pelo caminho real da categoria em includes/permalinks.php,
+		// produzindo /calhas/dobradeiras-regua-lisa/automatica/ conforme a planilha aprovada.
 		'rewrite'            => array(
-			'slug'       => FACHINI_SLUG_MAQUINAS,
+			'slug'       => '%categoria_maquina%',
 			'with_front' => false,
 		),
 		'menu_icon'          => 'dashicons-hammer',
