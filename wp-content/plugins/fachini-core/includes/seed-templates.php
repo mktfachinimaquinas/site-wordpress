@@ -1,0 +1,290 @@
+<?php
+/**
+ * Modelos do Theme Builder criados por código.
+ *
+ * São dois: a página de máquina e a listagem de categoria. Eles nascem aqui
+ * para poderem ser recriados em qualquer ambiente, mas depois disso são
+ * editáveis normalmente no Elementor. Esta rotina não sobrescreve nada:
+ * se o modelo já existir, ela não toca nele.
+ *
+ * O conteúdo das máquinas (especificações, catálogo, vídeo, relacionadas) é
+ * renderizado por shortcode, em includes/shortcodes.php, e não por widget do
+ * Elementor. Assim o dado continua nosso e o Elementor cuida só do visual.
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+define( 'FACHINI_TEMPLATES_VERSAO', '2026-10-01e' );
+
+/**
+ * Gera um id curto no formato que o Elementor usa.
+ */
+function fachini_el_id() {
+	return substr( md5( uniqid( '', true ) ), 0, 7 );
+}
+
+/**
+ * Monta um widget.
+ */
+function fachini_el_widget( $tipo, $settings = array() ) {
+	return array(
+		'id'         => fachini_el_id(),
+		'elType'     => 'widget',
+		'widgetType' => $tipo,
+		'settings'   => $settings,
+		'elements'   => array(),
+	);
+}
+
+/**
+ * Monta uma seção de uma coluna com os widgets informados.
+ */
+function fachini_el_secao( $widgets, $settings = array() ) {
+	return array(
+		'id'       => fachini_el_id(),
+		'elType'   => 'section',
+		'settings' => $settings,
+		'elements' => array(
+			array(
+				'id'       => fachini_el_id(),
+				'elType'   => 'column',
+				'settings' => array( '_column_size' => 100, '_inline_size' => null ),
+				'elements' => $widgets,
+			),
+		),
+	);
+}
+
+/**
+ * Layout da página de máquina.
+ */
+function fachini_layout_maquina() {
+	return array(
+
+		// Caminho de navegação
+		fachini_el_secao(
+			array(
+				fachini_el_widget( 'shortcode', array( 'shortcode' => '[rank_math_breadcrumb]' ) ),
+			),
+			array( 'padding' => array( 'unit' => 'px', 'top' => '24', 'right' => '0', 'bottom' => '0', 'left' => '0', 'isLinked' => false ) )
+		),
+
+		// Nome da máquina e descrição curta
+		fachini_el_secao(
+			array(
+				fachini_el_widget(
+					'theme-post-title',
+					array(
+						'title_tag'   => 'h1',
+						'title'       => '',
+						'__dynamic__' => array( 'title' => '[elementor-tag id="fachtit" name="post-title" settings="%7B%7D"]' ),
+					)
+				),
+				fachini_el_widget( 'theme-post-excerpt', array() ),
+			),
+			array( 'padding' => array( 'unit' => 'px', 'top' => '16', 'right' => '0', 'bottom' => '24', 'left' => '0', 'isLinked' => false ) )
+		),
+
+		// Foto principal
+		fachini_el_secao(
+			array(
+				fachini_el_widget( 'theme-post-featured-image', array( 'image' => array( 'id' => '', 'url' => '' ), 'image_size' => 'large' ) ),
+			)
+		),
+
+		// Especificações
+		fachini_el_secao(
+			array(
+				fachini_el_widget( 'heading', array( 'title' => 'Especificações técnicas', 'header_size' => 'h2' ) ),
+				fachini_el_widget( 'shortcode', array( 'shortcode' => '[fachini_especificacoes]' ) ),
+			),
+			array( 'padding' => array( 'unit' => 'px', 'top' => '48', 'right' => '0', 'bottom' => '24', 'left' => '0', 'isLinked' => false ) )
+		),
+
+		// Vídeo e catálogo
+		fachini_el_secao(
+			array(
+				fachini_el_widget( 'shortcode', array( 'shortcode' => '[fachini_video]' ) ),
+				fachini_el_widget( 'shortcode', array( 'shortcode' => '[fachini_catalogo]' ) ),
+			),
+			array( 'padding' => array( 'unit' => 'px', 'top' => '24', 'right' => '0', 'bottom' => '24', 'left' => '0', 'isLinked' => false ) )
+		),
+
+		// Chamada para orçamento
+		fachini_el_secao(
+			array(
+				fachini_el_widget(
+					'heading',
+					array( 'title' => 'Quer um orçamento desta máquina?', 'header_size' => 'h3' )
+				),
+				fachini_el_widget(
+					'button',
+					array(
+						'text' => 'Falar com um especialista',
+						'link' => array( 'url' => '/contato/', 'is_external' => '', 'nofollow' => '' ),
+						'size' => 'lg',
+					)
+				),
+			),
+			array(
+				'background_background' => 'classic',
+				'background_color'      => '#F1F3F6',
+				'padding'               => array( 'unit' => 'px', 'top' => '48', 'right' => '24', 'bottom' => '48', 'left' => '24', 'isLinked' => false ),
+			)
+		),
+
+		// Relacionadas
+		fachini_el_secao(
+			array(
+				fachini_el_widget( 'heading', array( 'title' => 'Máquinas relacionadas', 'header_size' => 'h2' ) ),
+				fachini_el_widget( 'shortcode', array( 'shortcode' => '[fachini_relacionadas]' ) ),
+			),
+			array( 'padding' => array( 'unit' => 'px', 'top' => '48', 'right' => '0', 'bottom' => '48', 'left' => '0', 'isLinked' => false ) )
+		),
+	);
+}
+
+/**
+ * Layout da listagem de categoria.
+ */
+function fachini_layout_categoria() {
+	return array(
+
+		fachini_el_secao(
+			array(
+				fachini_el_widget( 'shortcode', array( 'shortcode' => '[rank_math_breadcrumb]' ) ),
+				fachini_el_widget(
+					'theme-archive-title',
+					array(
+						'header_size' => 'h1',
+						'title'       => '',
+						'__dynamic__' => array( 'title' => '[elementor-tag id="facharc" name="archive-title" settings="%7B%7D"]' ),
+					)
+				),
+			),
+			array( 'padding' => array( 'unit' => 'px', 'top' => '24', 'right' => '0', 'bottom' => '16', 'left' => '0', 'isLinked' => false ) )
+		),
+
+		fachini_el_secao(
+			array(
+				fachini_el_widget(
+					'archive-posts',
+					array(
+						'_skin'                   => 'archive_classic',
+						'classic_columns'         => '3',
+						'classic_columns_tablet'  => '2',
+						'classic_columns_mobile'  => '1',
+						'classic_meta_data'       => array(),
+						'classic_show_excerpt'    => 'yes',
+						'classic_excerpt_length'  => 18,
+						'classic_show_read_more'  => 'yes',
+						'classic_read_more_text'  => 'Ver máquina',
+						'classic_image_size'      => 'medium_large',
+					)
+				),
+			),
+			array( 'padding' => array( 'unit' => 'px', 'top' => '16', 'right' => '0', 'bottom' => '64', 'left' => '0', 'isLinked' => false ) )
+		),
+	);
+}
+
+/**
+ * Cria os dois modelos, se ainda não existirem.
+ */
+function fachini_seed_templates() {
+
+	if ( get_option( 'fachini_templates_versao' ) === FACHINI_TEMPLATES_VERSAO ) {
+		return;
+	}
+
+	if ( ! did_action( 'elementor/loaded' ) || ! post_type_exists( 'elementor_library' ) ) {
+		return;
+	}
+
+	$modelos = array(
+		array(
+			'titulo'     => 'Máquina (página individual)',
+			'tipo'       => 'single-post',
+			'layout'     => fachini_layout_maquina(),
+			'condicoes'  => array( 'include/singular/maquina' ),
+			'chave'      => 'fachini_tpl_maquina',
+		),
+		array(
+			'titulo'     => 'Categoria de máquinas (listagem)',
+			'tipo'       => 'archive',
+			'layout'     => fachini_layout_categoria(),
+			'condicoes'  => array( 'include/archive/taxonomy/categoria_maquina', 'include/archive/categoria_maquina' ),
+			'chave'      => 'fachini_tpl_categoria',
+		),
+	);
+
+	foreach ( $modelos as $modelo ) {
+
+		$post_id = (int) get_option( $modelo['chave'] );
+
+		// Cria apenas se ainda não existir. O layout de um modelo já criado
+		// nunca é sobrescrito, para não apagar ajuste feito no editor.
+		$forcar_layout = ( get_option( 'fachini_templates_layout' ) !== FACHINI_TEMPLATES_VERSAO );
+
+		if ( $post_id && get_post( $post_id ) && $forcar_layout ) {
+			// Atualização única do layout. Seguro enquanto os modelos ainda não
+			// foram editados à mão; depois disso, esta rotina não roda mais.
+			update_post_meta( $post_id, '_elementor_data', wp_slash( wp_json_encode( $modelo['layout'] ) ) );
+		}
+
+		if ( ! $post_id || ! get_post( $post_id ) ) {
+
+			$post_id = wp_insert_post(
+				array(
+					'post_title'  => $modelo['titulo'],
+					'post_type'   => 'elementor_library',
+					'post_status' => 'publish',
+				)
+			);
+
+			if ( is_wp_error( $post_id ) || ! $post_id ) {
+				continue;
+			}
+
+			update_post_meta( $post_id, '_elementor_edit_mode', 'builder' );
+			update_post_meta( $post_id, '_elementor_data', wp_slash( wp_json_encode( $modelo['layout'] ) ) );
+			update_option( $modelo['chave'], $post_id );
+		}
+
+		// Tipo, classificação e condições são sempre reaplicados: é o que faz o
+		// modelo aparecer no Construtor de Temas e valer para as páginas certas.
+		update_post_meta( $post_id, '_elementor_template_type', $modelo['tipo'] );
+		update_post_meta( $post_id, '_elementor_conditions', $modelo['condicoes'] );
+		wp_set_object_terms( $post_id, $modelo['tipo'], 'elementor_library_type', false );
+	}
+
+	// O Elementor Pro guarda as condições em cache. Sem limpar, um modelo
+	// criado fora do editor existe mas não é aplicado a nenhuma página.
+	delete_option( 'elementor_pro_theme_builder_conditions' );
+
+	if ( class_exists( '\ElementorPro\Plugin' ) ) {
+		try {
+			$modulos = \ElementorPro\Plugin::instance()->modules_manager->get_modules( 'theme-builder' );
+			if ( $modulos && method_exists( $modulos, 'get_conditions_manager' ) ) {
+				$cache = $modulos->get_conditions_manager()->get_cache();
+				if ( method_exists( $cache, 'regenerate' ) ) {
+					$cache->regenerate();
+				}
+			}
+		} catch ( \Throwable $e ) {
+			// Se a API do Elementor mudar, seguimos com o cache apagado acima.
+			error_log( 'Fachini Core: não foi possível regenerar o cache de condições do Elementor. ' . $e->getMessage() );
+		}
+	}
+
+	// Limpa o CSS gerado para os modelos novos aparecerem já estilizados.
+	if ( class_exists( '\Elementor\Plugin' ) && isset( \Elementor\Plugin::$instance->files_manager ) ) {
+		\Elementor\Plugin::$instance->files_manager->clear_cache();
+	}
+
+	update_option( 'fachini_templates_layout', FACHINI_TEMPLATES_VERSAO );
+	update_option( 'fachini_templates_versao', FACHINI_TEMPLATES_VERSAO );
+}
+add_action( 'init', 'fachini_seed_templates', 30 );
