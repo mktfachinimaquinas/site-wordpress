@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'FACHINI_TEMPLATES_VERSAO', '2026-10-01e' );
+define( 'FACHINI_TEMPLATES_VERSAO', '2026-10-01f' );
 
 /**
  * Gera um id curto no formato que o Elementor usa.
@@ -66,7 +66,7 @@ function fachini_layout_maquina() {
 		// Caminho de navegação
 		fachini_el_secao(
 			array(
-				fachini_el_widget( 'shortcode', array( 'shortcode' => '[rank_math_breadcrumb]' ) ),
+				fachini_el_widget( 'shortcode', array( 'shortcode' => '[fachini_breadcrumb]' ) ),
 			),
 			array( 'padding' => array( 'unit' => 'px', 'top' => '24', 'right' => '0', 'bottom' => '0', 'left' => '0', 'isLinked' => false ) )
 		),
@@ -97,7 +97,6 @@ function fachini_layout_maquina() {
 		// Especificações
 		fachini_el_secao(
 			array(
-				fachini_el_widget( 'heading', array( 'title' => 'Especificações técnicas', 'header_size' => 'h2' ) ),
 				fachini_el_widget( 'shortcode', array( 'shortcode' => '[fachini_especificacoes]' ) ),
 			),
 			array( 'padding' => array( 'unit' => 'px', 'top' => '48', 'right' => '0', 'bottom' => '24', 'left' => '0', 'isLinked' => false ) )
@@ -138,7 +137,6 @@ function fachini_layout_maquina() {
 		// Relacionadas
 		fachini_el_secao(
 			array(
-				fachini_el_widget( 'heading', array( 'title' => 'Máquinas relacionadas', 'header_size' => 'h2' ) ),
 				fachini_el_widget( 'shortcode', array( 'shortcode' => '[fachini_relacionadas]' ) ),
 			),
 			array( 'padding' => array( 'unit' => 'px', 'top' => '48', 'right' => '0', 'bottom' => '48', 'left' => '0', 'isLinked' => false ) )
@@ -154,7 +152,7 @@ function fachini_layout_categoria() {
 
 		fachini_el_secao(
 			array(
-				fachini_el_widget( 'shortcode', array( 'shortcode' => '[rank_math_breadcrumb]' ) ),
+				fachini_el_widget( 'shortcode', array( 'shortcode' => '[fachini_breadcrumb]' ) ),
 				fachini_el_widget(
 					'theme-archive-title',
 					array(

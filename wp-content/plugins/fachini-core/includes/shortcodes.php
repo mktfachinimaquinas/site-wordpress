@@ -16,7 +16,51 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
+ * Caminho de navegação (breadcrumb).
+ *
+ * Feito aqui em vez de depender do Rank Math: o shortcode dele só existe se a
+ * opção estiver ligada no painel, e se não estiver o visitante vê o shortcode
+ * escrito na tela. Este sempre funciona.
+ */
+function fachini_sc_breadcrumb() {
+	$itens = array( '<a href="' . esc_url( home_url( '/' ) ) . '">Home</a>' );
+
+	if ( is_singular( 'maquina' ) ) {
+		$termo = fachini_get_termo_principal( get_the_ID() );
+
+		if ( $termo ) {
+			$ancestrais = array_reverse( get_ancestors( $termo->term_id, 'categoria_maquina' ) );
+			foreach ( $ancestrais as $id ) {
+				$pai = get_term( $id, 'categoria_maquina' );
+				if ( $pai && ! is_wp_error( $pai ) ) {
+					$itens[] = '<a href="' . esc_url( get_term_link( $pai ) ) . '">' . esc_html( $pai->name ) . '</a>';
+				}
+			}
+			$itens[] = '<a href="' . esc_url( get_term_link( $termo ) ) . '">' . esc_html( $termo->name ) . '</a>';
+		}
+
+		$itens[] = '<span>' . esc_html( get_the_title() ) . '</span>';
+
+	} elseif ( is_tax( 'categoria_maquina' ) ) {
+		$atual      = get_queried_object();
+		$ancestrais = array_reverse( get_ancestors( $atual->term_id, 'categoria_maquina' ) );
+
+		foreach ( $ancestrais as $id ) {
+			$pai = get_term( $id, 'categoria_maquina' );
+			if ( $pai && ! is_wp_error( $pai ) ) {
+				$itens[] = '<a href="' . esc_url( get_term_link( $pai ) ) . '">' . esc_html( $pai->name ) . '</a>';
+			}
+		}
+		$itens[] = '<span>' . esc_html( $atual->name ) . '</span>';
+	}
+
+	return '<nav class="fachini-breadcrumb" aria-label="Você está aqui">' . implode( ' <span class="fachini-breadcrumb__sep">/</span> ', $itens ) . '</nav>';
+}
+add_shortcode( 'fachini_breadcrumb', 'fachini_sc_breadcrumb' );
+
+/**
  * Tabela de especificações, montada a partir do campo de texto.
+ * O título vem junto: assim a seção inteira some quando não há especificação.
  */
 function fachini_sc_especificacoes() {
 	$itens = function_exists( 'fachini_get_especificacoes' ) ? fachini_get_especificacoes( get_the_ID() ) : array();
@@ -25,7 +69,8 @@ function fachini_sc_especificacoes() {
 		return '';
 	}
 
-	$html = '<table class="fachini-specs"><tbody>';
+	$html  = '<h2 class="fachini-titulo-secao">Especificações técnicas</h2>';
+	$html .= '<table class="fachini-specs"><tbody>';
 
 	foreach ( $itens as $item ) {
 		$html .= '<tr>';
@@ -136,7 +181,8 @@ function fachini_sc_relacionadas() {
 		return '';
 	}
 
-	$html = '<div class="fachini-relacionadas">';
+	$html  = '<h2 class="fachini-titulo-secao">Máquinas relacionadas</h2>';
+	$html .= '<div class="fachini-relacionadas">';
 
 	foreach ( $ids as $rid ) {
 		$html .= sprintf(

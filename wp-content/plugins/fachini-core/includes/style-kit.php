@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'FACHINI_STYLEKIT_VERSAO', '2026-10-01' );
+define( 'FACHINI_STYLEKIT_VERSAO', '2026-10-01b' );
 
 /**
  * Paleta aprovada. Os apelidos "primary", "secondary", "text" e "accent" são os
@@ -41,13 +41,14 @@ function fachini_paleta() {
 /**
  * Monta um bloco de tipografia no formato que o Elementor espera.
  */
-function fachini_tipografia( $fonte, $peso, $tamanho, $altura, $espaco = 0, $caixa = 'none' ) {
+function fachini_tipografia( $fonte, $peso, $tamanho, $altura, $espaco = 0, $caixa = 'none', $tamanho_mobile = null, $tamanho_tablet = null ) {
 	return array(
 		'typography_typography'      => 'custom',
 		'typography_font_family'     => $fonte,
 		'typography_font_weight'     => (string) $peso,
 		'typography_font_size'       => array( 'unit' => 'px', 'size' => $tamanho ),
-		'typography_font_size_mobile'=> array( 'unit' => 'px', 'size' => null ),
+		'typography_font_size_tablet'=> array( 'unit' => 'px', 'size' => $tamanho_tablet ? $tamanho_tablet : round( $tamanho * 0.8 ) ),
+		'typography_font_size_mobile'=> array( 'unit' => 'px', 'size' => $tamanho_mobile ? $tamanho_mobile : $tamanho ),
 		'typography_line_height'     => array( 'unit' => 'em', 'size' => $altura ),
 		'typography_letter_spacing'  => array( 'unit' => 'em', 'size' => $espaco ),
 		'typography_text_transform'  => $caixa,
@@ -84,24 +85,25 @@ function fachini_aplicar_style_kit() {
 
 	// Tipografia global do Elementor
 	$ajustes['system_typography'] = array(
-		array_merge( array( '_id' => 'primary',   'title' => 'Títulos (Mitr)' ),   fachini_tipografia( 'Mitr', 600, 56, 1.1, 0.06, 'uppercase' ) ),
+		array_merge( array( '_id' => 'primary',   'title' => 'Títulos (Mitr)' ),   fachini_tipografia( 'Mitr', 600, 56, 1.15, 0.06, 'uppercase', 32 ) ),
 		array_merge( array( '_id' => 'secondary', 'title' => 'Subtítulos' ),       fachini_tipografia( 'Archivo', 600, 23, 1.35 ) ),
 		array_merge( array( '_id' => 'text',      'title' => 'Corpo de texto' ),   fachini_tipografia( 'Archivo', 400, 16, 1.6 ) ),
 		array_merge( array( '_id' => 'accent',    'title' => 'Destaques e botões' ), fachini_tipografia( 'Archivo', 700, 15, 1, 0.05, 'uppercase' ) ),
 	);
 
 	// Escala de títulos (Elementor > Estilo do tema)
+	// O sétimo valor é o tamanho no celular, da escala do design system.
 	$escala = array(
-		'h1' => array( 'Mitr', 600, 56, 1.1, 0.06, 'uppercase' ),
-		'h2' => array( 'Mitr', 600, 45, 1.15, 0.06, 'uppercase' ),
-		'h3' => array( 'Archivo', 600, 36, 1.25, 0.02, 'none' ),
-		'h4' => array( 'Archivo', 600, 29, 1.3, 0, 'none' ),
-		'h5' => array( 'Archivo', 600, 23, 1.35, 0, 'none' ),
-		'h6' => array( 'Archivo', 600, 19, 1.4, 0, 'none' ),
+		'h1' => array( 'Mitr', 600, 56, 1.15, 0.06, 'uppercase', 32 ),
+		'h2' => array( 'Mitr', 600, 45, 1.2, 0.06, 'uppercase', 27 ),
+		'h3' => array( 'Archivo', 600, 36, 1.3, 0.02, 'none', 23 ),
+		'h4' => array( 'Archivo', 600, 29, 1.35, 0, 'none', 19 ),
+		'h5' => array( 'Archivo', 600, 23, 1.4, 0, 'none', 17 ),
+		'h6' => array( 'Archivo', 600, 19, 1.4, 0, 'none', 16 ),
 	);
 
 	foreach ( $escala as $tag => $v ) {
-		foreach ( fachini_tipografia( $v[0], $v[1], $v[2], $v[3], $v[4], $v[5] ) as $chave => $valor ) {
+		foreach ( fachini_tipografia( $v[0], $v[1], $v[2], $v[3], $v[4], $v[5], $v[6] ) as $chave => $valor ) {
 			$ajustes[ $tag . '_' . $chave ] = $valor;
 		}
 		$ajustes[ $tag . '_color' ] = '#15274E';
