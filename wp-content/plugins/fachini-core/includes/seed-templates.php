@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'FACHINI_TEMPLATES_VERSAO', '2026-10-01f' );
+define( 'FACHINI_TEMPLATES_VERSAO', '2026-10-02b' );
 
 /**
  * Gera um id curto no formato que o Elementor usa.
@@ -153,14 +153,7 @@ function fachini_layout_categoria() {
 		fachini_el_secao(
 			array(
 				fachini_el_widget( 'shortcode', array( 'shortcode' => '[fachini_breadcrumb]' ) ),
-				fachini_el_widget(
-					'theme-archive-title',
-					array(
-						'header_size' => 'h1',
-						'title'       => '',
-						'__dynamic__' => array( 'title' => '[elementor-tag id="facharc" name="archive-title" settings="%7B%7D"]' ),
-					)
-				),
+				fachini_el_widget( 'shortcode', array( 'shortcode' => '[fachini_titulo_arquivo]' ) ),
 			),
 			array( 'padding' => array( 'unit' => 'px', 'top' => '24', 'right' => '0', 'bottom' => '16', 'left' => '0', 'isLinked' => false ) )
 		),
@@ -171,15 +164,26 @@ function fachini_layout_categoria() {
 					'archive-posts',
 					array(
 						'_skin'                   => 'archive_classic',
-						'classic_columns'         => '3',
-						'classic_columns_tablet'  => '2',
-						'classic_columns_mobile'  => '1',
-						'classic_meta_data'       => array(),
-						'classic_show_excerpt'    => 'yes',
-						'classic_excerpt_length'  => 18,
-						'classic_show_read_more'  => 'yes',
-						'classic_read_more_text'  => 'Ver máquina',
-						'classic_image_size'      => 'medium_large',
+						'archive_classic_columns'         => '3',
+						'archive_classic_columns_tablet'  => '2',
+						'archive_classic_columns_mobile'  => '1',
+						'archive_classic_meta_data'       => array(),
+						'archive_classic_show_author'     => '',
+						'archive_classic_show_date'       => '',
+						'archive_classic_show_comments'   => '',
+						'archive_classic_title_tag'       => 'h3',
+						// O h3 global tem 36px, grande demais para card. Aqui fica no tamanho de rótulo (20px).
+						'archive_classic_title_typography_typography'  => 'custom',
+						'archive_classic_title_typography_font_family' => 'Archivo',
+						'archive_classic_title_typography_font_weight' => '600',
+						'archive_classic_title_typography_font_size'   => array( 'unit' => 'px', 'size' => 20 ),
+						'archive_classic_title_typography_line_height' => array( 'unit' => 'em', 'size' => 1.3 ),
+						'archive_classic_title_typography_text_transform' => 'none',
+						'archive_classic_show_excerpt'    => 'yes',
+						'archive_classic_excerpt_length'  => 18,
+						'archive_classic_show_read_more'  => 'yes',
+						'archive_classic_read_more_text'  => 'Ver máquina',
+						'archive_classic_image_size'      => 'medium_large',
 					)
 				),
 			),

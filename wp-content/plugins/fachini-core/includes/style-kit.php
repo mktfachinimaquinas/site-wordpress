@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'FACHINI_STYLEKIT_VERSAO', '2026-10-01b' );
+define( 'FACHINI_STYLEKIT_VERSAO', '2026-10-02-figma' );
 
 /**
  * Paleta aprovada. Os apelidos "primary", "secondary", "text" e "accent" são os
@@ -85,21 +85,23 @@ function fachini_aplicar_style_kit() {
 
 	// Tipografia global do Elementor
 	$ajustes['system_typography'] = array(
-		array_merge( array( '_id' => 'primary',   'title' => 'Títulos (Mitr)' ),   fachini_tipografia( 'Mitr', 600, 56, 1.15, 0.06, 'uppercase', 32 ) ),
-		array_merge( array( '_id' => 'secondary', 'title' => 'Subtítulos' ),       fachini_tipografia( 'Archivo', 600, 23, 1.35 ) ),
-		array_merge( array( '_id' => 'text',      'title' => 'Corpo de texto' ),   fachini_tipografia( 'Archivo', 400, 16, 1.6 ) ),
-		array_merge( array( '_id' => 'accent',    'title' => 'Destaques e botões' ), fachini_tipografia( 'Archivo', 700, 15, 1, 0.05, 'uppercase' ) ),
+		array_merge( array( '_id' => 'primary',   'title' => 'Títulos (Archivo)' ),  fachini_tipografia( 'Archivo', 700, 64, 1.125, 0, 'uppercase', 32 ) ),
+		array_merge( array( '_id' => 'secondary', 'title' => 'Hero (Geist)' ),       fachini_tipografia( 'Geist', 700, 56, 1.14, 0.05, 'uppercase', 30 ) ),
+		array_merge( array( '_id' => 'text',      'title' => 'Corpo (body large)' ), fachini_tipografia( 'Archivo', 400, 18, 1.56 ) ),
+		array_merge( array( '_id' => 'accent',    'title' => 'Botões e UI' ),        fachini_tipografia( 'Archivo', 600, 16, 1.5, 0, 'uppercase' ) ),
 	);
 
 	// Escala de títulos (Elementor > Estilo do tema)
 	// O sétimo valor é o tamanho no celular, da escala do design system.
+	// Valores da tabela de tipografia revisada no Figma (aba "tipografia").
+	// entrelinha convertida para proporção: ex. h1 72/64 = 1.125.
 	$escala = array(
-		'h1' => array( 'Mitr', 600, 56, 1.15, 0.06, 'uppercase', 32 ),
-		'h2' => array( 'Mitr', 600, 45, 1.2, 0.06, 'uppercase', 27 ),
-		'h3' => array( 'Archivo', 600, 36, 1.3, 0.02, 'none', 23 ),
-		'h4' => array( 'Archivo', 600, 29, 1.35, 0, 'none', 19 ),
-		'h5' => array( 'Archivo', 600, 23, 1.4, 0, 'none', 17 ),
-		'h6' => array( 'Archivo', 600, 19, 1.4, 0, 'none', 16 ),
+		'h1' => array( 'Archivo', 700, 64, 1.125, 0, 'uppercase', 32 ),   // h1 - page title
+		'h2' => array( 'Archivo', 700, 42, 1.05, 0, 'none', 27 ),         // h2 - category title
+		'h3' => array( 'Archivo', 700, 36, 1.33, 0, 'uppercase', 23 ),    // h3 - section title
+		'h4' => array( 'Archivo', 500, 20, 1.4, 0, 'none', 18 ),          // ui - label
+		'h5' => array( 'Archivo', 600, 18, 1.56, 0, 'none', 17 ),         // body - L highlight
+		'h6' => array( 'Archivo', 500, 14, 1.71, 0, 'none', 14 ),         // ui - small
 	);
 
 	foreach ( $escala as $tag => $v ) {
@@ -109,8 +111,8 @@ function fachini_aplicar_style_kit() {
 		$ajustes[ $tag . '_color' ] = '#15274E';
 	}
 
-	// Corpo de texto
-	foreach ( fachini_tipografia( 'Archivo', 400, 16, 1.6 ) as $chave => $valor ) {
+	// Corpo de texto: body - large da tabela (18 / 28)
+	foreach ( fachini_tipografia( 'Archivo', 400, 18, 1.56 ) as $chave => $valor ) {
 		$ajustes[ 'body_' . $chave ] = $valor;
 	}
 	$ajustes['body_color'] = '#0F0F0F';
@@ -120,7 +122,8 @@ function fachini_aplicar_style_kit() {
 	$ajustes['link_hover_color']  = '#B01319';
 
 	// Botões
-	foreach ( fachini_tipografia( 'Archivo', 700, 15, 1, 0.05, 'uppercase' ) as $chave => $valor ) {
+	// ui - button: Archivo semibold 16 / 24
+	foreach ( fachini_tipografia( 'Archivo', 600, 16, 1.5, 0, 'uppercase' ) as $chave => $valor ) {
 		$ajustes[ 'button_' . $chave ] = $valor;
 	}
 	$ajustes['button_text_color']             = '#FFFFFF';

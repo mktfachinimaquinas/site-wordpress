@@ -59,6 +59,33 @@ function fachini_sc_breadcrumb() {
 add_shortcode( 'fachini_breadcrumb', 'fachini_sc_breadcrumb' );
 
 /**
+ * Título da listagem, sem o prefixo que o Elementor acrescenta
+ * ("Categoria de máquina: Calhas" vira apenas "Calhas").
+ * Abaixo dele entra a descrição da categoria, quando houver.
+ */
+function fachini_sc_titulo_arquivo() {
+	if ( ! is_tax( 'categoria_maquina' ) ) {
+		return '';
+	}
+
+	$termo = get_queried_object();
+
+	if ( ! $termo || is_wp_error( $termo ) ) {
+		return '';
+	}
+
+	$html = '<h1 class="fachini-titulo-arquivo">' . esc_html( $termo->name ) . '</h1>';
+
+	$descricao = term_description( $termo );
+	if ( $descricao ) {
+		$html .= '<div class="fachini-arquivo-descricao">' . wp_kses_post( $descricao ) . '</div>';
+	}
+
+	return $html;
+}
+add_shortcode( 'fachini_titulo_arquivo', 'fachini_sc_titulo_arquivo' );
+
+/**
  * Tabela de especificações, montada a partir do campo de texto.
  * O título vem junto: assim a seção inteira some quando não há especificação.
  */
