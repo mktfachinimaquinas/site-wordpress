@@ -16,6 +16,42 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
+ * Conteúdo do rodapé.
+ *
+ * Os dados da empresa vêm do documento de privacidade aprovado pelo jurídico.
+ * A unidade de Curitiba entra quando o cliente enviar o endereço.
+ */
+function fachini_sc_rodape() {
+	$ano = date_i18n( 'Y' );
+
+	ob_start();
+	?>
+	<div class="fachini-rodape">
+		<div class="fachini-rodape__coluna">
+			<p class="fachini-rodape__empresa"><strong>FACHINI MÁQUINAS LTDA</strong></p>
+			<p>CNPJ 04.152.592/0001-18</p>
+			<p>R. Beliamino Julio Miotto, 493, CITVEL 1<br>Cascavel, PR, 85818-576</p>
+		</div>
+		<div class="fachini-rodape__coluna">
+			<p><strong>Contato</strong></p>
+			<p><a href="tel:+554533281313">+55 45 3328-1313</a></p>
+			<p><a href="mailto:marketing@fachinimaquinas.com.br">marketing@fachinimaquinas.com.br</a></p>
+		</div>
+		<div class="fachini-rodape__coluna">
+			<p><strong>Institucional</strong></p>
+			<p><a href="<?php echo esc_url( home_url( '/quem-somos/' ) ); ?>">Quem somos</a></p>
+			<p><a href="<?php echo esc_url( home_url( '/contato/' ) ); ?>">Contato</a></p>
+			<p><a href="<?php echo esc_url( home_url( '/politica-de-privacidade/' ) ); ?>">Política de privacidade</a></p>
+			<p><a href="<?php echo esc_url( home_url( '/termos-de-uso/' ) ); ?>">Termos de uso</a></p>
+		</div>
+	</div>
+	<p class="fachini-rodape__copy">&copy; <?php echo esc_html( $ano ); ?> Fachini Máquinas. Todos os direitos reservados.</p>
+	<?php
+	return ob_get_clean();
+}
+add_shortcode( 'fachini_rodape', 'fachini_sc_rodape' );
+
+/**
  * Caminho de navegação (breadcrumb).
  *
  * Feito aqui em vez de depender do Rank Math: o shortcode dele só existe se a

@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'FACHINI_TEMPLATES_VERSAO', '2026-10-02b' );
+define( 'FACHINI_TEMPLATES_VERSAO', '2026-10-02d' );
 
 /**
  * Gera um id curto no formato que o Elementor usa.
@@ -192,10 +192,127 @@ function fachini_layout_categoria() {
 	);
 }
 
+
 /**
- * Cria os dois modelos, se ainda não existirem.
+ * Cabeçalho: variante escura da barra de navegação desenhada pela Débora.
+ * Fundo navy, logo horizontal à esquerda e menu à direita.
+ */
+function fachini_layout_cabecalho() {
+	$logo_id  = (int) get_option( 'fachini_logo_id' );
+	$logo_url = $logo_id ? wp_get_attachment_url( $logo_id ) : '';
+
+	$coluna_logo = array(
+		'id'       => fachini_el_id(),
+		'elType'   => 'column',
+		'settings' => array( '_column_size' => 30, '_inline_size' => 30 ),
+		'elements' => array(
+			fachini_el_widget(
+				'theme-site-logo',
+				array(
+					'image'      => array( 'id' => $logo_id, 'url' => $logo_url ),
+					'image_size' => 'medium',
+					'align'      => 'left',
+					'width'      => array( 'unit' => 'px', 'size' => 200 ),
+					'link_to'    => 'home',
+				)
+			),
+		),
+	);
+
+	$coluna_menu = array(
+		'id'       => fachini_el_id(),
+		'elType'   => 'column',
+		'settings' => array( '_column_size' => 70, '_inline_size' => 70 ),
+		'elements' => array(
+			fachini_el_widget(
+				'nav-menu',
+				array(
+					'menu'            => 'menu-principal',
+					'align'           => 'right',
+					'layout'          => 'horizontal',
+					'color_menu_item' => '#FFFFFF',
+					'color_menu_item_hover' => '#E01E26',
+					'pointer'         => 'underline',
+					'menu_typography_typography'      => 'custom',
+					'menu_typography_font_family'     => 'Archivo',
+					'menu_typography_font_size'       => array( 'unit' => 'px', 'size' => 16 ),
+					'menu_typography_font_weight'     => '400',
+					'menu_typography_line_height'     => array( 'unit' => 'em', 'size' => 1.5 ),
+					'menu_typography_text_transform'  => 'uppercase',
+					'menu_typography_letter_spacing'  => array( 'unit' => 'px', 'size' => 0 ),
+					'padding_horizontal_menu_item'    => array( 'unit' => 'px', 'size' => 14 ),
+					'toggle_align'    => 'right',
+					'color_menu_item_active' => '#E01E26',
+				)
+			),
+		),
+	);
+
+	return array(
+		array(
+			'id'       => fachini_el_id(),
+			'elType'   => 'section',
+			'settings' => array(
+				'background_background' => 'classic',
+				'background_color'      => '#15274E',
+				'padding'               => array( 'unit' => 'px', 'top' => '16', 'right' => '24', 'bottom' => '16', 'left' => '24', 'isLinked' => false ),
+				'content_width'         => 'boxed',
+				'structure'             => '20',
+			),
+			'elements' => array( $coluna_logo, $coluna_menu ),
+		),
+	);
+}
+
+/**
+ * Rodapé: navy escuro, com identificação da empresa e links legais.
+ * O conteúdo real das unidades entra quando o cliente enviar os dados.
+ */
+function fachini_layout_rodape() {
+	return array(
+		array(
+			'id'       => fachini_el_id(),
+			'elType'   => 'section',
+			'settings' => array(
+				'background_background' => 'classic',
+				'background_color'      => '#00224E',
+				'padding'               => array( 'unit' => 'px', 'top' => '48', 'right' => '24', 'bottom' => '32', 'left' => '24', 'isLinked' => false ),
+			),
+			'elements' => array(
+				array(
+					'id'       => fachini_el_id(),
+					'elType'   => 'column',
+					'settings' => array( '_column_size' => 100 ),
+					'elements' => array(
+						fachini_el_widget( 'shortcode', array( 'shortcode' => '[fachini_rodape]' ) ),
+					),
+				),
+			),
+		),
+	);
+}
+
+/**
+ * Cria os modelos, se ainda não existirem.
  */
 function fachini_seed_templates() {
+
+	// Descobre o logo na biblioteca de mídia uma única vez.
+	if ( ! get_option( 'fachini_logo_id' ) ) {
+		$encontrado = get_posts(
+			array(
+				'post_type'      => 'attachment',
+				'post_status'    => 'inherit',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				's'              => 'logo-fachini-horizontal',
+			)
+		);
+		if ( ! empty( $encontrado ) ) {
+			update_option( 'fachini_logo_id', (int) $encontrado[0] );
+		}
+	}
+
 
 	if ( get_option( 'fachini_templates_versao' ) === FACHINI_TEMPLATES_VERSAO ) {
 		return;
@@ -212,6 +329,20 @@ function fachini_seed_templates() {
 			'layout'     => fachini_layout_maquina(),
 			'condicoes'  => array( 'include/singular/maquina' ),
 			'chave'      => 'fachini_tpl_maquina',
+		),
+		array(
+			'titulo'     => 'Cabeçalho do site',
+			'tipo'       => 'header',
+			'layout'     => fachini_layout_cabecalho(),
+			'condicoes'  => array( 'include/general' ),
+			'chave'      => 'fachini_tpl_cabecalho',
+		),
+		array(
+			'titulo'     => 'Rodapé do site',
+			'tipo'       => 'footer',
+			'layout'     => fachini_layout_rodape(),
+			'condicoes'  => array( 'include/general' ),
+			'chave'      => 'fachini_tpl_rodape',
 		),
 		array(
 			'titulo'     => 'Categoria de máquinas (listagem)',

@@ -4,7 +4,7 @@ Theme URI:    https://github.com/mktfachinimaquinas/site-wordpress
 Description:  Tema filho do Hello Elementor para o site da Fachini Máquinas. Todo código personalizado (CSS, scripts, SMTP, scripts de marketing) mora aqui, para que o tema pai possa ser atualizado sem perder nada.
 Author:       Fachini Máquinas
 Template:     hello-elementor
-Version:      1.0.0
+Version:      1.1.0
 License:      GPL-2.0-or-later
 Text Domain:  hello-elementor-child
 */
@@ -27,4 +27,48 @@ Text Domain:  hello-elementor-child
 
 	--fachini-largura-padrao: 1200px;
 	--fachini-largura-texto: 720px;
+}
+
+/* -------------------------------------------------------------------------
+   Rodapé
+   Texto claro sobre o fundo navy. Sem isto, o texto herda a cor do corpo
+   (quase preto) e fica ilegível.
+   ------------------------------------------------------------------------- */
+.fachini-rodape {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 32px;
+	color: var(--fachini-offwhite);
+}
+.fachini-rodape p { margin: 0 0 8px; color: var(--fachini-offwhite); }
+.fachini-rodape a { color: var(--fachini-offwhite); text-decoration: none; }
+.fachini-rodape a:hover { color: var(--fachini-vermelho); }
+.fachini-rodape__copy {
+	margin-top: 32px;
+	padding-top: 16px;
+	border-top: 1px solid rgba(251, 251, 251, .2);
+	color: var(--fachini-cinza-nevoa);
+	font-size: 14px;
+}
+
+/* Caminho de navegação */
+.fachini-breadcrumb { font-size: 14px; color: var(--fachini-cinza-medio); }
+.fachini-breadcrumb a { color: var(--fachini-cinza-medio); text-decoration: none; }
+.fachini-breadcrumb a:hover { color: var(--fachini-vermelho); }
+.fachini-breadcrumb__sep { opacity: .5; }
+
+/* Tabela de especificações */
+.fachini-specs { width: 100%; border-collapse: collapse; }
+.fachini-specs th,
+.fachini-specs td { padding: 12px 16px; border: 1px solid var(--fachini-cinza-nevoa); text-align: left; }
+.fachini-specs th { width: 40%; background: var(--fachini-cinza-nevoa); font-weight: 600; }
+
+/* Máquinas relacionadas */
+.fachini-relacionadas { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+.fachini-relacionadas__item { text-decoration: none; color: var(--fachini-navy); }
+.fachini-relacionadas__nome { display: block; margin-top: 8px; font-weight: 600; }
+
+@media (max-width: 767px) {
+	.fachini-rodape { grid-template-columns: 1fr; gap: 24px; }
+	.fachini-relacionadas { grid-template-columns: repeat(2, 1fr); }
 }
