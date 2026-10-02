@@ -24,6 +24,50 @@ function fachini_child_enqueue_styles() {
 add_action( 'wp_enqueue_scripts', 'fachini_child_enqueue_styles', 20 );
 
 /**
+ * Carrega a fonte Geist.
+ *
+ * Decisão da Débora em 02/10/2026: a Geist é usada exclusivamente no hero.
+ * Todo o resto do site usa Archivo, que o próprio Elementor já carrega a
+ * partir do kit de estilos.
+ *
+ * Carregamos só os pesos realmente usados. Cada peso a mais é um arquivo a
+ * mais para o visitante baixar, e isso pesa na nota de performance.
+ */
+function fachini_child_fontes() {
+	// Uma única requisição, só com os pesos realmente usados no projeto.
+	// Archivo: 400 texto, 500 rótulos, 600 destaques e botões, 700 títulos.
+	// Geist: 400 e 700, exclusiva do hero.
+	wp_enqueue_style(
+		'fachini-fontes',
+		'https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Geist:wght@400;700&display=swap',
+		array(),
+		null
+	);
+}
+add_action( 'wp_enqueue_scripts', 'fachini_child_fontes', 5 );
+
+/**
+ * Impede o Elementor de carregar as fontes por conta própria.
+ *
+ * Por padrão ele pede a Archivo em todos os pesos e itálicos, 18 arquivos,
+ * sendo que o projeto usa quatro. Como já carregamos acima exatamente o que é
+ * usado, aqui apenas desligamos a carga automática dele.
+ */
+add_filter( 'elementor/frontend/print_google_fonts', '__return_false' );
+
+/**
+ * Abre a conexão com o servidor de fontes mais cedo, para o texto aparecer antes.
+ */
+function fachini_child_preconnect_fontes( $urls, $relation_type ) {
+	if ( 'preconnect' === $relation_type ) {
+		$urls[] = array( 'href' => 'https://fonts.googleapis.com' );
+		$urls[] = array( 'href' => 'https://fonts.gstatic.com', 'crossorigin' => 'anonymous' );
+	}
+	return $urls;
+}
+add_filter( 'wp_resource_hints', 'fachini_child_preconnect_fontes', 10, 2 );
+
+/**
  * Limpeza de cabeçalho: remove o que não é usado e só adiciona peso.
  */
 remove_action( 'wp_head', 'wp_generator' );                 // esconde a versão do WordPress
