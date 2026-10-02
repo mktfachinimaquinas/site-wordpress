@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'FACHINI_TEMPLATES_VERSAO', '2026-10-02d' );
+define( 'FACHINI_TEMPLATES_VERSAO', '2026-10-02e' );
 
 /**
  * Gera um id curto no formato que o Elementor usa.
@@ -297,20 +297,24 @@ function fachini_layout_rodape() {
  */
 function fachini_seed_templates() {
 
-	// Descobre o logo na biblioteca de mídia uma única vez.
-	if ( ! get_option( 'fachini_logo_id' ) ) {
-		$encontrado = get_posts(
-			array(
-				'post_type'      => 'attachment',
-				'post_status'    => 'inherit',
-				'posts_per_page' => 1,
-				'fields'         => 'ids',
-				's'              => 'logo-fachini-horizontal',
-			)
-		);
-		if ( ! empty( $encontrado ) ) {
-			update_option( 'fachini_logo_id', (int) $encontrado[0] );
-		}
+	// Logo oficial enviado pela Débora em 02/10/2026.
+	// LIGHT_H é a versão horizontal com o texto claro, para o cabeçalho navy.
+	// DARK_H é a versão para fundo claro; LIGHT_V é a vertical, para uso futuro.
+	$logo_atual = (int) get_option( 'fachini_logo_id' );
+	$oficial    = get_posts(
+		array(
+			'post_type'      => 'attachment',
+			'post_status'    => 'inherit',
+			'posts_per_page' => 1,
+			'fields'         => 'ids',
+			'name'           => 'light_h',
+		)
+	);
+
+	if ( ! empty( $oficial ) && (int) $oficial[0] !== $logo_atual ) {
+		update_option( 'fachini_logo_id', (int) $oficial[0] );
+		// Força o cabeçalho a ser remontado com o logo novo.
+		delete_option( 'fachini_templates_layout' );
 	}
 
 
