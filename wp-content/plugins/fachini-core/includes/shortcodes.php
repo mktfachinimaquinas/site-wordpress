@@ -30,7 +30,7 @@ function fachini_sc_rodape() {
 		<div class="fachini-rodape__coluna">
 			<p class="fachini-rodape__empresa"><strong>FACHINI MÁQUINAS LTDA</strong></p>
 			<p>CNPJ 04.152.592/0001-18</p>
-			<p>R. Beliamino Julio Miotto, 493, CITVEL 1<br>Cascavel, PR, 85818-576</p>
+			<p>R. Beliamino Julio Miotto, 493, CITVEL&nbsp;1<br>Cascavel, PR, 85818-576</p>
 		</div>
 		<div class="fachini-rodape__coluna">
 			<p><strong>Contato</strong></p>
@@ -88,6 +88,9 @@ function fachini_sc_breadcrumb() {
 			}
 		}
 		$itens[] = '<span>' . esc_html( $atual->name ) . '</span>';
+
+	} elseif ( is_post_type_archive( 'maquina' ) ) {
+		$itens[] = '<span>' . esc_html( post_type_archive_title( '', false ) ) . '</span>';
 	}
 
 	return '<nav class="fachini-breadcrumb" aria-label="Você está aqui">' . implode( ' <span class="fachini-breadcrumb__sep">/</span> ', $itens ) . '</nav>';
@@ -96,10 +99,15 @@ add_shortcode( 'fachini_breadcrumb', 'fachini_sc_breadcrumb' );
 
 /**
  * Título da listagem, sem o prefixo que o Elementor acrescenta
- * ("Categoria de máquina: Calhas" vira apenas "Calhas").
+ * ("Categoria de máquina: Calhas" vira apenas "Calhas"; "Arquivos: Máquinas"
+ * vira "Máquinas").
  * Abaixo dele entra a descrição da categoria, quando houver.
  */
 function fachini_sc_titulo_arquivo() {
+	if ( is_post_type_archive( 'maquina' ) ) {
+		return '<h1 class="fachini-titulo-arquivo">' . esc_html( post_type_archive_title( '', false ) ) . '</h1>';
+	}
+
 	if ( ! is_tax( 'categoria_maquina' ) ) {
 		return '';
 	}

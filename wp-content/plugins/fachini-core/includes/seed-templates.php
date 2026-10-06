@@ -2,10 +2,11 @@
 /**
  * Modelos do Theme Builder criados por código.
  *
- * São dois: a página de máquina e a listagem de categoria. Eles nascem aqui
- * para poderem ser recriados em qualquer ambiente, mas depois disso são
- * editáveis normalmente no Elementor. Esta rotina não sobrescreve nada:
- * se o modelo já existir, ela não toca nele.
+ * São cinco: página de máquina, listagem de categoria, listagem de todas as
+ * máquinas (/maquinas/), cabeçalho e rodapé. Eles nascem aqui para poderem
+ * ser recriados em qualquer ambiente, mas depois disso são editáveis
+ * normalmente no Elementor. Um modelo que já existe só tem o layout
+ * reescrito quando FACHINI_TEMPLATES_LAYOUT muda (ver abaixo).
  *
  * O conteúdo das máquinas (especificações, catálogo, vídeo, relacionadas) é
  * renderizado por shortcode, em includes/shortcodes.php, e não por widget do
@@ -16,7 +17,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'FACHINI_TEMPLATES_VERSAO', '2026-10-02e' );
+// Mudar esta versão faz a rotina rodar de novo: cria os modelos que faltam e
+// reaplica tipo e condições de todos.
+define( 'FACHINI_TEMPLATES_VERSAO', '2026-10-06a' );
+
+// Mudar esta outra reescreve o layout dos modelos que já existem, a partir do
+// código. Fica separada para que acrescentar um modelo novo não apague ajuste
+// feito à mão nos outros.
+define( 'FACHINI_TEMPLATES_LAYOUT', '2026-10-02e' );
 
 /**
  * Gera um id curto no formato que o Elementor usa.
@@ -355,15 +363,24 @@ function fachini_seed_templates() {
 			'condicoes'  => array( 'include/archive/taxonomy/categoria_maquina', 'include/archive/categoria_maquina' ),
 			'chave'      => 'fachini_tpl_categoria',
 		),
+		array(
+			// /maquinas/, o primeiro item do menu. A condição de arquivo de um tipo
+			// de conteúdo no Elementor Pro é "<tipo>_archive", diferente da de taxonomia.
+			'titulo'     => 'Listagem de máquinas (todas)',
+			'tipo'       => 'archive',
+			'layout'     => fachini_layout_categoria(),
+			'condicoes'  => array( 'include/archive/maquina_archive' ),
+			'chave'      => 'fachini_tpl_listagem',
+		),
 	);
 
 	foreach ( $modelos as $modelo ) {
 
 		$post_id = (int) get_option( $modelo['chave'] );
 
-		// Cria apenas se ainda não existir. O layout de um modelo já criado
-		// nunca é sobrescrito, para não apagar ajuste feito no editor.
-		$forcar_layout = ( get_option( 'fachini_templates_layout' ) !== FACHINI_TEMPLATES_VERSAO );
+		// Cria apenas se ainda não existir. O layout de um modelo já criado só é
+		// reescrito quando FACHINI_TEMPLATES_LAYOUT muda.
+		$forcar_layout = ( get_option( 'fachini_templates_layout' ) !== FACHINI_TEMPLATES_LAYOUT );
 
 		if ( $post_id && get_post( $post_id ) && $forcar_layout ) {
 			// Atualização única do layout. Seguro enquanto os modelos ainda não
@@ -421,7 +438,7 @@ function fachini_seed_templates() {
 		\Elementor\Plugin::$instance->files_manager->clear_cache();
 	}
 
-	update_option( 'fachini_templates_layout', FACHINI_TEMPLATES_VERSAO );
+	update_option( 'fachini_templates_layout', FACHINI_TEMPLATES_LAYOUT );
 	update_option( 'fachini_templates_versao', FACHINI_TEMPLATES_VERSAO );
 }
 add_action( 'init', 'fachini_seed_templates', 30 );
