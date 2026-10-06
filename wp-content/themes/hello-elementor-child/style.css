@@ -4,7 +4,7 @@ Theme URI:    https://github.com/mktfachinimaquinas/site-wordpress
 Description:  Tema filho do Hello Elementor para o site da Fachini Máquinas. Todo código personalizado (CSS, scripts, SMTP, scripts de marketing) mora aqui, para que o tema pai possa ser atualizado sem perder nada.
 Author:       Fachini Máquinas
 Template:     hello-elementor
-Version:      1.3.0
+Version:      1.3.1
 License:      GPL-2.0-or-later
 Text Domain:  hello-elementor-child
 */
@@ -71,4 +71,28 @@ Text Domain:  hello-elementor-child
 @media (max-width: 767px) {
 	.fachini-rodape { grid-template-columns: 1fr; gap: 24px; }
 	.fachini-relacionadas { grid-template-columns: repeat(2, 1fr); }
+
+	/* Cabeçalho no celular: logo e botão do menu na mesma linha.
+	   Sem isto, o Elementor empilha as duas colunas e o botão cai para
+	   uma segunda linha, quase invisível no fundo navy. */
+	.elementor-location-header .elementor-top-section > .elementor-container { flex-wrap: nowrap; align-items: center; }
+	.elementor-location-header .elementor-top-column { width: auto !important; }
+	.elementor-location-header .elementor-top-column:first-child { flex: 1 1 auto; min-width: 0; }
+	.elementor-location-header .elementor-top-column:last-child { flex: 0 0 auto; }
+	.elementor-location-header .elementor-menu-toggle { --nav-menu-icon-color: var(--fachini-offwhite); color: var(--fachini-offwhite); background-color: transparent; }
+	.elementor-location-header .elementor-menu-toggle svg { fill: var(--fachini-offwhite); }
+
+	/* O menu aberto aparece por cima do conteúdo, na largura toda, em vez de
+	   empurrar o cabeçalho para baixo. */
+	.elementor-location-header .elementor-top-section > .elementor-container,
+	.elementor-location-header .elementor-top-column,
+	.elementor-location-header .elementor-widget-wrap,
+	.elementor-location-header .elementor-widget-nav-menu,
+	.elementor-location-header .elementor-widget-nav-menu > .elementor-widget-container { position: static; }
+	.elementor-location-header .elementor-nav-menu--dropdown.elementor-nav-menu__container { position: absolute; top: 100%; left: 0; right: 0; width: 100%; margin-top: 0; z-index: 100; box-shadow: 0 8px 16px rgba(0, 0, 0, .12); }
+
+	/* Mesma margem lateral do bloco de orçamento e do rodapé, nas páginas de
+	   máquina e de categoria. */
+	.elementor-location-single > .elementor-section,
+	.elementor-location-archive > .elementor-section { padding-left: 24px !important; padding-right: 24px !important; }
 }
