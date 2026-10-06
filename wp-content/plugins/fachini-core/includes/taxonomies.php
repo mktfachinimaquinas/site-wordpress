@@ -36,6 +36,11 @@ function fachini_core_register_taxonomies() {
 		'hierarchical'      => true,
 		'show_admin_column' => true,
 		'show_in_rest'      => true,
+		// Escolher a categoria de uma máquina exige só poder editar máquinas.
+		// Sem isto o WordPress pediria edit_posts, que o papel "Cadastro de
+		// Máquinas" não tem. Criar, renomear e apagar categorias continua
+		// exigindo manage_categories (administrador).
+		'capabilities'      => array( 'assign_terms' => 'edit_maquinas' ),
 		'rewrite'           => array(
 			'slug'         => FACHINI_SLUG_CATEGORIAS,
 			'with_front'   => false,

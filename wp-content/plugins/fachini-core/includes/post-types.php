@@ -49,7 +49,11 @@ function fachini_core_register_post_types() {
 		'supports'           => array( 'title', 'editor', 'thumbnail', 'excerpt', 'revisions', 'page-attributes' ),
 		'show_in_rest'       => true,  // necessário para o editor de blocos e para integrações futuras
 		'publicly_queryable' => true,
-		'capability_type'    => 'post',
+		// Permissões próprias (edit_maquinas, publish_maquinas...) em vez das de
+		// "post", para que alguém possa cadastrar máquinas sem poder mexer em
+		// páginas, modelos ou posts. A distribuição fica em includes/papeis.php.
+		'capability_type'    => 'maquina',
+		'map_meta_cap'       => true,
 		'hierarchical'       => false,
 	);
 

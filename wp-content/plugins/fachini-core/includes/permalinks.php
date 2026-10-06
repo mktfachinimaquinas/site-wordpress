@@ -317,3 +317,36 @@ function fachini_canonical_maquina( $canonical ) {
 	return $canonical;
 }
 add_filter( 'get_canonical_url', 'fachini_canonical_maquina' );
+
+/* -------------------------------------------------------------------------
+   5. Endereço nativo da taxonomia
+   ------------------------------------------------------------------------- */
+
+/**
+ * /categorias/calhas/ é o endereço nativo do WordPress para a categoria e
+ * mostraria a mesma listagem de /calhas/, um conteúdo duplicado. O site nunca
+ * gera esse endereço, mas ele responderia se alguém digitasse ou se algum
+ * link antigo apontasse para ele. Redireciona (301) para o mesmo caminho sem
+ * o prefixo, mantendo o resto do caminho (paginação, feed) e os parâmetros.
+ */
+function fachini_redirecionar_prefixo_categorias() {
+	$uri     = isset( $_SERVER['REQUEST_URI'] ) ? wp_unslash( $_SERVER['REQUEST_URI'] ) : '';
+	$caminho = (string) wp_parse_url( $uri, PHP_URL_PATH );
+	$base    = rtrim( (string) wp_parse_url( home_url(), PHP_URL_PATH ), '/' );
+	$prefixo = $base . '/' . FACHINI_SLUG_CATEGORIAS . '/';
+
+	if ( 0 !== strpos( $caminho, $prefixo ) || strlen( $caminho ) <= strlen( $prefixo ) ) {
+		return;
+	}
+
+	$destino = home_url( '/' . substr( $caminho, strlen( $prefixo ) ) );
+	$params  = (string) wp_parse_url( $uri, PHP_URL_QUERY );
+
+	if ( '' !== $params ) {
+		$destino .= '?' . $params;
+	}
+
+	wp_safe_redirect( $destino, 301 );
+	exit;
+}
+add_action( 'template_redirect', 'fachini_redirecionar_prefixo_categorias', 1 );
