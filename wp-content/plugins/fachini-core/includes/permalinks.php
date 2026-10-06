@@ -141,6 +141,13 @@ function fachini_query_vars( $vars ) {
 add_filter( 'query_vars', 'fachini_query_vars' );
 
 function fachini_rewrite_rules() {
+	// /maquinas/maquina/  -> máquina ainda sem categoria
+	add_rewrite_rule(
+		'^' . FACHINI_SLUG_MAQUINAS . '/([^/]+)/?$',
+		'index.php?maquina=$matches[1]',
+		'top'
+	);
+
 	$raizes = fachini_slugs_categorias_raiz();
 
 	if ( empty( $raizes ) ) {
@@ -171,6 +178,22 @@ function fachini_rewrite_rules() {
 	);
 }
 add_action( 'init', 'fachini_rewrite_rules', 30 );
+
+/**
+ * Descarta as regras genéricas que o WordPress cria a partir do marcador
+ * %categoria_maquina% do tipo "Máquinas".
+ *
+ * Uma delas, (.+?)/?$, fica no topo da lista e captura QUALQUER endereço de um
+ * nível como se fosse categoria: /quem-somos/ e /contato/ davam 404. As
+ * máquinas já são lidas pelas regras explícitas acima, então as genéricas
+ * não fazem falta.
+ *
+ * Efeito colateral aceito: o mesmo bloco gerado trazia as regras de feed,
+ * embed, paginação (<!--nextpage-->) e anexo de cada máquina, que também
+ * deixam de existir. Nada disso é usado: os comentários estão fechados e
+ * nenhuma máquina usa quebra de página.
+ */
+add_filter( 'maquina_rewrite_rules', '__return_empty_array' );
 
 /**
  * Decide se o endereço é de categoria ou de máquina, consultando o banco.

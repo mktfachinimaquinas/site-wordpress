@@ -3,7 +3,7 @@
  * Plugin Name:       Fachini Core
  * Plugin URI:        https://github.com/mktfachinimaquinas/site-wordpress
  * Description:       Estrutura de conteúdo do site da Fachini Máquinas: tipo de conteúdo "Máquinas", taxonomias, campos, endereços, kit de estilos e modelos de página. Independente do tema, de forma que trocar o visual não apaga nenhum cadastro.
- * Version:           1.7.2
+ * Version:           1.7.3
  * Requires at least: 6.5
  * Requires PHP:      8.0
  * Author:            Fachini Máquinas
@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'FACHINI_CORE_VERSION', '1.7.2' );
+define( 'FACHINI_CORE_VERSION', '1.7.3' );
 define( 'FACHINI_CORE_PATH', plugin_dir_path( __FILE__ ) );
 
 /**
@@ -62,3 +62,18 @@ function fachini_core_deactivate() {
 	flush_rewrite_rules();
 }
 register_deactivation_hook( __FILE__, 'fachini_core_deactivate' );
+
+/**
+ * Regrava as regras de URL uma vez a cada versão nova do plugin.
+ * Atualizar pelo envio do zip não dispara a ativação, e sem isso as regras
+ * novas só valeriam depois de alguém salvar os links permanentes na mão.
+ */
+function fachini_core_atualizar_regras() {
+	if ( get_option( 'fachini_core_versao' ) === FACHINI_CORE_VERSION ) {
+		return;
+	}
+
+	flush_rewrite_rules();
+	update_option( 'fachini_core_versao', FACHINI_CORE_VERSION );
+}
+add_action( 'init', 'fachini_core_atualizar_regras', 99 );
