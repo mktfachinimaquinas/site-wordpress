@@ -156,6 +156,20 @@ function fachini_rewrite_rules() {
 
 	$grupo = implode( '|', array_map( 'preg_quote', $raizes ) );
 
+	// /categoria/page/2/ e /categoria/subcategoria/page/2/: paginação das listagens.
+	// Precisam vir antes das regras abaixo; sem isto, /calhas/page/2/ seria lido
+	// como categoria "calhas", subcategoria "page" e máquina "2", e daria 404.
+	add_rewrite_rule(
+		'^(' . $grupo . ')/page/([0-9]{1,})/?$',
+		'index.php?categoria_maquina=$matches[1]&paged=$matches[2]',
+		'top'
+	);
+	add_rewrite_rule(
+		'^(' . $grupo . ')/([^/]+)/page/([0-9]{1,})/?$',
+		'index.php?categoria_maquina=$matches[1]/$matches[2]&paged=$matches[3]',
+		'top'
+	);
+
 	// /categoria/subcategoria/maquina/
 	add_rewrite_rule(
 		'^(' . $grupo . ')/([^/]+)/([^/]+)/?$',

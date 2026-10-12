@@ -91,3 +91,33 @@ function fachini_core_migrar_papeis() {
 		wp_get_current_user()->get_role_caps();
 	}
 }
+
+/**
+ * Uma máquina continua sendo de quem a cadastrou, mesmo quando outra pessoa
+ * salva uma alteração nela.
+ *
+ * O tipo "Máquinas" não tem campo de autor. Quando alguém salva uma máquina,
+ * o editor de blocos envia os campos do ACF para o post.php num formulário
+ * que traz o usuário atual e não traz o autor, e o WordPress troca o autor
+ * pelo usuário atual. A edição rápida da listagem faz o mesmo. Com o papel
+ * "Cadastro de Máquinas", quem cadastrou perderia a edição da própria máquina
+ * assim que o administrador corrigisse algo nela.
+ *
+ * Por isso, numa atualização, o autor gravado é mantido. Máquina sem autor
+ * (0) pode receber um. Transferir uma máquina para outra pessoa fica fora do
+ * painel, de propósito.
+ */
+function fachini_manter_autor_maquina( $dados, $postarr, $postarr_bruto = array(), $atualizacao = false ) {
+	if ( 'maquina' !== $dados['post_type'] || ! $atualizacao || empty( $postarr['ID'] ) ) {
+		return $dados;
+	}
+
+	$autor = (int) get_post_field( 'post_author', (int) $postarr['ID'] );
+
+	if ( $autor > 0 ) {
+		$dados['post_author'] = $autor;
+	}
+
+	return $dados;
+}
+add_filter( 'wp_insert_post_data', 'fachini_manter_autor_maquina', 10, 4 );
