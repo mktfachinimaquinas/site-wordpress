@@ -4,7 +4,7 @@ Theme URI:    https://github.com/mktfachinimaquinas/site-wordpress
 Description:  Tema filho do Hello Elementor para o site da Fachini Máquinas. Todo código personalizado (CSS, scripts, SMTP, scripts de marketing) mora aqui, para que o tema pai possa ser atualizado sem perder nada.
 Author:       Fachini Máquinas
 Template:     hello-elementor
-Version:      1.3.1
+Version:      1.3.2
 License:      GPL-2.0-or-later
 Text Domain:  hello-elementor-child
 */
@@ -30,25 +30,122 @@ Text Domain:  hello-elementor-child
 }
 
 /* -------------------------------------------------------------------------
-   Rodapé
-   Texto claro sobre o fundo navy. Sem isto, o texto herda a cor do corpo
-   (quase preto) e fica ilegível.
+   Rodapé, igual ao Figma (desktop: nó 55:2330; celular: nó 167:2317).
+   O fundo navy (#00224E) vem da seção do modelo de rodapé no Elementor.
    ------------------------------------------------------------------------- */
-.fachini-rodape {
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	gap: 32px;
-	color: var(--fachini-offwhite);
-}
-.fachini-rodape p { margin: 0 0 8px; color: var(--fachini-offwhite); }
-.fachini-rodape a { color: var(--fachini-offwhite); text-decoration: none; }
+.elementor-location-footer .elementor-container { max-width: 1208px; }
+
+.fachini-rodape { color: #fff; font-family: 'Archivo', sans-serif; }
+.fachini-rodape p { margin: 0; }
+.fachini-rodape a { color: inherit; text-decoration: none; }
 .fachini-rodape a:hover { color: var(--fachini-vermelho); }
-.fachini-rodape__copy {
-	margin-top: 32px;
-	padding-top: 16px;
-	border-top: 1px solid rgba(251, 251, 251, .2);
-	color: var(--fachini-cinza-nevoa);
+
+.fachini-rodape__topo {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 51px 9px;
+}
+.fachini-rodape__logo img { display: block; width: 129px; height: 92px; }
+.fachini-rodape__colunas { display: flex; align-items: center; gap: 24px; }
+
+.fachini-rodape__menu-bloco { display: flex; align-items: center; gap: 8px; }
+.fachini-rodape__menu-bloco > .fachini-rodape__divisor { display: none; }
+.fachini-rodape__menu { display: flex; flex-direction: column; width: 130px; }
+.fachini-rodape__menu a {
+	display: block;
+	padding: 5px 10px 5px 12px;
+	font-size: 16px;
+	line-height: 24px;
+	color: var(--fachini-offwhite);
+	text-transform: uppercase;
+	white-space: nowrap;
+}
+
+/* Linha vertical de 162px, desenhada no Figma como linha horizontal girada. */
+.fachini-rodape__divisor { position: relative; flex: none; width: 1px; height: 162px; }
+.fachini-rodape__divisor img {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 162px;
+	height: 1px;
+	transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.fachini-rodape__redes { display: flex; align-items: center; gap: 8px; width: 283px; }
+/* Os quatro ícones são um único desenho no Figma. Cada link se estende
+   por cima do seu ícone, então clicar no ícone também abre a rede. */
+.fachini-rodape__redes-lista { position: relative; }
+.fachini-rodape__redes-icones { position: absolute; top: 0; left: 0; width: 29.9726px; height: 134px; }
+.fachini-rodape__redes-lista ul {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	gap: 18px;
+	margin: 0;
+	padding: 8px 0;
+	list-style: none;
+}
+.fachini-rodape__redes-lista a {
+	display: block;
+	width: 253px;
+	padding-left: 38px;
 	font-size: 14px;
+	line-height: 16px;
+	letter-spacing: .7px;
+	text-transform: uppercase;
+}
+
+.fachini-rodape__unidades { display: flex; align-items: center; gap: 28px; width: 438px; }
+.fachini-rodape__grade {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 13px 31px;
+	width: 414px;
+}
+.fachini-rodape__unidade { display: flex; flex-direction: column; gap: 5px; }
+.fachini-rodape__cidade {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 24px;
+	letter-spacing: .7px;
+	text-transform: uppercase;
+	white-space: nowrap;
+}
+.fachini-rodape__cidade img { width: 8.85938px; height: 10.3837px; flex: none; }
+.fachini-rodape__endereco { min-height: 50px; font-size: 14px; line-height: 16px; letter-spacing: .7px; }
+
+.fachini-rodape__base { display: flex; flex-direction: column; gap: 12px; padding-bottom: 16px; }
+.fachini-rodape__linha { display: block; width: 100%; height: 1px; }
+.fachini-rodape__base-linha {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	font-size: 14px;
+	line-height: 24px;
+}
+
+/* Abaixo de 1100px o layout de celular do Figma: logo em cima, menu e redes
+   lado a lado, unidades embaixo. */
+@media (max-width: 1100px) {
+	.fachini-rodape__topo { flex-direction: column; align-items: flex-start; gap: 48px; padding: 51px 0; }
+	.fachini-rodape__colunas { display: grid; grid-template-columns: auto auto; justify-content: space-between; gap: 32px 24px; width: 100%; max-width: 566px; }
+	.fachini-rodape__menu-bloco > .fachini-rodape__divisor { display: block; }
+	.fachini-rodape__unidades { grid-column: 1 / -1; width: 100%; gap: 10px; }
+	.fachini-rodape__grade { width: 100%; }
+}
+
+/* Celular estreito: o layout de celular do Figma tem 744px de largura e não
+   cabe em 390px lado a lado, então menu e redes ficam um embaixo do outro. */
+@media (max-width: 600px) {
+	.fachini-rodape__colunas { grid-template-columns: 1fr; }
+	.fachini-rodape__redes, .fachini-rodape__unidades { width: 100%; }
+	.fachini-rodape__base-linha { flex-direction: column; align-items: flex-start; gap: 4px; }
 }
 
 /* Caminho de navegação */
@@ -69,7 +166,6 @@ Text Domain:  hello-elementor-child
 .fachini-relacionadas__nome { display: block; margin-top: 8px; font-weight: 600; }
 
 @media (max-width: 767px) {
-	.fachini-rodape { grid-template-columns: 1fr; gap: 24px; }
 	.fachini-relacionadas { grid-template-columns: repeat(2, 1fr); }
 
 	/* Cabeçalho no celular: logo e botão do menu na mesma linha.

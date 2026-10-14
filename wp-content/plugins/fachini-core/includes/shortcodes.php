@@ -16,36 +16,88 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Conteúdo do rodapé.
+ * Conteúdo do rodapé, igual ao layout do Figma (desktop e celular).
  *
- * Os dados da empresa vêm do documento de privacidade aprovado pelo jurídico.
- * A unidade de Curitiba entra quando o cliente enviar o endereço.
+ * As quatro unidades de venda de máquinas vêm da ficha cadastral enviada pela
+ * Fachini em 13/10/2026. A filial de Cascavel da Rua Francisco Ignacio
+ * Fernandes fica de fora de propósito: é a loja de peças de caminhão, outro
+ * negócio. O link do blog do layout entra quando o blog existir.
+ * Os desenhos (logo, linhas, ícones) são os exportados do Figma, em
+ * assets/rodape/.
  */
 function fachini_sc_rodape() {
-	$ano = date_i18n( 'Y' );
+	$img = plugins_url( 'assets/rodape/', FACHINI_CORE_PATH . 'fachini-core.php' );
+
+	$menu = array(
+		'/'           => 'Home',
+		'/quem-somos/' => 'Quem somos',
+		'/contato/'   => 'Contato',
+	);
+
+	$redes = array(
+		array( 'https://www.instagram.com/fachinimaquinasoficial/', '@fachinimaquinasoficial', 'Instagram' ),
+		array( 'https://www.facebook.com/fachinimaquinasoficial/', 'Fachini Máquinas Oficial', 'Facebook' ),
+		array( 'https://www.linkedin.com/company/grupofachini/', 'Grupo Fachini', 'LinkedIn' ),
+		array( 'https://www.youtube.com/@fachinimaquinasoficial', 'Fachini Máquinas', 'YouTube' ),
+	);
+
+	$unidades = array(
+		array( 'Curitiba - PR', 'Rua Albino Niquele, 160 - Umbará, Curitiba - PR, 81940-220', 'pino.svg' ),
+		array( 'Cascavel - PR', 'R. Beliamino Julio Miotto, 493 - Citvel I, Cascavel - PR, 85818-576', 'pino-2.svg' ),
+		array( 'Joinville - SC', 'R. Princesa Mafalda, 447 - Floresta, Joinville - SC, 89212-170', 'pino-2.svg' ),
+		array( 'Chapecó - SC', 'Av. Leopoldo Sander, 1081 - Cristo Rei, Chapecó - SC, 89810-000', 'pino-2.svg' ),
+	);
+
+	$divisor = '<span class="fachini-rodape__divisor" aria-hidden="true"><img src="' . esc_url( $img . 'linha-vertical.svg' ) . '" width="162" height="1" alt=""></span>';
 
 	ob_start();
 	?>
 	<div class="fachini-rodape">
-		<div class="fachini-rodape__coluna">
-			<p class="fachini-rodape__empresa"><strong>FACHINI MÁQUINAS LTDA</strong></p>
-			<p>CNPJ 04.152.592/0001-18</p>
-			<p>R. Beliamino Julio Miotto, 493, CITVEL&nbsp;1<br>Cascavel, PR, 85818-576</p>
+		<div class="fachini-rodape__topo">
+			<a class="fachini-rodape__logo" href="<?php echo esc_url( home_url( '/' ) ); ?>">
+				<img src="<?php echo esc_url( $img . 'logo.svg' ); ?>" width="129" height="92" alt="Fachini Máquinas">
+			</a>
+			<div class="fachini-rodape__colunas">
+				<div class="fachini-rodape__menu-bloco">
+					<?php echo $divisor; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- montado acima com esc_url. No desktop esta linha fica escondida. ?>
+					<nav class="fachini-rodape__menu" aria-label="Rodapé">
+						<?php foreach ( $menu as $caminho => $rotulo ) : ?>
+							<a href="<?php echo esc_url( home_url( $caminho ) ); ?>"><?php echo esc_html( $rotulo ); ?></a>
+						<?php endforeach; ?>
+					</nav>
+				</div>
+				<div class="fachini-rodape__redes">
+					<?php echo $divisor; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- montado acima com esc_url. ?>
+					<div class="fachini-rodape__redes-lista">
+						<img class="fachini-rodape__redes-icones" src="<?php echo esc_url( $img . 'redes.svg' ); ?>" width="29.9726" height="134" alt="" aria-hidden="true">
+						<ul>
+							<?php foreach ( $redes as $rede ) : ?>
+								<li><a href="<?php echo esc_url( $rede[0] ); ?>" target="_blank" rel="noopener" aria-label="<?php echo esc_attr( $rede[2] . ': ' . $rede[1] ); ?>"><?php echo esc_html( $rede[1] ); ?></a></li>
+							<?php endforeach; ?>
+						</ul>
+					</div>
+				</div>
+				<div class="fachini-rodape__unidades">
+					<?php echo $divisor; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- montado acima com esc_url. ?>
+					<div class="fachini-rodape__grade">
+						<?php foreach ( $unidades as $unidade ) : ?>
+							<div class="fachini-rodape__unidade">
+								<p class="fachini-rodape__cidade"><img src="<?php echo esc_url( $img . $unidade[2] ); ?>" width="8.85938" height="10.3837" alt=""><?php echo esc_html( $unidade[0] ); ?></p>
+								<p class="fachini-rodape__endereco"><?php echo esc_html( $unidade[1] ); ?></p>
+							</div>
+						<?php endforeach; ?>
+					</div>
+				</div>
+			</div>
 		</div>
-		<div class="fachini-rodape__coluna">
-			<p><strong>Contato</strong></p>
-			<p><a href="tel:+554533281313">+55 45 3328-1313</a></p>
-			<p><a href="mailto:marketing@fachinimaquinas.com.br">marketing@fachinimaquinas.com.br</a></p>
-		</div>
-		<div class="fachini-rodape__coluna">
-			<p><strong>Institucional</strong></p>
-			<p><a href="<?php echo esc_url( home_url( '/quem-somos/' ) ); ?>">Quem somos</a></p>
-			<p><a href="<?php echo esc_url( home_url( '/contato/' ) ); ?>">Contato</a></p>
-			<p><a href="<?php echo esc_url( home_url( '/politica-de-privacidade/' ) ); ?>">Política de privacidade</a></p>
-			<p><a href="<?php echo esc_url( home_url( '/termos-de-uso/' ) ); ?>">Termos de uso</a></p>
+		<div class="fachini-rodape__base">
+			<img class="fachini-rodape__linha" src="<?php echo esc_url( $img . 'linha-horizontal.svg' ); ?>" width="1208" height="1" alt="" aria-hidden="true">
+			<div class="fachini-rodape__base-linha">
+				<a href="<?php echo esc_url( home_url( '/politica-de-privacidade/' ) ); ?>">Política de Privacidade</a>
+				<p>&copy; <?php echo esc_html( date_i18n( 'Y' ) ); ?> All Rights Reserved by Fachini</p>
+			</div>
 		</div>
 	</div>
-	<p class="fachini-rodape__copy">&copy; <?php echo esc_html( $ano ); ?> Fachini Máquinas. Todos os direitos reservados.</p>
 	<?php
 	return ob_get_clean();
 }
