@@ -4,7 +4,7 @@ Theme URI:    https://github.com/mktfachinimaquinas/site-wordpress
 Description:  Tema filho do Hello Elementor para o site da Fachini Máquinas. Todo código personalizado (CSS, scripts, SMTP, scripts de marketing) mora aqui, para que o tema pai possa ser atualizado sem perder nada.
 Author:       Fachini Máquinas
 Template:     hello-elementor
-Version:      1.3.2
+Version:      1.3.3
 License:      GPL-2.0-or-later
 Text Domain:  hello-elementor-child
 */
@@ -72,6 +72,10 @@ Text Domain:  hello-elementor-child
 	height: 1px;
 	transform: translate(-50%, -50%) rotate(90deg);
 }
+/* O Elementor e o Hello aplicam "img { height: auto; max-width: 100% }".
+   Sem isto a linha vertical vira um ponto e a horizontal fica sem altura. */
+.fachini-rodape .fachini-rodape__divisor img { max-width: none; height: 1px; }
+.fachini-rodape img.fachini-rodape__linha { height: 1px; }
 
 .fachini-rodape__redes { display: flex; align-items: center; gap: 8px; width: 283px; }
 /* Os quatro ícones são um único desenho no Figma. Cada link se estende
