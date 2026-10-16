@@ -24,11 +24,11 @@ function fachini_child_enqueue_styles() {
 add_action( 'wp_enqueue_scripts', 'fachini_child_enqueue_styles', 20 );
 
 /**
- * Carrega a fonte Geist.
+ * Carrega as fontes do site.
  *
  * Decisão da Débora em 02/10/2026: a Geist é usada exclusivamente no hero.
- * Todo o resto do site usa Archivo, que o próprio Elementor já carrega a
- * partir do kit de estilos.
+ * No Figma o estilo do hero (DISPLAY/HERO) é a Geist Mono, então é ela que
+ * carregamos. Todo o resto do site usa Archivo.
  *
  * Carregamos só os pesos realmente usados. Cada peso a mais é um arquivo a
  * mais para o visitante baixar, e isso pesa na nota de performance.
@@ -36,10 +36,11 @@ add_action( 'wp_enqueue_scripts', 'fachini_child_enqueue_styles', 20 );
 function fachini_child_fontes() {
 	// Uma única requisição, só com os pesos realmente usados no projeto.
 	// Archivo: 400 texto, 500 rótulos, 600 destaques e botões, 700 títulos.
-	// Geist: 400 e 700, exclusiva do hero.
+	// Geist Mono: 700, exclusiva do título do hero.
+	// Inter: 700, só nos números da Home (é a fonte do componente no Figma).
 	wp_enqueue_style(
 		'fachini-fontes',
-		'https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Geist:wght@400;700&display=swap',
+		'https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Geist+Mono:wght@700&family=Inter:wght@700&display=swap',
 		array(),
 		null
 	);

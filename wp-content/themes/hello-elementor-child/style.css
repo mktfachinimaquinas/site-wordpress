@@ -4,7 +4,7 @@ Theme URI:    https://github.com/mktfachinimaquinas/site-wordpress
 Description:  Tema filho do Hello Elementor para o site da Fachini Máquinas. Todo código personalizado (CSS, scripts, SMTP, scripts de marketing) mora aqui, para que o tema pai possa ser atualizado sem perder nada.
 Author:       Fachini Máquinas
 Template:     hello-elementor
-Version:      1.3.3
+Version:      1.3.5
 License:      GPL-2.0-or-later
 Text Domain:  hello-elementor-child
 */
@@ -150,6 +150,262 @@ Text Domain:  hello-elementor-child
 	.fachini-rodape__colunas { grid-template-columns: 1fr; }
 	.fachini-rodape__redes, .fachini-rodape__unidades { width: 100%; }
 	.fachini-rodape__base-linha { flex-direction: column; align-items: flex-start; gap: 4px; }
+}
+
+/* -------------------------------------------------------------------------
+   Home, igual ao Figma (desktop: nó 7:3804; tablet: 143:1956; celular: 167:2244).
+   Textos, fotos, links e fundos ficam nos widgets do Elementor, editáveis.
+   Aqui fica só o que o Elementor não faz sozinho: o botão com seta, as abas,
+   a grade de fotos, os marcadores e as larguras que dependem da tela.
+   ------------------------------------------------------------------------- */
+
+/* O cabeçalho fica por cima da foto do hero, sem fundo próprio. */
+body:has(.fachini-home-hero) .elementor-location-header { position: absolute; top: 0; left: 0; right: 0; z-index: 20; }
+body:has(.fachini-home-hero) .elementor-location-header .elementor-section,
+body:has(.fachini-home-hero) .elementor-location-header .e-con { background: transparent !important; }
+
+.fachini-home-hero__titulo .elementor-heading-title { margin: 0; }
+.fachini-home-hero__texto p { margin: 0; }
+
+/* Botão do layout: texto, seta e linha embaixo. A seta é o mesmo desenho do
+   Figma (diagonal girada 45 graus), pintado com a cor de cada variação. */
+.elementor-widget-button.fachini-botao .elementor-button {
+	display: inline-flex;
+	width: var(--fachini-botao-largura, 208px);
+	max-width: 100%;
+	min-width: 116px;
+	margin-bottom: 8px;
+	padding: 0 0 4px;
+	border: 0;
+	border-bottom: 1px solid var(--fachini-botao-linha);
+	border-radius: 0;
+	background: none;
+	color: var(--fachini-botao-texto);
+	font-family: 'Archivo', sans-serif;
+	font-size: 16px;
+	font-weight: 600;
+	line-height: 24px;
+	text-transform: uppercase;
+}
+.elementor-widget-button.fachini-botao .elementor-button:hover,
+.elementor-widget-button.fachini-botao .elementor-button:focus { background: none; color: var(--fachini-botao-texto); }
+.fachini-botao .elementor-button-content-wrapper {
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-between;
+	gap: 16px;
+	width: 100%;
+}
+.fachini-botao .elementor-button-content-wrapper::after {
+	content: '';
+	flex: none;
+	width: 28px;
+	height: 27.5px;
+	background-color: var(--fachini-botao-seta);
+	-webkit-mask: url(assets/seta.svg) center / 22.2px no-repeat;
+	mask: url(assets/seta.svg) center / 22.2px no-repeat;
+	transform: rotate(44.57deg) scale(.885);
+	transition: transform .2s ease;
+}
+.fachini-botao .elementor-button:hover .elementor-button-content-wrapper::after { transform: translateX(4px) rotate(44.57deg) scale(.885); }
+
+.fachini-botao--hero { --fachini-botao-largura: 280px; --fachini-botao-texto: var(--fachini-offwhite); --fachini-botao-seta: #DD0C14; --fachini-botao-linha: #DD0C14; }
+.fachini-botao--claro { --fachini-botao-texto: var(--fachini-offwhite); --fachini-botao-seta: var(--fachini-offwhite); --fachini-botao-linha: var(--fachini-offwhite); }
+.fachini-botao--escuro { --fachini-botao-largura: 170px; --fachini-botao-texto: var(--fachini-onix); --fachini-botao-seta: var(--fachini-onix); --fachini-botao-linha: var(--fachini-onix); }
+
+/* Vitrine de máquinas: abas por categoria. */
+.fachini-home-abas .e-n-tabs { gap: 32px; }
+.fachini-home-abas .e-n-tabs-heading { justify-content: center; gap: 24px; padding: 8px; }
+.fachini-home-abas .e-n-tabs-heading .e-n-tab-title {
+	flex: 0 0 177px;
+	justify-content: center;
+	padding: 0 0 15px !important;
+	border: 0 !important;
+	border-bottom: 7px solid var(--fachini-cinza-medio) !important;
+	border-radius: 0 !important;
+	background: none !important;
+	color: var(--fachini-cinza-medio) !important;
+	font-family: 'Archivo', sans-serif;
+	font-size: 20px !important;
+	font-weight: 500;
+	line-height: 28px;
+	text-transform: uppercase;
+}
+.fachini-home-abas .e-n-tabs-heading .e-n-tab-title[aria-selected="true"],
+.fachini-home-abas .e-n-tabs-heading .e-n-tab-title:hover { border-bottom-color: var(--fachini-navy-escuro) !important; color: var(--fachini-navy-escuro) !important; }
+.fachini-home-abas .e-n-tab-title .e-n-tab-title-text { color: inherit !important; font: inherit !important; text-transform: inherit; }
+
+/* Grade: uma foto alta à esquerda, duas pequenas e uma larga à direita. */
+.fachini-home-abas .fachini-vitrine {
+	display: grid;
+	grid-template-columns: 435fr 358fr 358fr;
+	grid-template-rows: 231px 231px auto;
+	gap: 24px;
+	padding: 0;
+}
+.fachini-vitrine > .elementor-widget { width: 100%; height: 100%; margin: 0; }
+.fachini-vitrine__foto--1 { grid-column: 1; grid-row: 1 / 3; }
+.fachini-vitrine__foto--2 { grid-column: 2; grid-row: 1; }
+.fachini-vitrine__foto--3 { grid-column: 3; grid-row: 1; }
+.fachini-vitrine__foto--4 { grid-column: 2 / 4; grid-row: 2; }
+.fachini-vitrine > .fachini-botao { grid-column: 1 / -1; grid-row: 3; justify-self: end; width: auto; margin: 8px 46px 0 0; }
+.fachini-vitrine .elementor-widget-image .elementor-widget-container,
+.fachini-vitrine .elementor-widget-image a { display: block; height: 100%; }
+.fachini-vitrine .elementor-widget-image img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+/* Faixa azul: texto alinhado à grade de 1200px, foto ocupando a outra metade. */
+.e-con.fachini-home-cta { min-height: 392px; }
+.e-con.fachini-home-cta__texto {
+	width: 50%;
+	padding: 53px 24px 53px max(24px, calc(50% - 600px));
+}
+.fachini-home-cta__chamada { padding-top: 4px; border-top: 1px solid var(--fachini-offwhite); }
+.fachini-home-cta__chamada p { margin: 0; }
+.e-con.fachini-home-cta__foto { position: relative; width: 50%; min-height: 392px; }
+.e-con.fachini-home-cta__foto::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(to left, rgba(150, 150, 150, 0), #253142 76.556%);
+	mix-blend-mode: hard-light;
+	pointer-events: none;
+}
+
+/* Diferenciais: foto encostada na borda esquerda, lista à direita. */
+.elementor-element.fachini-home-diferenciais__foto { flex: 0 0 50%; height: 542px; margin: 0; }
+.e-con.fachini-home-diferenciais__lista { --flex-grow: 1; --flex-shrink: 1; --flex-basis: 0%; padding-right: 24px; }
+.e-con.fachini-diferencial { position: relative; padding-left: 16px; }
+.e-con.fachini-diferencial::after { content: ''; position: absolute; top: 27px; left: 0; width: 8px; height: 8px; background: var(--fachini-onix); }
+.fachini-diferencial .elementor-heading-title { margin: 0; }
+.fachini-diferencial p,
+.fachini-home-destaque__texto p { max-width: 420px; margin: 0; }
+
+/* Texto e foto: texto na grade, foto encostada na borda direita. */
+.e-con.fachini-home-destaque { padding-left: max(24px, calc(50% - 595px)); }
+.e-con.fachini-home-destaque__texto { --flex-grow: 0; --flex-shrink: 0; --flex-basis: 420px; --width: 420px; }
+.elementor-element.fachini-home-destaque__foto { --flex-grow: 1; --flex-shrink: 1; --flex-basis: 0%; height: 360px; margin: 0; }
+
+.elementor-widget-image.fachini-home-diferenciais__foto .elementor-widget-container,
+.elementor-widget-image.fachini-home-destaque__foto .elementor-widget-container { height: 100%; }
+.elementor-widget-image.fachini-home-diferenciais__foto img,
+.elementor-widget-image.fachini-home-destaque__foto img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+/* Título de seção com a linha embaixo, na largura toda (Números). */
+.elementor-widget.fachini-home-titulo-linha { padding-bottom: 12px; border-bottom: 1px solid var(--fachini-onix); }
+.fachini-home-titulo-linha .elementor-heading-title { margin: 0; }
+
+/* Números: texto à esquerda e três cartões cinza. Atrás do número fica o
+   mesmo número bem grande, na cor do fundo, cortado pela borda do cartão
+   (no Figma é um recorte da forma cinza). */
+.e-con.fachini-home-numeros__texto,
+.elementor-widget.fachini-home-numeros__texto { --flex-grow: 0; --flex-shrink: 0; --flex-basis: 248px; width: 248px; }
+.fachini-home-numeros__texto p { margin: 0; }
+.e-con.fachini-home-numeros__cards { --flex-grow: 1; --flex-shrink: 1; --flex-basis: 0%; padding: 10px 0; }
+.e-con.fachini-numero {
+	--flex-grow: 0;
+	--flex-shrink: 1;
+	--flex-basis: 282px;
+	position: relative;
+	min-height: 332px;
+	padding: 35px 35px 21px;
+	overflow: hidden;
+	background: #EDEDED;
+}
+.elementor-element.fachini-numero__fantasma {
+	position: absolute;
+	top: -49px;
+	left: 64px;
+	width: auto;
+	max-width: none;
+	margin: 0;
+	transform: scaleX(.8);
+	transform-origin: left top;
+	white-space: nowrap;
+	pointer-events: none;
+	user-select: none;
+}
+.fachini-numero__fantasma .elementor-heading-title { margin: 0; }
+.elementor-element.fachini-numero__valor,
+.elementor-element.fachini-numero__rotulo { position: relative; margin: 0; }
+.fachini-numero__valor .elementor-heading-title,
+.fachini-numero__rotulo p { margin: 0; }
+
+/* Faixa "Tecnologia que transforma": foto no fundo e escurecimento do lado
+   do texto, com as três paradas do Figma (2%, 51% e 100%). */
+.e-con.fachini-home-tecnologia { position: relative; }
+.e-con.fachini-home-tecnologia::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(to right, rgba(55, 55, 55, 0) 0%, rgba(0, 0, 0, .6) 49%, #000 98%);
+	pointer-events: none;
+}
+.e-con.fachini-home-tecnologia > .e-con { position: relative; z-index: 1; }
+/* No Figma o texto começa 16px depois do meio da tela e passa da grade de
+   1200px (o título sozinho tem uns 600px). */
+.e-con.fachini-home-tecnologia__texto { --flex-grow: 0; --flex-shrink: 1; --flex-basis: auto; --width: 620px; }
+@media (min-width: 768px) {
+	.e-con.fachini-home-tecnologia { padding-left: calc(50% + 16px); }
+}
+.fachini-home-tecnologia__texto .elementor-heading-title,
+.fachini-home-tecnologia__texto p { margin: 0; }
+.fachini-home-tecnologia__texto .fachini-botao { margin-top: 16px; }
+
+@media (max-width: 1024px) {
+	.fachini-home-abas .e-n-tabs-heading { gap: 12px; }
+	.fachini-home-abas .e-n-tabs-heading .e-n-tab-title { flex-basis: 150px; font-size: 18px !important; }
+	.fachini-home-abas .fachini-vitrine { grid-template-rows: 180px 180px auto; gap: 16px; }
+	.elementor-element.fachini-home-diferenciais__foto { height: 460px; }
+	.e-con.fachini-home-destaque__texto { --flex-basis: 340px; --width: 340px; }
+
+	.e-con.fachini-home-numeros__conteudo { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+	.e-con.fachini-home-numeros__cards { display: contents; }
+	.elementor-widget.fachini-home-numeros__texto { width: auto; }
+	.e-con.fachini-numero { min-height: 300px; margin: 0; }
+
+	/* Tablet: texto da faixa à esquerda, como no Figma de 744px, e o
+	   escurecimento do lado do texto. */
+	.e-con.fachini-home-tecnologia { padding-left: 24px; }
+	.e-con.fachini-home-tecnologia__texto { --width: 100%; max-width: 620px; }
+	.e-con.fachini-home-tecnologia::after { background: linear-gradient(to left, rgba(55, 55, 55, 0) 0%, rgba(0, 0, 0, .6) 49%, #000 98%); }
+	.elementor-element.fachini-numero__fantasma { top: -40px; left: 48px; }
+}
+
+@media (max-width: 767px) {
+	/* Abas em duas linhas de duas, grade em coluna. */
+	.fachini-home-abas .e-n-tabs-heading { flex-wrap: wrap; gap: 16px 12px; padding: 0; }
+	.fachini-home-abas .e-n-tabs-heading .e-n-tab-title { flex: 1 1 calc(50% - 6px); padding-bottom: 10px !important; border-bottom-width: 4px !important; font-size: 16px !important; line-height: 22px; }
+	.fachini-home-abas .fachini-vitrine { grid-template-columns: 1fr 1fr; grid-template-rows: 240px 140px 140px auto; gap: 12px; }
+	.fachini-vitrine__foto--1 { grid-column: 1 / -1; grid-row: 1; }
+	.fachini-vitrine__foto--2 { grid-column: 1; grid-row: 2; }
+	.fachini-vitrine__foto--3 { grid-column: 2; grid-row: 2; }
+	.fachini-vitrine__foto--4 { grid-column: 1 / -1; grid-row: 3; }
+	.fachini-vitrine > .fachini-botao { grid-row: 4; margin-right: 0; }
+
+	.e-con.fachini-home-cta__texto,
+	.e-con.fachini-home-cta__foto { width: 100%; }
+	.e-con.fachini-home-cta__texto { padding: 48px 24px; }
+	.e-con.fachini-home-cta__foto { min-height: 240px; }
+
+	.elementor-element.fachini-home-diferenciais__foto { flex-basis: auto; width: 100%; height: 280px; }
+	.e-con.fachini-home-diferenciais__lista { padding: 0 24px; }
+	.e-con.fachini-home-destaque { padding-left: 0; }
+	.e-con.fachini-home-destaque__texto { --flex-basis: auto; --width: 100%; padding: 0 24px; }
+	.elementor-element.fachini-home-destaque__foto { --flex-basis: auto; width: 100%; height: 240px; }
+
+	/* No celular a foto da faixa azul fica embaixo do texto: o escurecimento
+	   vem de cima, continuando o azul, em vez da lateral. */
+	.e-con.fachini-home-cta__foto::after { background: linear-gradient(to bottom, #253142 0%, rgba(150, 150, 150, 0) 60%); }
+
+	.e-con.fachini-numero { min-height: 260px; padding: 28px 24px 20px; }
+
+	.e-con.fachini-home-tecnologia::after { background: rgba(0, 0, 0, .55); }
+	.e-con.fachini-home-tecnologia__texto { --width: 100%; }
+}
+
+@media (max-width: 600px) {
+	.e-con.fachini-home-numeros__conteudo { grid-template-columns: 1fr; gap: 16px; }
+	.e-con.fachini-numero { min-height: 240px; }
 }
 
 /* Caminho de navegação */
