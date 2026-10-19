@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // Mudar esta versão faz a rotina rodar de novo: cria os modelos que faltam e
 // reaplica tipo e condições de todos.
-define( 'FACHINI_TEMPLATES_VERSAO', '2026-10-19b' );
+define( 'FACHINI_TEMPLATES_VERSAO', '2026-10-19c' );
 
 // Mudar esta outra reescreve o layout dos modelos que já existem, a partir do
 // código. Fica separada para que acrescentar um modelo novo não apague ajuste
@@ -32,7 +32,7 @@ define( 'FACHINI_LISTAGEM_LAYOUT', '2026-10-19a' );
 
 // Versão própria do layout da página de máquina. Mudar só esta reescreve só
 // esse modelo.
-define( 'FACHINI_MAQUINA_LAYOUT', '2026-10-19a' );
+define( 'FACHINI_MAQUINA_LAYOUT', '2026-10-19b' );
 
 /**
  * Gera um id curto no formato que o Elementor usa.
@@ -98,7 +98,10 @@ function fachini_layout_maquina() {
 						'__dynamic__' => array( 'title' => '[elementor-tag id="fachtit" name="post-title" settings="%7B%7D"]' ),
 					)
 				),
-				fachini_el_widget( 'theme-post-excerpt', array() ),
+				fachini_el_widget(
+					'theme-post-excerpt',
+					array( '__dynamic__' => array( 'excerpt' => '[elementor-tag id="fachres" name="post-excerpt" settings="%7B%7D"]' ) )
+				),
 			),
 			array( 'padding' => array( 'unit' => 'px', 'top' => '16', 'right' => '0', 'bottom' => '24', 'left' => '0', 'isLinked' => false ) )
 		),
@@ -106,7 +109,16 @@ function fachini_layout_maquina() {
 		// Foto principal
 		fachini_el_secao(
 			array(
-				fachini_el_widget( 'theme-post-featured-image', array( 'image' => array( 'id' => '', 'url' => '' ), 'image_size' => 'large' ) ),
+				// Sem o __dynamic__, os dois widgets não puxam o resumo e a foto da
+				// máquina e ficam vazios (só o título tinha).
+				fachini_el_widget(
+					'theme-post-featured-image',
+					array(
+						'image'       => array( 'id' => '', 'url' => '' ),
+						'image_size'  => 'large',
+						'__dynamic__' => array( 'image' => '[elementor-tag id="fachfot" name="post-featured-image" settings="%7B%7D"]' ),
+					)
+				),
 			)
 		),
 
