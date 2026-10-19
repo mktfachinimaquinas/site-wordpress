@@ -144,6 +144,38 @@ function fachini_core_register_acf_fields() {
 			),
 		)
 	);
+
+	// Foto de cada categoria: usada na faixa da categoria (na página da
+	// categoria-mãe e em /maquinas/) e no topo da própria página da categoria.
+	acf_add_local_field_group(
+		array(
+			'key'             => 'group_fachini_categoria',
+			'title'           => 'Foto da categoria',
+			'location'        => array(
+				array(
+					array(
+						'param'    => 'taxonomy',
+						'operator' => '==',
+						'value'    => 'categoria_maquina',
+					),
+				),
+			),
+			'label_placement' => 'top',
+			'active'          => true,
+			'fields'          => array(
+				array(
+					'key'           => 'field_fachini_categoria_foto',
+					'label'         => 'Foto',
+					'name'          => 'foto_categoria',
+					'type'          => 'image',
+					'return_format' => 'id',
+					'preview_size'  => 'medium',
+					'library'       => 'all',
+					'instructions'  => 'Foto horizontal, de preferência com 1920 px de largura. Sem foto, a categoria usa a da categoria-mãe.',
+				),
+			),
+		)
+	);
 }
 
 /**

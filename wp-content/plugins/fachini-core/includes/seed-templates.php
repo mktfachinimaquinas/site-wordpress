@@ -19,12 +19,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // Mudar esta versão faz a rotina rodar de novo: cria os modelos que faltam e
 // reaplica tipo e condições de todos.
-define( 'FACHINI_TEMPLATES_VERSAO', '2026-10-06a' );
+define( 'FACHINI_TEMPLATES_VERSAO', '2026-10-19a' );
 
 // Mudar esta outra reescreve o layout dos modelos que já existem, a partir do
 // código. Fica separada para que acrescentar um modelo novo não apague ajuste
 // feito à mão nos outros.
 define( 'FACHINI_TEMPLATES_LAYOUT', '2026-10-02e' );
+
+// Versão própria do layout das duas listagens (categorias e /maquinas/).
+// Mudar só esta reescreve só esses dois modelos.
+define( 'FACHINI_LISTAGEM_LAYOUT', '2026-10-19a' );
 
 /**
  * Gera um id curto no formato que o Elementor usa.
@@ -153,49 +157,21 @@ function fachini_layout_maquina() {
 }
 
 /**
- * Layout da listagem de categoria.
+ * Layout das listagens (categorias e /maquinas/): uma seção na largura toda
+ * com o shortcode que monta a página (includes/categorias.php). O conteúdo
+ * vem das categorias e máquinas cadastradas, não do Elementor.
  */
-function fachini_layout_categoria() {
+function fachini_layout_listagem() {
 	return array(
-
 		fachini_el_secao(
 			array(
-				fachini_el_widget( 'shortcode', array( 'shortcode' => '[fachini_breadcrumb]' ) ),
-				fachini_el_widget( 'shortcode', array( 'shortcode' => '[fachini_titulo_arquivo]' ) ),
+				fachini_el_widget( 'shortcode', array( 'shortcode' => '[fachini_listagem]' ) ),
 			),
-			array( 'padding' => array( 'unit' => 'px', 'top' => '24', 'right' => '0', 'bottom' => '16', 'left' => '0', 'isLinked' => false ) )
-		),
-
-		fachini_el_secao(
 			array(
-				fachini_el_widget(
-					'archive-posts',
-					array(
-						'_skin'                   => 'archive_classic',
-						'archive_classic_columns'         => '3',
-						'archive_classic_columns_tablet'  => '2',
-						'archive_classic_columns_mobile'  => '1',
-						'archive_classic_meta_data'       => array(),
-						'archive_classic_show_author'     => '',
-						'archive_classic_show_date'       => '',
-						'archive_classic_show_comments'   => '',
-						'archive_classic_title_tag'       => 'h3',
-						// O h3 global tem 36px, grande demais para card. Aqui fica no tamanho de rótulo (20px).
-						'archive_classic_title_typography_typography'  => 'custom',
-						'archive_classic_title_typography_font_family' => 'Archivo',
-						'archive_classic_title_typography_font_weight' => '600',
-						'archive_classic_title_typography_font_size'   => array( 'unit' => 'px', 'size' => 20 ),
-						'archive_classic_title_typography_line_height' => array( 'unit' => 'em', 'size' => 1.3 ),
-						'archive_classic_title_typography_text_transform' => 'none',
-						'archive_classic_show_excerpt'    => 'yes',
-						'archive_classic_excerpt_length'  => 18,
-						'archive_classic_show_read_more'  => 'yes',
-						'archive_classic_read_more_text'  => 'Ver máquina',
-						'archive_classic_image_size'      => 'medium_large',
-					)
-				),
-			),
-			array( 'padding' => array( 'unit' => 'px', 'top' => '16', 'right' => '0', 'bottom' => '64', 'left' => '0', 'isLinked' => false ) )
+				'layout'  => 'full_width',
+				'gap'     => 'no',
+				'padding' => array( 'unit' => 'px', 'top' => '0', 'right' => '0', 'bottom' => '0', 'left' => '0', 'isLinked' => true ),
+			)
 		),
 	);
 }
@@ -357,20 +333,22 @@ function fachini_seed_templates() {
 			'chave'      => 'fachini_tpl_rodape',
 		),
 		array(
-			'titulo'     => 'Categoria de máquinas (listagem)',
-			'tipo'       => 'archive',
-			'layout'     => fachini_layout_categoria(),
-			'condicoes'  => array( 'include/archive/taxonomy/categoria_maquina', 'include/archive/categoria_maquina' ),
-			'chave'      => 'fachini_tpl_categoria',
+			'titulo'        => 'Categoria de máquinas (listagem)',
+			'tipo'          => 'archive',
+			'layout'        => fachini_layout_listagem(),
+			'layout_versao' => FACHINI_LISTAGEM_LAYOUT,
+			'condicoes'     => array( 'include/archive/taxonomy/categoria_maquina', 'include/archive/categoria_maquina' ),
+			'chave'         => 'fachini_tpl_categoria',
 		),
 		array(
 			// /maquinas/, o primeiro item do menu. A condição de arquivo de um tipo
 			// de conteúdo no Elementor Pro é "<tipo>_archive", diferente da de taxonomia.
-			'titulo'     => 'Listagem de máquinas (todas)',
-			'tipo'       => 'archive',
-			'layout'     => fachini_layout_categoria(),
-			'condicoes'  => array( 'include/archive/maquina_archive' ),
-			'chave'      => 'fachini_tpl_listagem',
+			'titulo'        => 'Listagem de máquinas (todas)',
+			'tipo'          => 'archive',
+			'layout'        => fachini_layout_listagem(),
+			'layout_versao' => FACHINI_LISTAGEM_LAYOUT,
+			'condicoes'     => array( 'include/archive/maquina_archive' ),
+			'chave'         => 'fachini_tpl_listagem',
 		),
 	);
 
@@ -379,8 +357,14 @@ function fachini_seed_templates() {
 		$post_id = (int) get_option( $modelo['chave'] );
 
 		// Cria apenas se ainda não existir. O layout de um modelo já criado só é
-		// reescrito quando FACHINI_TEMPLATES_LAYOUT muda.
-		$forcar_layout = ( get_option( 'fachini_templates_layout' ) !== FACHINI_TEMPLATES_LAYOUT );
+		// reescrito quando a versão de layout dele muda: a própria, para as
+		// listagens, ou FACHINI_TEMPLATES_LAYOUT, para os outros.
+		$versao_propria = isset( $modelo['layout_versao'] ) ? $modelo['layout_versao'] : '';
+		if ( $versao_propria ) {
+			$forcar_layout = ( get_option( $modelo['chave'] . '_layout' ) !== $versao_propria );
+		} else {
+			$forcar_layout = ( get_option( 'fachini_templates_layout' ) !== FACHINI_TEMPLATES_LAYOUT );
+		}
 
 		if ( $post_id && get_post( $post_id ) && $forcar_layout ) {
 			// Atualização única do layout. Seguro enquanto os modelos ainda não
@@ -405,6 +389,10 @@ function fachini_seed_templates() {
 			update_post_meta( $post_id, '_elementor_edit_mode', 'builder' );
 			update_post_meta( $post_id, '_elementor_data', wp_slash( wp_json_encode( $modelo['layout'] ) ) );
 			update_option( $modelo['chave'], $post_id );
+		}
+
+		if ( $versao_propria ) {
+			update_option( $modelo['chave'] . '_layout', $versao_propria );
 		}
 
 		// Tipo, classificação e condições são sempre reaplicados: é o que faz o

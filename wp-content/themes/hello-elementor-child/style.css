@@ -4,7 +4,7 @@ Theme URI:    https://github.com/mktfachinimaquinas/site-wordpress
 Description:  Tema filho do Hello Elementor para o site da Fachini Máquinas. Todo código personalizado (CSS, scripts, SMTP, scripts de marketing) mora aqui, para que o tema pai possa ser atualizado sem perder nada.
 Author:       Fachini Máquinas
 Template:     hello-elementor
-Version:      1.3.5
+Version:      1.3.6
 License:      GPL-2.0-or-later
 Text Domain:  hello-elementor-child
 */
@@ -408,11 +408,259 @@ body:has(.fachini-home-hero) .elementor-location-header .e-con { background: tra
 	.e-con.fachini-numero { min-height: 240px; }
 }
 
-/* Caminho de navegação */
-.fachini-breadcrumb { font-size: 14px; color: var(--fachini-cinza-medio); }
-.fachini-breadcrumb a { color: var(--fachini-cinza-medio); text-decoration: none; }
+/* Texto só para leitor de tela e Google. */
+.fachini-sr {
+	position: absolute !important;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	padding: 0;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
+}
+
+/* Caminho de navegação, como no Figma: caixa alta, quadradinho entre os
+   itens, o atual em preto. */
+.fachini-breadcrumb {
+	display: inline-flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 7px;
+	color: var(--fachini-cinza-medio);
+	font-family: 'Archivo', sans-serif;
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 18px;
+	letter-spacing: .7px;
+	text-transform: uppercase;
+}
+.fachini-breadcrumb a { color: inherit; text-decoration: none; }
 .fachini-breadcrumb a:hover { color: var(--fachini-vermelho); }
-.fachini-breadcrumb__sep { opacity: .5; }
+.fachini-breadcrumb__sep { display: block; flex: none; width: 8px; height: 8px; background: var(--fachini-cinza-medio); }
+.fachini-breadcrumb [aria-current] { color: var(--fachini-onix); }
+.fachini-breadcrumb > .fachini-breadcrumb__sep:nth-last-child(2) { background: var(--fachini-onix); }
+
+/* Link de texto com seta, para o que é montado pelo plugin (faixas de
+   categoria, lista de máquinas). Mesmo desenho do botão da Home. */
+.fachini-seta-link {
+	display: inline-flex;
+	align-items: flex-end;
+	justify-content: space-between;
+	gap: 16px;
+	min-width: 170px;
+	padding-bottom: 4px;
+	border-bottom: 1px solid currentColor;
+	font-family: 'Archivo', sans-serif;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 24px;
+	text-decoration: none;
+	text-transform: uppercase;
+}
+.fachini-seta-link::after {
+	content: '';
+	flex: none;
+	width: 28px;
+	height: 27.5px;
+	background-color: currentColor;
+	-webkit-mask: url(assets/seta.svg) center / 22.2px no-repeat;
+	mask: url(assets/seta.svg) center / 22.2px no-repeat;
+	transform: rotate(44.57deg) scale(.885);
+	transition: transform .2s ease;
+}
+a:hover .fachini-seta-link::after,
+a.fachini-seta-link:hover::after { transform: translateX(4px) rotate(44.57deg) scale(.885); }
+.fachini-seta-link--claro,
+.fachini-seta-link--claro:hover { color: var(--fachini-offwhite); }
+.fachini-seta-link--escuro,
+.fachini-seta-link--escuro:hover { color: var(--fachini-onix); }
+
+/* -------------------------------------------------------------------------
+   Categorias e /maquinas/, igual ao Figma ("MAQUINAS 2" e "MAQUINAS 3").
+   O conteúdo vem do shortcode [fachini_listagem], no plugin.
+   ------------------------------------------------------------------------- */
+.fachini-listagem { background: var(--fachini-offwhite); }
+
+.fachini-cat-banner { position: relative; height: 482px; overflow: hidden; background: var(--fachini-navy-escuro); }
+.fachini-cat-banner__foto { display: block; width: 100%; height: 100%; max-width: none; object-fit: cover; }
+
+/* Barra das categorias principais. */
+.fachini-cat-nav { border: 2px solid #EDEDED; background: var(--fachini-offwhite); }
+.fachini-cat-nav__lista {
+	display: flex;
+	gap: 40px;
+	max-width: 1192px;
+	margin: 0 auto;
+	padding: 0 24px;
+	list-style: none;
+}
+.fachini-cat-nav__item {
+	position: relative;
+	display: flex;
+	align-items: center;
+	height: 57px;
+	color: var(--fachini-cinza-medio);
+	font-family: 'Archivo', sans-serif;
+	font-size: 16px;
+	font-weight: 600;
+	line-height: 24px;
+	text-decoration: none;
+	text-transform: uppercase;
+	white-space: nowrap;
+}
+.fachini-cat-nav__item:hover,
+.fachini-cat-nav__item.is-ativo { color: var(--fachini-navy-escuro); }
+.fachini-cat-nav__item.is-ativo::after { content: ''; position: absolute; right: -2px; bottom: 1px; left: -2px; height: 3px; background: var(--fachini-navy-escuro); }
+
+/* Caminho e ordenação, com as linhas embaixo. */
+.fachini-cat-topo {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-end;
+	justify-content: space-between;
+	gap: 24px;
+	max-width: 1192px;
+	margin: 0 auto;
+	padding: 78px 0 21px;
+}
+.fachini-cat-topo .fachini-breadcrumb { min-width: min(458px, 100%); padding-bottom: 7px; border-bottom: 1px solid var(--fachini-onix); }
+.fachini-ordenar { margin: 0; }
+.fachini-ordenar select {
+	width: 280px;
+	max-width: 100%;
+	padding: 0 32px 4px 0;
+	border: 0;
+	border-bottom: 1px solid var(--fachini-onix);
+	border-radius: 0;
+	background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='19' height='10' viewBox='0 0 19 10'%3E%3Cpath d='M1 1l8.5 8L18 1' fill='none' stroke='%2300224E' stroke-width='1.6'/%3E%3C/svg%3E") right 2px top 7px / 19px 10px no-repeat;
+	color: var(--fachini-navy-escuro);
+	font-family: 'Archivo', sans-serif;
+	font-size: 16px;
+	line-height: 24px;
+	letter-spacing: .8px;
+	text-transform: uppercase;
+	cursor: pointer;
+	-webkit-appearance: none;
+	appearance: none;
+}
+
+/* Faixas das categorias: rótulo com a contagem e foto escurecida. */
+.fachini-faixas { padding-bottom: 80px; }
+.fachini-faixa__rotulo {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 16px;
+	max-width: 1192px;
+	margin: 0 auto;
+	padding: 24px 0 18px;
+	color: var(--fachini-cinza-medio);
+	font-family: 'Archivo', sans-serif;
+	font-size: 16px;
+	line-height: 24px;
+	text-transform: uppercase;
+}
+.fachini-faixa__total { font-size: 14px; font-weight: 500; line-height: 18px; }
+.fachini-faixa__corpo { position: relative; display: block; height: 360px; overflow: hidden; color: var(--fachini-offwhite); text-decoration: none; }
+.fachini-faixa__corpo::before { content: ''; position: absolute; inset: 0; z-index: 1; background: rgba(15, 15, 15, .7); transition: background .2s ease; }
+.fachini-faixa__corpo:hover::before { background: rgba(15, 15, 15, .6); }
+.fachini-faixa__foto { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; object-fit: cover; }
+.fachini-faixa__texto { position: relative; z-index: 2; max-width: 1192px; margin: 0 auto; padding-top: 103px; }
+.fachini-faixa__titulo {
+	max-width: 563px;
+	margin: 0 0 25px;
+	color: var(--fachini-offwhite);
+	font-family: 'Archivo', sans-serif;
+	font-size: 42px;
+	font-weight: 700;
+	line-height: 44px;
+	text-transform: uppercase;
+}
+.fachini-faixa__descricao {
+	display: -webkit-box;
+	max-width: 369px;
+	margin: 0 0 18px;
+	overflow: hidden;
+	color: #EDEDED;
+	font-family: 'Archivo', sans-serif;
+	font-size: 14px;
+	line-height: 24px;
+	letter-spacing: .42px;
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
+}
+
+/* Lista de máquinas (categoria sem subcategorias). O cartão definitivo ainda
+   vai ser desenhado; esta linha ocupa o mesmo espaço do Figma (1192 x 180). */
+.fachini-maquinas-lista { display: flex; flex-direction: column; gap: 28px; max-width: 1192px; margin: 0 auto; }
+.fachini-maquina-linha { display: grid; grid-template-columns: 360px 1fr; min-height: 180px; background: #EDEDED; font-family: 'Archivo', sans-serif; }
+/* A foto preenche a linha sem definir a altura dela (foto em pé não estica a linha). */
+.fachini-maquina-linha__foto { position: relative; display: block; min-height: 180px; overflow: hidden; background: #D9D9D9; }
+.fachini-maquina-linha__foto img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; max-width: none; object-fit: cover; }
+.fachini-maquina-linha__corpo { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; padding: 24px 32px; }
+.fachini-maquina-linha__nome { margin: 0; font-family: 'Archivo', sans-serif; font-size: 24px; font-weight: 700; line-height: 32px; text-transform: uppercase; }
+.fachini-maquina-linha__nome a { color: var(--fachini-onix); text-decoration: none; }
+.fachini-maquina-linha__nome a:hover { color: var(--fachini-vermelho); }
+.fachini-maquina-linha__modelo { margin: 0; color: var(--fachini-cinza-medio); font-size: 14px; font-weight: 500; line-height: 18px; letter-spacing: .7px; text-transform: uppercase; }
+.fachini-maquina-linha__resumo {
+	display: -webkit-box;
+	max-width: 640px;
+	margin: 0 0 6px;
+	overflow: hidden;
+	color: var(--fachini-cinza-medio);
+	font-size: 14px;
+	line-height: 24px;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+}
+.fachini-lista-vazia { max-width: 1192px; margin: 0 auto; padding: 24px 0 96px; color: var(--fachini-cinza-medio); }
+
+/* Paginação: número atual num círculo navy. */
+.fachini-paginacao { max-width: 1192px; margin: 0 auto; padding: 96px 0 120px; }
+.fachini-paginacao ul { display: flex; justify-content: flex-end; align-items: center; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.fachini-paginacao .page-numbers {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 29px;
+	height: 29px;
+	border-radius: 14.5px;
+	color: var(--fachini-onix);
+	font-family: 'Archivo', sans-serif;
+	font-size: 16px;
+	line-height: 24px;
+	letter-spacing: .8px;
+	text-decoration: none;
+}
+.fachini-paginacao .page-numbers.current { background: var(--fachini-navy-escuro); color: var(--fachini-offwhite); }
+.fachini-paginacao a.page-numbers:hover { color: var(--fachini-vermelho); }
+
+@media (max-width: 1240px) {
+	.fachini-cat-topo,
+	.fachini-faixa__rotulo,
+	.fachini-maquinas-lista,
+	.fachini-lista-vazia,
+	.fachini-paginacao { margin-right: 24px; margin-left: 24px; }
+	.fachini-faixa__texto { padding-right: 24px; padding-left: 24px; }
+}
+
+@media (max-width: 767px) {
+	.fachini-cat-banner { height: 240px; }
+	.fachini-cat-nav__lista { gap: 28px; overflow-x: auto; scrollbar-width: none; }
+	.fachini-cat-topo { flex-direction: column; align-items: stretch; padding-top: 40px; }
+	.fachini-ordenar select { width: 100%; }
+	.fachini-faixa__corpo { height: 320px; }
+	.fachini-faixa__texto { padding-top: 56px; }
+	.fachini-faixa__titulo { margin-bottom: 16px; font-size: 28px; line-height: 32px; }
+	.fachini-maquina-linha { grid-template-columns: 1fr; }
+	.fachini-maquina-linha__foto { height: 200px; }
+	.fachini-maquina-linha__corpo { padding: 20px 20px 24px; }
+	.fachini-maquina-linha__nome { font-size: 20px; line-height: 28px; }
+	.fachini-paginacao { padding: 56px 0 80px; }
+	.fachini-paginacao ul { justify-content: center; }
+}
 
 /* Tabela de especificações */
 .fachini-specs { width: 100%; border-collapse: collapse; }

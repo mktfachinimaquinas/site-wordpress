@@ -113,6 +113,11 @@ add_shortcode( 'fachini_rodape', 'fachini_sc_rodape' );
 function fachini_sc_breadcrumb() {
 	$itens = array( '<a href="' . esc_url( home_url( '/' ) ) . '">Home</a>' );
 
+	// No Figma o caminho passa por "Máquinas" (/maquinas/) antes das categorias.
+	if ( is_singular( 'maquina' ) || is_tax( 'categoria_maquina' ) ) {
+		$itens[] = '<a href="' . esc_url( get_post_type_archive_link( 'maquina' ) ) . '">Máquinas</a>';
+	}
+
 	if ( is_singular( 'maquina' ) ) {
 		$termo = fachini_get_termo_principal( get_the_ID() );
 
@@ -145,7 +150,12 @@ function fachini_sc_breadcrumb() {
 		$itens[] = '<span>' . esc_html( post_type_archive_title( '', false ) ) . '</span>';
 	}
 
-	return '<nav class="fachini-breadcrumb" aria-label="Você está aqui">' . implode( ' <span class="fachini-breadcrumb__sep">/</span> ', $itens ) . '</nav>';
+	// O último item é a página atual. O separador é o quadradinho do layout,
+	// desenhado no CSS.
+	$ultimo = count( $itens ) - 1;
+	$itens[ $ultimo ] = preg_replace( '/^<span>/', '<span aria-current="page">', $itens[ $ultimo ] );
+
+	return '<nav class="fachini-breadcrumb" aria-label="Você está aqui">' . implode( '<span class="fachini-breadcrumb__sep" aria-hidden="true"></span>', $itens ) . '</nav>';
 }
 add_shortcode( 'fachini_breadcrumb', 'fachini_sc_breadcrumb' );
 
