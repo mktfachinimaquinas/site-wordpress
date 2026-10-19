@@ -321,6 +321,30 @@ function fachini_slug_unico_termo( $slug, $term, $original_slug ) {
 add_filter( 'wp_unique_term_slug', 'fachini_slug_unico_termo', 10, 3 );
 
 /**
+ * O mesmo vale ao editar. Ao salvar uma categoria, o WordPress procura o
+ * apelido em toda a taxonomia e recusa a edição se achar outro termo com ele
+ * ("Item não atualizado" em Calhas > Acessórios, por causa de Perfiladeiras >
+ * Acessórios). Durante essa conferência a busca passa a olhar só a mesma
+ * categoria-mãe, que é a regra deste site. Vale para uma única busca.
+ */
+function fachini_marcar_edicao_termo( $pai, $term_id, $taxonomia ) {
+	if ( 'categoria_maquina' === $taxonomia ) {
+		$GLOBALS['fachini_termo_em_edicao'] = (int) $pai;
+	}
+	return $pai;
+}
+add_filter( 'wp_update_term_parent', 'fachini_marcar_edicao_termo', 10, 3 );
+
+function fachini_slug_no_mesmo_ramo( $args, $taxonomias ) {
+	if ( isset( $GLOBALS['fachini_termo_em_edicao'] ) && ! empty( $args['slug'] ) && in_array( 'categoria_maquina', (array) $taxonomias, true ) ) {
+		$args['parent'] = $GLOBALS['fachini_termo_em_edicao'];
+		unset( $GLOBALS['fachini_termo_em_edicao'] );
+	}
+	return $args;
+}
+add_filter( 'get_terms_args', 'fachini_slug_no_mesmo_ramo', 10, 2 );
+
+/**
  * Conteúdo duplicado: o endereço canônico é sempre o da categoria mais específica.
  */
 function fachini_canonical_maquina( $canonical ) {
