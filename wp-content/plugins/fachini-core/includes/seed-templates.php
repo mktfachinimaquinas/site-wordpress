@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // Mudar esta versão faz a rotina rodar de novo: cria os modelos que faltam e
 // reaplica tipo e condições de todos.
-define( 'FACHINI_TEMPLATES_VERSAO', '2026-10-19a' );
+define( 'FACHINI_TEMPLATES_VERSAO', '2026-10-19b' );
 
 // Mudar esta outra reescreve o layout dos modelos que já existem, a partir do
 // código. Fica separada para que acrescentar um modelo novo não apague ajuste
@@ -29,6 +29,10 @@ define( 'FACHINI_TEMPLATES_LAYOUT', '2026-10-02e' );
 // Versão própria do layout das duas listagens (categorias e /maquinas/).
 // Mudar só esta reescreve só esses dois modelos.
 define( 'FACHINI_LISTAGEM_LAYOUT', '2026-10-19a' );
+
+// Versão própria do layout da página de máquina. Mudar só esta reescreve só
+// esse modelo.
+define( 'FACHINI_MAQUINA_LAYOUT', '2026-10-19a' );
 
 /**
  * Gera um id curto no formato que o Elementor usa.
@@ -104,6 +108,14 @@ function fachini_layout_maquina() {
 			array(
 				fachini_el_widget( 'theme-post-featured-image', array( 'image' => array( 'id' => '', 'url' => '' ), 'image_size' => 'large' ) ),
 			)
+		),
+
+		// Descrição completa (o texto do cadastro)
+		fachini_el_secao(
+			array(
+				fachini_el_widget( 'shortcode', array( 'shortcode' => '[fachini_descricao]' ) ),
+			),
+			array( 'padding' => array( 'unit' => 'px', 'top' => '48', 'right' => '0', 'bottom' => '0', 'left' => '0', 'isLinked' => false ) )
 		),
 
 		// Especificações
@@ -312,11 +324,12 @@ function fachini_seed_templates() {
 
 	$modelos = array(
 		array(
-			'titulo'     => 'Máquina (página individual)',
-			'tipo'       => 'single-post',
-			'layout'     => fachini_layout_maquina(),
-			'condicoes'  => array( 'include/singular/maquina' ),
-			'chave'      => 'fachini_tpl_maquina',
+			'titulo'        => 'Máquina (página individual)',
+			'tipo'          => 'single-post',
+			'layout'        => fachini_layout_maquina(),
+			'layout_versao' => FACHINI_MAQUINA_LAYOUT,
+			'condicoes'     => array( 'include/singular/maquina' ),
+			'chave'         => 'fachini_tpl_maquina',
 		),
 		array(
 			'titulo'     => 'Cabeçalho do site',
@@ -357,8 +370,8 @@ function fachini_seed_templates() {
 		$post_id = (int) get_option( $modelo['chave'] );
 
 		// Cria apenas se ainda não existir. O layout de um modelo já criado só é
-		// reescrito quando a versão de layout dele muda: a própria, para as
-		// listagens, ou FACHINI_TEMPLATES_LAYOUT, para os outros.
+		// reescrito quando a versão de layout dele muda: a própria, para a máquina
+		// e as listagens, ou FACHINI_TEMPLATES_LAYOUT, para os outros.
 		$versao_propria = isset( $modelo['layout_versao'] ) ? $modelo['layout_versao'] : '';
 		if ( $versao_propria ) {
 			$forcar_layout = ( get_option( $modelo['chave'] . '_layout' ) !== $versao_propria );

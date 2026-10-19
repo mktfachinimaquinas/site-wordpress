@@ -223,6 +223,24 @@ function fachini_sc_especificacoes() {
 add_shortcode( 'fachini_especificacoes', 'fachini_sc_especificacoes' );
 
 /**
+ * Descrição completa da máquina, o texto principal do cadastro.
+ * Como nas especificações, o título vem junto e a seção some sem texto.
+ */
+function fachini_sc_descricao() {
+	$texto = (string) get_post_field( 'post_content', get_the_ID() );
+
+	if ( '' === trim( wp_strip_all_tags( $texto ) ) ) {
+		return '';
+	}
+
+	$html  = '<h2 class="fachini-titulo-secao">Descrição</h2>';
+	$html .= '<div class="fachini-descricao">' . apply_filters( 'the_content', $texto ) . '</div>';
+
+	return $html;
+}
+add_shortcode( 'fachini_descricao', 'fachini_sc_descricao' );
+
+/**
  * Botão de download do catálogo. Só aparece se houver arquivo.
  */
 function fachini_sc_catalogo() {
