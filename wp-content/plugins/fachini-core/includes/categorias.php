@@ -272,9 +272,9 @@ function fachini_faixas( $termos, $rotulo ) {
  * foto, nome, modelo, resumo e "Ver máquina". O cartão definitivo ainda vai
  * ser desenhado pela Débora; esta versão segue o estilo do resto do site.
  */
-function fachini_lista_maquinas() {
+function fachini_lista_maquinas( $vazio = 'Em breve, as máquinas desta categoria.' ) {
 	if ( ! have_posts() ) {
-		return '<p class="fachini-lista-vazia">Em breve, as máquinas desta categoria.</p>';
+		return '<p class="fachini-lista-vazia">' . esc_html( $vazio ) . '</p>';
 	}
 
 	$html = '<div class="fachini-maquinas-lista">';
@@ -327,6 +327,12 @@ function fachini_lista_maquinas() {
  * categoria sem subcategorias, as máquinas.
  */
 function fachini_sc_listagem() {
+	// Resultado da busca: mesmo modelo, sem foto no topo.
+	if ( is_search() ) {
+		$vazio = 'Nenhuma máquina encontrada. Tente outra palavra ou navegue pelas categorias acima.';
+		return '<div class="fachini-listagem fachini-listagem--busca">' . fachini_categoria_nav() . fachini_busca_topo() . fachini_lista_maquinas( $vazio ) . '</div>';
+	}
+
 	$atual = fachini_categoria_atual();
 
 	if ( $atual ) {

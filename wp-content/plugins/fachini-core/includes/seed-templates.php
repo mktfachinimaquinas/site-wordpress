@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // Mudar esta versão faz a rotina rodar de novo: cria os modelos que faltam e
 // reaplica tipo e condições de todos.
-define( 'FACHINI_TEMPLATES_VERSAO', '2026-10-19c' );
+define( 'FACHINI_TEMPLATES_VERSAO', '2026-10-20a' );
 
 // Mudar esta outra reescreve o layout dos modelos que já existem, a partir do
 // código. Fica separada para que acrescentar um modelo novo não apague ajuste
@@ -368,11 +368,12 @@ function fachini_seed_templates() {
 		array(
 			// /maquinas/, o primeiro item do menu. A condição de arquivo de um tipo
 			// de conteúdo no Elementor Pro é "<tipo>_archive", diferente da de taxonomia.
+			// O resultado da busca (só máquinas, ver busca.php) usa o mesmo modelo.
 			'titulo'        => 'Listagem de máquinas (todas)',
 			'tipo'          => 'archive',
 			'layout'        => fachini_layout_listagem(),
 			'layout_versao' => FACHINI_LISTAGEM_LAYOUT,
-			'condicoes'     => array( 'include/archive/maquina_archive' ),
+			'condicoes'     => array( 'include/archive/maquina_archive', 'include/archive/search' ),
 			'chave'         => 'fachini_tpl_listagem',
 		),
 	);

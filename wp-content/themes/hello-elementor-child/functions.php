@@ -24,6 +24,21 @@ function fachini_child_enqueue_styles() {
 add_action( 'wp_enqueue_scripts', 'fachini_child_enqueue_styles', 20 );
 
 /**
+ * Abre e fecha a camada da busca (a camada em si vem do plugin Fachini Core).
+ * Carregado no rodapé e com defer, para não atrasar a página.
+ */
+function fachini_child_busca_script() {
+	wp_enqueue_script(
+		'fachini-busca',
+		get_stylesheet_directory_uri() . '/assets/busca.js',
+		array(),
+		wp_get_theme()->get( 'Version' ),
+		array( 'in_footer' => true, 'strategy' => 'defer' )
+	);
+}
+add_action( 'wp_enqueue_scripts', 'fachini_child_busca_script', 20 );
+
+/**
  * Carrega as fontes do site.
  *
  * Decisão da Débora em 02/10/2026: a Geist é usada exclusivamente no hero.

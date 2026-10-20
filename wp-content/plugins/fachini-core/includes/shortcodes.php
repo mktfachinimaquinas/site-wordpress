@@ -148,6 +148,8 @@ function fachini_sc_breadcrumb() {
 
 	} elseif ( is_post_type_archive( 'maquina' ) ) {
 		$itens[] = '<span>' . esc_html( post_type_archive_title( '', false ) ) . '</span>';
+	} elseif ( is_search() ) {
+		$itens[] = '<span>Busca</span>';
 	}
 
 	// O último item é a página atual. O separador é o quadradinho do layout,
