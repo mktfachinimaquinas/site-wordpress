@@ -96,19 +96,23 @@ function fachini_core_migrar_papeis() {
  * Uma máquina continua sendo de quem a cadastrou, mesmo quando outra pessoa
  * salva uma alteração nela.
  *
- * O tipo "Máquinas" não tem campo de autor. Quando alguém salva uma máquina,
- * o editor de blocos envia os campos do ACF para o post.php num formulário
- * que traz o usuário atual e não traz o autor, e o WordPress troca o autor
- * pelo usuário atual. A edição rápida da listagem faz o mesmo. Com o papel
+ * Quando alguém salva uma máquina, o editor de blocos envia os campos do ACF
+ * para o post.php num formulário que traz o usuário atual (user_ID) e não o
+ * autor, e o WordPress troca o autor pelo usuário atual. Com o papel
  * "Cadastro de Máquinas", quem cadastrou perderia a edição da própria máquina
  * assim que o administrador corrigisse algo nela.
  *
  * Por isso, numa atualização, o autor gravado é mantido. Máquina sem autor
- * (0) pode receber um. Transferir uma máquina para outra pessoa fica fora do
- * painel, de propósito.
+ * (0) pode receber um. A exceção é a troca feita de propósito por quem pode
+ * editar as máquinas dos outros (o administrador), pelo campo Autor do editor
+ * ou pela API: esses pedidos não trazem user_ID e valem como vieram.
  */
 function fachini_manter_autor_maquina( $dados, $postarr, $postarr_bruto = array(), $atualizacao = false ) {
 	if ( 'maquina' !== $dados['post_type'] || ! $atualizacao || empty( $postarr['ID'] ) ) {
+		return $dados;
+	}
+
+	if ( ! isset( $postarr_bruto['user_ID'] ) && current_user_can( 'edit_others_maquinas' ) ) {
 		return $dados;
 	}
 

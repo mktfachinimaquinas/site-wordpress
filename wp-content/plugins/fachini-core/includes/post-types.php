@@ -46,7 +46,9 @@ function fachini_core_register_post_types() {
 		),
 		'menu_icon'          => 'dashicons-hammer',
 		'menu_position'      => 20,
-		'supports'           => array( 'title', 'editor', 'thumbnail', 'excerpt', 'revisions', 'page-attributes' ),
+		// 'author': o administrador pode passar uma máquina para quem vai cuidar
+		// dela (ver fachini_manter_autor_maquina em includes/papeis.php).
+		'supports'           => array( 'title', 'editor', 'thumbnail', 'excerpt', 'revisions', 'page-attributes', 'author' ),
 		'show_in_rest'       => true,  // necessário para o editor de blocos e para integrações futuras
 		'publicly_queryable' => true,
 		// Permissões próprias (edit_maquinas, publish_maquinas...) em vez das de
