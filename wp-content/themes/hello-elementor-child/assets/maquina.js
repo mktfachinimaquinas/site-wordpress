@@ -51,23 +51,54 @@
 	if ( ! links.length || ! ( 'IntersectionObserver' in window ) ) {
 		return;
 	}
-	var porSecao = {};
+	var alvos = [];
 	links.forEach( function ( link ) {
 		var secao = document.getElementById( link.hash.slice( 1 ) );
 		if ( secao ) {
-			porSecao[ secao.id ] = link;
+			alvos.push( [ secao, link ] );
 		}
 	} );
+	// A foto do topo conta como a primeira seção: voltando para o alto da
+	// página, a barra volta a marcar a primeira.
+	var topo = document.querySelector( '.fachini-maquina-topo' );
+	if ( topo ) {
+		alvos.push( [ topo, links[ 0 ] ] );
+	}
+	var noFim = function () {
+		return window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+	};
+	var marcaUltima = function () {
+		links.forEach( function ( link, i ) {
+			link.classList.toggle( 'is-ativo', i === links.length - 1 );
+		} );
+	};
 	var observador = new IntersectionObserver( function ( entradas ) {
+		if ( noFim() ) {
+			marcaUltima();
+			return;
+		}
 		entradas.forEach( function ( entrada ) {
-			if ( entrada.isIntersecting ) {
-				links.forEach( function ( link ) {
-					link.classList.toggle( 'is-ativo', link === porSecao[ entrada.target.id ] );
-				} );
+			if ( ! entrada.isIntersecting ) {
+				return;
 			}
+			alvos.forEach( function ( par ) {
+				if ( par[ 0 ] === entrada.target ) {
+					links.forEach( function ( link ) {
+						link.classList.toggle( 'is-ativo', link === par[ 1 ] );
+					} );
+				}
+			} );
 		} );
 	}, { rootMargin: '-45% 0px -50% 0px' } );
-	Object.keys( porSecao ).forEach( function ( id ) {
-		observador.observe( document.getElementById( id ) );
+	alvos.forEach( function ( par ) {
+		observador.observe( par[ 0 ] );
 	} );
+
+	// No fim da página, a última seção pode ser curta demais para chegar ao
+	// meio da tela: marca a última.
+	window.addEventListener( 'scroll', function () {
+		if ( noFim() ) {
+			marcaUltima();
+		}
+	}, { passive: true } );
 }() );
