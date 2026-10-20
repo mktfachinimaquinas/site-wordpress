@@ -39,6 +39,23 @@ function fachini_child_busca_script() {
 add_action( 'wp_enqueue_scripts', 'fachini_child_busca_script', 20 );
 
 /**
+ * Galeria, barra das seções e vídeo da página da máquina. Só nessa página.
+ */
+function fachini_child_maquina_script() {
+	if ( ! is_singular( 'maquina' ) ) {
+		return;
+	}
+	wp_enqueue_script(
+		'fachini-maquina',
+		get_stylesheet_directory_uri() . '/assets/maquina.js',
+		array(),
+		wp_get_theme()->get( 'Version' ),
+		array( 'in_footer' => true, 'strategy' => 'defer' )
+	);
+}
+add_action( 'wp_enqueue_scripts', 'fachini_child_maquina_script', 20 );
+
+/**
  * Carrega as fontes do site.
  *
  * Decisão da Débora em 02/10/2026: a Geist é usada exclusivamente no hero.

@@ -4,7 +4,7 @@ Theme URI:    https://github.com/mktfachinimaquinas/site-wordpress
 Description:  Tema filho do Hello Elementor para o site da Fachini Máquinas. Todo código personalizado (CSS, scripts, SMTP, scripts de marketing) mora aqui, para que o tema pai possa ser atualizado sem perder nada.
 Author:       Fachini Máquinas
 Template:     hello-elementor
-Version:      1.4.0
+Version:      1.5.0
 License:      GPL-2.0-or-later
 Text Domain:  hello-elementor-child
 */
@@ -627,6 +627,9 @@ a.fachini-seta-link:hover::after { transform: translateX(4px) rotate(44.57deg) s
 /* Lista de máquinas (categoria sem subcategorias). O cartão definitivo ainda
    vai ser desenhado; esta linha ocupa o mesmo espaço do Figma (1192 x 180). */
 .fachini-maquinas-lista { display: flex; flex-direction: column; gap: 28px; max-width: 1192px; margin: 0 auto; }
+/* Sem paginação (uma página só), a lista é o último item: o espaço até o
+   rodapé, que senão vinha da paginação. */
+.fachini-maquinas-lista:last-child { margin-bottom: 120px; }
 .fachini-maquina-linha { display: grid; grid-template-columns: 360px 1fr; min-height: 180px; background: #EDEDED; font-family: 'Archivo', sans-serif; }
 /* A foto preenche a linha sem definir a altura dela (foto em pé não estica a linha). */
 .fachini-maquina-linha__foto { position: relative; display: block; min-height: 180px; overflow: hidden; background: #D9D9D9; }
@@ -693,6 +696,7 @@ a.fachini-seta-link:hover::after { transform: translateX(4px) rotate(44.57deg) s
 	.fachini-maquina-linha__corpo { padding: 20px 20px 24px; }
 	.fachini-maquina-linha .fachini-maquina-linha__nome { font-size: 20px; line-height: 28px; }
 	.fachini-paginacao { padding: 56px 0 80px; }
+	.fachini-maquinas-lista:last-child { margin-bottom: 80px; }
 	.fachini-paginacao ul { justify-content: center; }
 }
 
@@ -1076,4 +1080,166 @@ body.fachini-busca-aberta { overflow: hidden; }
 @media (max-width: 767px) {
 	.fachini-busca-topo { margin-top: 40px; }
 	.fachini-busca-topo .fachini-busca-topo__titulo { font-size: 24px; line-height: 30px; }
+}
+
+/* -------------------------------------------------------------------------
+   Página da máquina (Figma: "MAQUINAS 1 - MAX 1369", nó 66:1587). A página
+   é montada pelo plugin ([fachini_maquina]); aqui fica só o visual. A galeria,
+   a barra das seções e o vídeo usam assets/maquina.js.
+   ------------------------------------------------------------------------- */
+:root:has(.fachini-maquina-abas) { scroll-behavior: smooth; }
+.fachini-maquina { padding-bottom: 120px; background: var(--fachini-offwhite); font-family: 'Archivo', sans-serif; }
+.fachini-maquina__caminho { max-width: 1200px; margin: 0 auto; padding: 30px 0; }
+
+/* Topo: foto larga escurecida, com o nome, o resumo e o pedido de orçamento. */
+.fachini-maquina-topo { position: relative; display: flex; align-items: flex-end; min-height: 520px; overflow: hidden; background: var(--fachini-onix); }
+.fachini-maquina .fachini-maquina-topo__foto { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; object-fit: cover; }
+.fachini-maquina-topo::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(to right, rgba(0, 0, 0, .7) 0%, rgba(0, 0, 0, .3) 55%, rgba(0, 0, 0, .1) 100%);
+	pointer-events: none;
+}
+.fachini-maquina-topo__texto { position: relative; z-index: 1; width: 100%; max-width: 1200px; margin: 0 auto; padding: 48px 0 43px; color: #fff; }
+.fachini-maquina-topo .fachini-maquina-topo__titulo { max-width: 760px; margin: 0 0 16px; color: #fff; font-family: 'Archivo', sans-serif; font-size: 40px; font-weight: 700; line-height: 48px; text-transform: uppercase; }
+.fachini-maquina-topo__resumo { max-width: 580px; margin: 0 0 28px; color: #EDEDED; font-size: 16px; line-height: 24px; }
+
+/* Barra das seções: o mesmo desenho da barra das categorias, centralizada e
+   presa no alto da tela durante a rolagem. */
+.fachini-maquina-abas { position: sticky; top: 0; z-index: 15; }
+body.admin-bar .fachini-maquina-abas { top: 32px; }
+.fachini-maquina-abas .fachini-cat-nav__lista { justify-content: center; }
+
+/* Seções: linha fina em cima, título grande e o conteúdo. */
+.fachini-maquina-secao { max-width: 1200px; margin: 100px auto 0; scroll-margin-top: 80px; }
+.fachini-maquina .fachini-maquina-secao__titulo {
+	margin: 0 0 40px;
+	padding-top: 20px;
+	border-top: 1px solid #EDEDED;
+	color: var(--fachini-onix);
+	font-family: 'Archivo', sans-serif;
+	font-size: 36px;
+	font-weight: 700;
+	line-height: 44px;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+}
+.fachini-maquina .fachini-maquina-secao--descricao .fachini-maquina-secao__titulo { border-top-color: var(--fachini-onix); }
+
+/* Descrição: texto à esquerda e as fotos encostadas na borda direita da tela. */
+.fachini-maquina-secao--descricao { max-width: none; margin-top: 96px; }
+.fachini-maquina-secao--descricao .fachini-maquina-secao__titulo { max-width: 1200px; margin-right: auto; margin-left: auto; }
+.fachini-maquina-descricao { display: grid; grid-template-columns: minmax(24px, 1fr) minmax(0, 560px) 37px minmax(0, 603px) minmax(24px, 1fr); align-items: start; }
+.fachini-maquina-descricao__texto { grid-column: 2; color: var(--fachini-cinza-medio); font-size: 18px; line-height: 28px; }
+.fachini-maquina-descricao__texto p { margin: 0 0 16px; }
+.fachini-maquina-descricao__texto ul { margin: 0 0 16px; padding-left: 26px; }
+.fachini-maquina-descricao__texto h3 { margin: 32px 0 12px; color: var(--fachini-onix); font-size: 20px; line-height: 28px; }
+.fachini-maquina-galeria { grid-column: 4 / -1; }
+.fachini-maquina-galeria__principal { height: 520px; overflow: hidden; background: #D9D9D9; }
+.fachini-maquina .fachini-maquina-galeria__foto { display: block; width: 100%; height: 100%; max-width: none; object-fit: cover; }
+.fachini-maquina-galeria__miniaturas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 12px; }
+.fachini-maquina .fachini-maquina-galeria__miniatura {
+	flex: none;
+	width: 120px;
+	height: 90px;
+	padding: 0;
+	overflow: hidden;
+	border: 2px solid transparent;
+	border-radius: 0;
+	background: #D9D9D9;
+	cursor: pointer;
+	opacity: .7;
+	transition: opacity .2s, border-color .2s;
+}
+.fachini-maquina .fachini-maquina-galeria__miniatura:hover,
+.fachini-maquina .fachini-maquina-galeria__miniatura:focus-visible,
+.fachini-maquina .fachini-maquina-galeria__miniatura.is-ativa { border-color: var(--fachini-navy-escuro); background: #D9D9D9; opacity: 1; }
+.fachini-maquina .fachini-maquina-galeria__miniatura img { display: block; width: 100%; height: 100%; max-width: none; object-fit: cover; }
+
+/* Especificações técnicas: tabela de linhas finas, como no Figma. */
+.fachini-maquina .fachini-maquina-specs { width: 100%; margin: 0; border: 0; border-top: 1px solid var(--fachini-onix); border-collapse: collapse; font-size: 18px; line-height: 28px; }
+.fachini-maquina .fachini-maquina-specs th,
+.fachini-maquina .fachini-maquina-specs td { padding: 6px 15px; border: 0; border-bottom: 1px solid var(--fachini-onix); background: none; text-align: left; vertical-align: top; }
+.fachini-maquina .fachini-maquina-specs th { width: 40%; color: var(--fachini-onix); font-weight: 500; }
+.fachini-maquina .fachini-maquina-specs td { color: var(--fachini-cinza-medio); font-weight: 400; }
+
+/* Modelos de telha: nome, telha (ou peça) e desenho técnico em cada linha. */
+.fachini-maquina-modelos { padding: 24px 104px; background: #fff; }
+.fachini-maquina-modelo { display: grid; grid-template-columns: 1fr 1fr; align-items: center; column-gap: 56px; padding: 24px 0; border-bottom: 1px solid #EDEDED; }
+.fachini-maquina-modelo:last-child { border-bottom: 0; }
+.fachini-maquina .fachini-maquina-modelo__nome { grid-column: 1 / -1; margin: 0 0 8px; color: var(--fachini-navy-escuro); font-size: 14px; font-weight: 700; line-height: 18px; letter-spacing: .5px; text-transform: uppercase; }
+.fachini-maquina .fachini-maquina-modelo__imagem img { display: block; width: 100%; height: 220px; max-width: none; object-fit: contain; }
+.fachini-maquina-modelo--uma .fachini-maquina-modelo__imagem { grid-column: 1 / -1; }
+.fachini-maquina .fachini-maquina-modelo--uma .fachini-maquina-modelo__imagem img { height: 320px; }
+
+/* Aplicações: as duas fotos lado a lado na largura toda, legenda embaixo. */
+.fachini-maquina-secao--aplicacoes { max-width: none; }
+.fachini-maquina-secao--aplicacoes .fachini-maquina-secao__titulo { max-width: 1200px; margin-right: auto; margin-left: auto; }
+.fachini-maquina-aplicacoes { display: grid; grid-template-columns: 1fr 1fr; }
+.fachini-maquina .fachini-maquina-aplicacao { margin: 0; }
+.fachini-maquina-aplicacao__foto { height: 472px; overflow: hidden; background: #D9D9D9; }
+.fachini-maquina .fachini-maquina-aplicacao__foto img { display: block; width: 100%; height: 100%; max-width: none; object-fit: cover; }
+.fachini-maquina .fachini-maquina-aplicacao__legenda { padding: 16px 12px 0; color: var(--fachini-onix); font-size: 18px; font-style: normal; line-height: 24px; text-transform: uppercase; }
+.fachini-maquina .fachini-maquina-aplicacao:first-child .fachini-maquina-aplicacao__legenda { padding-left: max(24px, calc(100% - 600px)); }
+
+/* Vídeo: a capa do YouTube com o botão; o player só carrega no clique. */
+.fachini-video { position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: #000; }
+.fachini-video .fachini-video__play,
+.fachini-video .fachini-video__play:hover,
+.fachini-video .fachini-video__play:focus { position: absolute; inset: 0; display: block; width: 100%; height: 100%; padding: 0; border: 0; border-radius: 0; background: #000; cursor: pointer; }
+.fachini-video .fachini-video__play img { display: block; width: 100%; height: 100%; max-width: none; object-fit: cover; opacity: .85; transition: opacity .2s; }
+.fachini-video .fachini-video__play:hover img { opacity: 1; }
+.fachini-video__icone { position: absolute; top: 50%; left: 50%; width: 76px; height: 76px; margin: -38px 0 0 -38px; border-radius: 50%; background: var(--fachini-vermelho); }
+.fachini-video__icone::after { content: ''; position: absolute; top: 50%; left: 50%; margin: -13px 0 0 -8px; border-top: 13px solid transparent; border-bottom: 13px solid transparent; border-left: 22px solid #fff; }
+.fachini-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.fachini-maquina .fachini-maquina-canal { margin: 28px 0 0; }
+
+@media (max-width: 1240px) {
+	.fachini-maquina__caminho,
+	.fachini-maquina-topo__texto,
+	.fachini-maquina-secao,
+	.fachini-maquina-secao--descricao .fachini-maquina-secao__titulo,
+	.fachini-maquina-secao--aplicacoes .fachini-maquina-secao__titulo { margin-right: 24px; margin-left: 24px; }
+	.fachini-maquina-topo__texto { width: auto; }
+	.fachini-maquina-secao--descricao,
+	.fachini-maquina-secao--aplicacoes { margin-right: 0; margin-left: 0; }
+	.fachini-maquina-modelos { padding: 16px 40px; }
+}
+
+@media (max-width: 1024px) {
+	.fachini-maquina-descricao { display: block; }
+	.fachini-maquina-descricao__texto { margin: 0 24px 32px; }
+	.fachini-maquina-galeria__principal { height: 440px; }
+	.fachini-maquina-galeria__miniaturas { padding: 0 24px; }
+}
+
+@media (max-width: 767px) {
+	/* A seção do modelo tem 24px de margem no celular; aqui a página usa a largura toda. */
+	.elementor-location-single > .elementor-section:has(.fachini-maquina) { padding-right: 0 !important; padding-left: 0 !important; }
+	.fachini-maquina { padding-bottom: 80px; }
+	.fachini-maquina__caminho { padding: 20px 0; }
+	.fachini-maquina-topo { min-height: 360px; }
+	.fachini-maquina-topo__texto { padding: 32px 0 28px; }
+	.fachini-maquina-topo .fachini-maquina-topo__titulo { font-size: 28px; line-height: 34px; }
+	.fachini-maquina-topo__resumo { font-size: 15px; line-height: 22px; }
+	.fachini-maquina-abas .fachini-cat-nav__lista { justify-content: flex-start; }
+	body.admin-bar .fachini-maquina-abas { top: 0; }
+	.fachini-maquina-secao,
+	.fachini-maquina-secao--descricao { margin-top: 64px; }
+	.fachini-maquina .fachini-maquina-secao__titulo { margin-bottom: 28px; font-size: 26px; line-height: 32px; letter-spacing: 1px; }
+	.fachini-maquina-descricao__texto { font-size: 16px; line-height: 26px; }
+	.fachini-maquina-galeria__principal { height: 280px; }
+	.fachini-maquina .fachini-maquina-galeria__miniatura { width: 80px; height: 60px; }
+	.fachini-maquina .fachini-maquina-specs { font-size: 15px; line-height: 22px; }
+	.fachini-maquina .fachini-maquina-specs th,
+	.fachini-maquina .fachini-maquina-specs td { padding: 8px 10px; }
+	.fachini-maquina-modelos { padding: 8px 16px; }
+	.fachini-maquina-modelo { grid-template-columns: 1fr; row-gap: 12px; padding: 20px 0; }
+	.fachini-maquina .fachini-maquina-modelo__imagem img { height: 160px; }
+	.fachini-maquina .fachini-maquina-modelo--uma .fachini-maquina-modelo__imagem img { height: 260px; }
+	.fachini-maquina-aplicacoes { grid-template-columns: 1fr; row-gap: 24px; }
+	.fachini-maquina-aplicacao__foto { height: 280px; }
+	.fachini-maquina .fachini-maquina-aplicacao__legenda,
+	.fachini-maquina .fachini-maquina-aplicacao:first-child .fachini-maquina-aplicacao__legenda { padding: 12px 24px 0; font-size: 15px; line-height: 22px; }
 }

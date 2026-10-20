@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // Mudar esta versão faz a rotina rodar de novo: cria os modelos que faltam e
 // reaplica tipo e condições de todos.
-define( 'FACHINI_TEMPLATES_VERSAO', '2026-10-20a' );
+define( 'FACHINI_TEMPLATES_VERSAO', '2026-10-20b' );
 
 // Mudar esta outra reescreve o layout dos modelos que já existem, a partir do
 // código. Fica separada para que acrescentar um modelo novo não apague ajuste
@@ -32,7 +32,7 @@ define( 'FACHINI_LISTAGEM_LAYOUT', '2026-10-19a' );
 
 // Versão própria do layout da página de máquina. Mudar só esta reescreve só
 // esse modelo.
-define( 'FACHINI_MAQUINA_LAYOUT', '2026-10-19b' );
+define( 'FACHINI_MAQUINA_LAYOUT', '2026-10-20a' );
 
 /**
  * Gera um id curto no formato que o Elementor usa.
@@ -74,108 +74,21 @@ function fachini_el_secao( $widgets, $settings = array() ) {
 }
 
 /**
- * Layout da página de máquina.
+ * Layout da página de máquina: uma seção na largura toda com o shortcode que
+ * monta a página igual ao Figma (includes/maquina.php). O conteúdo vem do
+ * cadastro da máquina, não do Elementor.
  */
 function fachini_layout_maquina() {
 	return array(
-
-		// Caminho de navegação
 		fachini_el_secao(
 			array(
-				fachini_el_widget( 'shortcode', array( 'shortcode' => '[fachini_breadcrumb]' ) ),
+				fachini_el_widget( 'shortcode', array( 'shortcode' => '[fachini_maquina]' ) ),
 			),
-			array( 'padding' => array( 'unit' => 'px', 'top' => '24', 'right' => '0', 'bottom' => '0', 'left' => '0', 'isLinked' => false ) )
-		),
-
-		// Nome da máquina e descrição curta
-		fachini_el_secao(
 			array(
-				fachini_el_widget(
-					'theme-post-title',
-					array(
-						'title_tag'   => 'h1',
-						'title'       => '',
-						'__dynamic__' => array( 'title' => '[elementor-tag id="fachtit" name="post-title" settings="%7B%7D"]' ),
-					)
-				),
-				fachini_el_widget(
-					'theme-post-excerpt',
-					array( '__dynamic__' => array( 'excerpt' => '[elementor-tag id="fachres" name="post-excerpt" settings="%7B%7D"]' ) )
-				),
-			),
-			array( 'padding' => array( 'unit' => 'px', 'top' => '16', 'right' => '0', 'bottom' => '24', 'left' => '0', 'isLinked' => false ) )
-		),
-
-		// Foto principal
-		fachini_el_secao(
-			array(
-				// Sem o __dynamic__, os dois widgets não puxam o resumo e a foto da
-				// máquina e ficam vazios (só o título tinha).
-				fachini_el_widget(
-					'theme-post-featured-image',
-					array(
-						'image'       => array( 'id' => '', 'url' => '' ),
-						'image_size'  => 'large',
-						'__dynamic__' => array( 'image' => '[elementor-tag id="fachfot" name="post-featured-image" settings="%7B%7D"]' ),
-					)
-				),
+				'layout'  => 'full_width',
+				'gap'     => 'no',
+				'padding' => array( 'unit' => 'px', 'top' => '0', 'right' => '0', 'bottom' => '0', 'left' => '0', 'isLinked' => true ),
 			)
-		),
-
-		// Descrição completa (o texto do cadastro)
-		fachini_el_secao(
-			array(
-				fachini_el_widget( 'shortcode', array( 'shortcode' => '[fachini_descricao]' ) ),
-			),
-			array( 'padding' => array( 'unit' => 'px', 'top' => '48', 'right' => '0', 'bottom' => '0', 'left' => '0', 'isLinked' => false ) )
-		),
-
-		// Especificações
-		fachini_el_secao(
-			array(
-				fachini_el_widget( 'shortcode', array( 'shortcode' => '[fachini_especificacoes]' ) ),
-			),
-			array( 'padding' => array( 'unit' => 'px', 'top' => '48', 'right' => '0', 'bottom' => '24', 'left' => '0', 'isLinked' => false ) )
-		),
-
-		// Vídeo e catálogo
-		fachini_el_secao(
-			array(
-				fachini_el_widget( 'shortcode', array( 'shortcode' => '[fachini_video]' ) ),
-				fachini_el_widget( 'shortcode', array( 'shortcode' => '[fachini_catalogo]' ) ),
-			),
-			array( 'padding' => array( 'unit' => 'px', 'top' => '24', 'right' => '0', 'bottom' => '24', 'left' => '0', 'isLinked' => false ) )
-		),
-
-		// Chamada para orçamento
-		fachini_el_secao(
-			array(
-				fachini_el_widget(
-					'heading',
-					array( 'title' => 'Quer um orçamento desta máquina?', 'header_size' => 'h3' )
-				),
-				fachini_el_widget(
-					'button',
-					array(
-						'text' => 'Falar com um especialista',
-						'link' => array( 'url' => '/contato/', 'is_external' => '', 'nofollow' => '' ),
-						'size' => 'lg',
-					)
-				),
-			),
-			array(
-				'background_background' => 'classic',
-				'background_color'      => '#F1F3F6',
-				'padding'               => array( 'unit' => 'px', 'top' => '48', 'right' => '24', 'bottom' => '48', 'left' => '24', 'isLinked' => false ),
-			)
-		),
-
-		// Relacionadas
-		fachini_el_secao(
-			array(
-				fachini_el_widget( 'shortcode', array( 'shortcode' => '[fachini_relacionadas]' ) ),
-			),
-			array( 'padding' => array( 'unit' => 'px', 'top' => '48', 'right' => '0', 'bottom' => '48', 'left' => '0', 'isLinked' => false ) )
 		),
 	);
 }
