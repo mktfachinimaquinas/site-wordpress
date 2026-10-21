@@ -286,7 +286,10 @@ function fachini_sc_maquina() {
 	if ( '' !== $resumo ) {
 		$html .= '<p class="fachini-maquina-topo__resumo">' . esc_html( $resumo ) . '</p>';
 	}
-	$html .= fachini_seta_link( 'Solicite seu orçamento', home_url( '/contato/' ), 'claro' );
+	// O formulário já abre com a categoria e o modelo desta máquina escolhidos.
+	// O parâmetro não pode se chamar "maquina": esse nome é do próprio tipo de
+	// conteúdo, e /contato/?maquina=17 daria página não encontrada.
+	$html .= fachini_seta_link( 'Solicite seu orçamento', add_query_arg( 'orcamento', $post_id, home_url( '/contato/' ) ), 'claro' );
 	$html .= '</div></section>';
 
 	if ( count( $secoes ) > 1 ) {

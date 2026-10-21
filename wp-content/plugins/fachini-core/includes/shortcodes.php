@@ -150,8 +150,20 @@ function fachini_sc_breadcrumb() {
 		$itens[] = '<span>' . esc_html( post_type_archive_title( '', false ) ) . '</span>';
 	} elseif ( is_search() ) {
 		$itens[] = '<span>Busca</span>';
+	} elseif ( is_page() ) {
+		$itens[] = '<span>' . esc_html( get_the_title() ) . '</span>';
 	}
 
+	return fachini_breadcrumb_montar( $itens );
+}
+add_shortcode( 'fachini_breadcrumb', 'fachini_sc_breadcrumb' );
+
+/**
+ * Monta o caminho a partir dos itens (links e, no fim, um <span> com a página
+ * atual). Usado também por páginas que têm um caminho próprio, como a
+ * confirmação do pedido (Home / Contato / Atendimento).
+ */
+function fachini_breadcrumb_montar( $itens ) {
 	// O último item é a página atual. O separador é o quadradinho do layout,
 	// desenhado no CSS.
 	$ultimo = count( $itens ) - 1;
@@ -159,7 +171,6 @@ function fachini_sc_breadcrumb() {
 
 	return '<nav class="fachini-breadcrumb" aria-label="Você está aqui">' . implode( '<span class="fachini-breadcrumb__sep" aria-hidden="true"></span>', $itens ) . '</nav>';
 }
-add_shortcode( 'fachini_breadcrumb', 'fachini_sc_breadcrumb' );
 
 /**
  * Título da listagem, sem o prefixo que o Elementor acrescenta
