@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // Mudar esta versão faz a rotina rodar de novo: cria os modelos que faltam e
 // reaplica tipo e condições de todos.
-define( 'FACHINI_TEMPLATES_VERSAO', '2026-10-20b' );
+define( 'FACHINI_TEMPLATES_VERSAO', '2026-10-21a' );
 
 // Mudar esta outra reescreve o layout dos modelos que já existem, a partir do
 // código. Fica separada para que acrescentar um modelo novo não apague ajuste
@@ -33,6 +33,10 @@ define( 'FACHINI_LISTAGEM_LAYOUT', '2026-10-19a' );
 // Versão própria do layout da página de máquina. Mudar só esta reescreve só
 // esse modelo.
 define( 'FACHINI_MAQUINA_LAYOUT', '2026-10-20a' );
+
+// Versão própria do layout do cabeçalho. Mudar só esta reescreve só esse
+// modelo (o rodapé continua como está).
+define( 'FACHINI_CABECALHO_LAYOUT', '2026-10-21a' );
 
 /**
  * Gera um id curto no formato que o Elementor usa.
@@ -134,7 +138,10 @@ function fachini_layout_cabecalho() {
 					'image_size' => 'medium',
 					'align'      => 'left',
 					'width'      => array( 'unit' => 'px', 'size' => 200 ),
-					'link_to'    => 'home',
+					// O widget só aceita none, file ou custom; qualquer outro valor
+					// vira link para o arquivo da imagem. "/" vale para qualquer domínio.
+					'link_to'    => 'custom',
+					'link'       => array( 'url' => '/', 'is_external' => '', 'nofollow' => '' ),
 				)
 			),
 		),
@@ -257,11 +264,12 @@ function fachini_seed_templates() {
 			'chave'         => 'fachini_tpl_maquina',
 		),
 		array(
-			'titulo'     => 'Cabeçalho do site',
-			'tipo'       => 'header',
-			'layout'     => fachini_layout_cabecalho(),
-			'condicoes'  => array( 'include/general' ),
-			'chave'      => 'fachini_tpl_cabecalho',
+			'titulo'        => 'Cabeçalho do site',
+			'tipo'          => 'header',
+			'layout'        => fachini_layout_cabecalho(),
+			'layout_versao' => FACHINI_CABECALHO_LAYOUT,
+			'condicoes'     => array( 'include/general' ),
+			'chave'         => 'fachini_tpl_cabecalho',
 		),
 		array(
 			'titulo'     => 'Rodapé do site',
