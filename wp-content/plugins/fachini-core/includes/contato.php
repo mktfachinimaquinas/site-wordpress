@@ -25,14 +25,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 define( 'FACHINI_FAQ_MAX', 8 );
 
 /**
- * A página atual é a de contato ou a de confirmação?
+ * A página atual é montada por inteiro pelo plugin (contato, confirmação ou
+ * política de privacidade)?
  */
 function fachini_contato_pagina_propria() {
 	if ( ! is_page() ) {
 		return false;
 	}
 	$post = get_queried_object();
-	return ( $post instanceof WP_Post ) && ( has_shortcode( $post->post_content, 'fachini_contato' ) || has_shortcode( $post->post_content, 'fachini_confirmacao' ) );
+	if ( ! ( $post instanceof WP_Post ) ) {
+		return false;
+	}
+	foreach ( array( 'fachini_contato', 'fachini_confirmacao', 'fachini_politica' ) as $shortcode ) {
+		if ( has_shortcode( $post->post_content, $shortcode ) ) {
+			return true;
+		}
+	}
+	return false;
 }
 
 /**
