@@ -4,7 +4,7 @@ Theme URI:    https://github.com/mktfachinimaquinas/site-wordpress
 Description:  Tema filho do Hello Elementor para o site da Fachini Máquinas. Todo código personalizado (CSS, scripts, SMTP, scripts de marketing) mora aqui, para que o tema pai possa ser atualizado sem perder nada.
 Author:       Fachini Máquinas
 Template:     hello-elementor
-Version:      1.7.0
+Version:      1.8.0
 License:      GPL-2.0-or-later
 Text Domain:  hello-elementor-child
 */
@@ -160,7 +160,7 @@ Text Domain:  hello-elementor-child
    ------------------------------------------------------------------------- */
 
 /* O cabeçalho fica por cima da foto do hero, sem fundo próprio. */
-body:has(.fachini-home-hero) .elementor-location-header { position: absolute; top: 0; left: 0; right: 0; z-index: 20; }
+body:has(.fachini-home-hero) .elementor-location-header { position: fixed; top: var(--fachini-barra-admin, 0px); left: 0; right: 0; z-index: 30; }
 body:has(.fachini-home-hero) .elementor-location-header .elementor-section,
 body:has(.fachini-home-hero) .elementor-location-header .e-con { background: transparent !important; }
 
@@ -743,7 +743,7 @@ a.fachini-seta-link:hover::after { transform: translateX(4px) rotate(44.57deg) s
    contato) ele continua com o fundo navy do modelo, senão o menu branco
    sumiria no fundo branco.
    ------------------------------------------------------------------------- */
-body:has(.fachini-cat-banner) .elementor-location-header { position: absolute; top: 0; left: 0; right: 0; z-index: 20; }
+body:has(.fachini-cat-banner) .elementor-location-header { position: fixed; top: var(--fachini-barra-admin, 0px); left: 0; right: 0; z-index: 30; }
 body:has(.fachini-cat-banner) .elementor-location-header .elementor-section { background: transparent !important; }
 /* O véu fica num pseudo-elemento: blur no próprio cabeçalho prenderia o
    painel do celular (position: fixed) dentro dele. */
@@ -1107,12 +1107,11 @@ body.fachini-busca-aberta { overflow: hidden; }
 
 /* Barra das seções: o mesmo desenho da barra das categorias, centralizada e
    presa no alto da tela durante a rolagem. */
-.fachini-maquina-abas { position: sticky; top: 0; z-index: 15; }
-body.admin-bar .fachini-maquina-abas { top: 32px; }
+.fachini-maquina-abas { position: sticky; top: var(--fachini-topo, 0px); z-index: 15; }
 .fachini-maquina-abas .fachini-cat-nav__lista { justify-content: center; }
 
 /* Seções: linha fina em cima, título grande e o conteúdo. */
-.fachini-maquina-secao { max-width: 1200px; margin: 100px auto 0; scroll-margin-top: 80px; }
+.fachini-maquina-secao { max-width: 1200px; margin: 100px auto 0; scroll-margin-top: calc(var(--fachini-topo, 0px) + 80px); }
 .fachini-maquina .fachini-maquina-secao__titulo {
 	margin: 0 0 40px;
 	padding-top: 20px;
@@ -1224,7 +1223,6 @@ body.admin-bar .fachini-maquina-abas { top: 32px; }
 	.fachini-maquina-topo .fachini-maquina-topo__titulo { font-size: 28px; line-height: 34px; }
 	.fachini-maquina-topo__resumo { font-size: 15px; line-height: 22px; }
 	.fachini-maquina-abas .fachini-cat-nav__lista { justify-content: flex-start; }
-	body.admin-bar .fachini-maquina-abas { top: 0; }
 	.fachini-maquina-secao,
 	.fachini-maquina-secao--descricao { margin-top: 64px; }
 	.fachini-maquina .fachini-maquina-secao__titulo { margin-bottom: 28px; font-size: 26px; line-height: 32px; letter-spacing: 1px; }
@@ -1680,12 +1678,11 @@ body.fachini-pagina-larga .site-main { max-width: none; padding-inline: 0; }
 	letter-spacing: 3px;
 	text-transform: uppercase;
 }
-.fachini-politica-abas { position: sticky; top: 0; z-index: 15; }
-body.admin-bar .fachini-politica-abas { top: 32px; }
+.fachini-politica-abas { position: sticky; top: var(--fachini-topo, 0px); z-index: 15; }
 .fachini-politica-abas .fachini-cat-nav__lista { max-width: 1238px; overflow-x: auto; scrollbar-width: none; }
 .fachini-politica-abas .fachini-cat-nav__lista::-webkit-scrollbar { display: none; }
 .fachini-politica__texto { padding-top: 62px; font-size: 18px; line-height: 28px; letter-spacing: .3px; }
-.fachini-politica__secao { scroll-margin-top: 90px; }
+.fachini-politica__secao { scroll-margin-top: calc(var(--fachini-topo, 0px) + 80px); }
 .fachini-politica__secao + .fachini-politica__secao { margin-top: 44px; padding-top: 16px; border-top: 1px solid var(--fachini-onix); }
 .fachini-politica__texto p { margin: 0 0 28px; }
 .fachini-politica__secao > :last-child { margin-bottom: 0; }
@@ -1724,6 +1721,9 @@ body.admin-bar .fachini-politica-abas { top: 32px; }
 .fachini-politica__tabela td { padding: 6px 13px; border: 0; border-bottom: 1px solid var(--fachini-onix); background: none; text-align: left; vertical-align: top; }
 .fachini-politica__tabela th { padding-top: 8px; padding-bottom: 8px; border-top: 1px solid var(--fachini-onix); color: var(--fachini-onix); font-weight: 400; text-transform: uppercase; }
 .fachini-politica__tabela td { color: var(--fachini-cinza-medio); }
+/* O reset do tema pai pinta de cinza a linha de cima do cabeçalho
+   (table thead:first-child tr:first-child th); no layout ela é preta. */
+.fachini-politica .fachini-politica__tabela thead tr:first-child th { border-top: 1px solid var(--fachini-onix); }
 .fachini-politica__tabela tbody tr:nth-child(odd) td,
 .fachini-politica__tabela tbody tr:nth-child(even) td { background: none; }
 
@@ -1735,7 +1735,6 @@ body.admin-bar .fachini-politica-abas { top: 32px; }
 	.fachini-politica { padding-bottom: 96px; }
 	.fachini-politica__topo { padding-top: 40px; }
 	.fachini-politica .fachini-politica__h1 { margin: 28px 0 24px; font-size: 36px; line-height: 44px; letter-spacing: 1px; }
-	body.admin-bar .fachini-politica-abas { top: 0; }
 	.fachini-politica__texto { padding-top: 40px; font-size: 16px; line-height: 26px; letter-spacing: 0; }
 	.fachini-politica__texto p,
 	.fachini-politica__texto ul { margin-bottom: 22px; }
@@ -1868,4 +1867,74 @@ body.admin-bar .fachini-politica-abas { top: 32px; }
 	.fachini-cookies__acoes { gap: 8px; }
 	.fachini-cookies .fachini-cookies__botao { flex: 1 1 auto; padding: 0 14px; font-size: 14px; }
 	.fachini-cookies .fachini-cookies__botao--aceitar { flex-basis: 100%; }
+}
+
+/* -------------------------------------------------------------------------
+   Cabeçalho fixo no alto em todas as páginas, botão de voltar ao topo e
+   barra das subcategorias (pedidos do cliente em 22/10/2026). O script
+   assets/site.js mede o cabeçalho (--fachini-topo, para as barras de seção
+   grudarem logo abaixo dele) e marca a página rolada (body.fachini-rolou).
+   ------------------------------------------------------------------------- */
+.elementor-location-header { position: sticky; top: var(--fachini-barra-admin, 0px); z-index: 30; }
+
+/* Nas páginas com foto no topo o cabeçalho é transparente; depois de rolar,
+   ganha o fundo navy, senão o menu branco some sobre o conteúdo claro. */
+body:has(.fachini-cat-banner) .elementor-location-header .elementor-section,
+body:has(.fachini-home-hero) .elementor-location-header .elementor-section,
+body:has(.fachini-home-hero) .elementor-location-header .e-con { transition: background-color .25s ease; }
+body.fachini-rolou:has(.fachini-cat-banner) .elementor-location-header .elementor-section,
+body.fachini-rolou:has(.fachini-home-hero) .elementor-location-header .elementor-section,
+body.fachini-rolou:has(.fachini-home-hero) .elementor-location-header .e-con { background-color: var(--fachini-navy) !important; }
+body:has(.fachini-cat-banner) .elementor-location-header::after { transition: opacity .25s ease; }
+body.fachini-rolou:has(.fachini-cat-banner) .elementor-location-header::after { opacity: 0; }
+@media (min-width: 1025px) {
+	/* Rolada a página, o que fica atrás da caixa do menu MÁQUINAS pode ser
+	   claro: caixa navy, como nas páginas sem foto. */
+	body.fachini-rolou .elementor-location-header .elementor-nav-menu--main .elementor-nav-menu ul.sub-menu {
+		background: rgba(21, 39, 78, .94);
+		-webkit-backdrop-filter: none;
+		backdrop-filter: none;
+	}
+}
+
+/* Voltar ao topo. Seletores com o button e duas classes: o kit do Elementor
+   pinta todo botão de vermelho, com cantos arredondados. */
+button.fachini-topo-botao.fachini-topo-botao {
+	position: fixed;
+	right: 24px;
+	bottom: 24px;
+	z-index: 50;
+	width: 48px;
+	height: 48px;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	border-radius: 0;
+	background: var(--fachini-navy-escuro) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 12' fill='none' stroke='%23FBFBFB' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 10l8-8 8 8'/%3E%3C/svg%3E") no-repeat center / 18px 11px;
+	box-shadow: 0 6px 20px rgba(0, 0, 0, .2);
+	cursor: pointer;
+	opacity: 0;
+	visibility: hidden;
+	transform: translateY(8px);
+	transition: opacity .2s ease, transform .2s ease, visibility 0s linear .2s, background-color .2s ease;
+}
+button.fachini-topo-botao.fachini-topo-botao.is-visivel { opacity: 1; visibility: visible; transform: none; transition: opacity .2s ease, transform .2s ease, background-color .2s ease; }
+button.fachini-topo-botao.fachini-topo-botao:hover,
+button.fachini-topo-botao.fachini-topo-botao:focus { background-color: var(--fachini-vermelho); }
+button.fachini-topo-botao.fachini-topo-botao:focus-visible { outline: 2px solid var(--fachini-navy-escuro); outline-offset: 3px; }
+/* Com o menu do celular aberto, o botão não fica por cima dele. */
+body:has(.elementor-menu-toggle.elementor-active) .fachini-topo-botao { display: none; }
+
+/* Subcategorias, logo abaixo da barra principal: o mesmo desenho, menor. */
+.fachini-subcat-nav { border-top: 0; background: var(--fachini-cinza-nevoa); }
+/* Com muitas subcategorias (Perfiladeiras tem 8), quebra em duas linhas no
+   computador; no celular rola de lado, como a barra principal. */
+.fachini-subcat-nav .fachini-cat-nav__lista { flex-wrap: wrap; column-gap: 32px; row-gap: 0; }
+.fachini-subcat-nav .fachini-cat-nav__item { height: 48px; font-size: 14px; font-weight: 500; letter-spacing: .3px; }
+.fachini-subcat-nav .fachini-cat-nav__item.is-ativo::after { height: 2px; }
+
+@media (max-width: 767px) {
+	button.fachini-topo-botao.fachini-topo-botao { right: 16px; bottom: 16px; width: 44px; height: 44px; }
+	.fachini-subcat-nav .fachini-cat-nav__lista { flex-wrap: nowrap; gap: 24px; }
+	.fachini-subcat-nav .fachini-cat-nav__item { height: 44px; font-size: 13px; }
 }

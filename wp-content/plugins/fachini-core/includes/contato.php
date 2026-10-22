@@ -142,6 +142,7 @@ function fachini_contato_campos_faq() {
 				),
 			),
 			'position'    => 'normal',
+			'show_in_rest' => true,
 			'description' => 'Aparecem no fim da página, em "Ainda tem dúvidas?".',
 			'fields'      => $campos,
 		)

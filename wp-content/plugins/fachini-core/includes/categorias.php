@@ -202,6 +202,36 @@ function fachini_categoria_nav() {
 }
 
 /**
+ * Barra das subcategorias, logo abaixo da barra principal (pedido do Rodrigo,
+ * 22/10/2026): atalho para as subcategorias da categoria aberta. Numa
+ * subcategoria, mostra as irmãs dela, com a atual marcada.
+ */
+function fachini_subcategoria_nav() {
+	$atual = fachini_categoria_atual();
+	if ( ! $atual ) {
+		return '';
+	}
+
+	$pai    = $atual;
+	$filhos = fachini_subcategorias( $atual );
+	if ( ! $filhos && $atual->parent ) {
+		$pai    = get_term( $atual->parent, 'categoria_maquina' );
+		$filhos = ( $pai instanceof WP_Term ) ? fachini_subcategorias( $pai ) : array();
+	}
+	if ( ! $filhos ) {
+		return '';
+	}
+
+	$itens = '';
+	foreach ( $filhos as $filho ) {
+		$ativo  = ( $filho->term_id === $atual->term_id );
+		$itens .= '<li><a class="fachini-cat-nav__item' . ( $ativo ? ' is-ativo' : '' ) . '" href="' . esc_url( get_term_link( $filho ) ) . '"' . ( $ativo ? ' aria-current="page"' : '' ) . '>' . esc_html( $filho->name ) . '</a></li>';
+	}
+
+	return '<nav class="fachini-cat-nav fachini-subcat-nav" aria-label="' . esc_attr( 'Subcategorias de ' . $pai->name ) . '"><ul class="fachini-cat-nav__lista">' . $itens . '</ul></nav>';
+}
+
+/**
  * Ordenação da lista de máquinas. Muda a ordem pela própria URL (?ordem=),
  * então funciona com o cache da página e volta para a página 1.
  */
@@ -346,6 +376,7 @@ function fachini_sc_listagem() {
 	$html  = '<div class="fachini-listagem">';
 	$html .= fachini_categoria_banner();
 	$html .= fachini_categoria_nav();
+	$html .= fachini_subcategoria_nav();
 	$html .= '<div class="fachini-cat-topo">' . fachini_sc_breadcrumb() . ( $filhos ? '' : fachini_ordenacao() ) . '</div>';
 	$html .= $filhos ? fachini_faixas( $filhos, $rotulo ) : fachini_lista_maquinas();
 	$html .= '</div>';

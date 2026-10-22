@@ -39,6 +39,20 @@ function fachini_child_busca_script() {
 add_action( 'wp_enqueue_scripts', 'fachini_child_busca_script', 20 );
 
 /**
+ * Cabeçalho fixo, botão de voltar ao topo e abas no celular. Todas as páginas.
+ */
+function fachini_child_site_script() {
+	wp_enqueue_script(
+		'fachini-site',
+		get_stylesheet_directory_uri() . '/assets/site.js',
+		array(),
+		wp_get_theme()->get( 'Version' ),
+		array( 'in_footer' => true, 'strategy' => 'defer' )
+	);
+}
+add_action( 'wp_enqueue_scripts', 'fachini_child_site_script', 20 );
+
+/**
  * Galeria, barra das seções e vídeo da página da máquina. Só nessa página.
  */
 function fachini_child_maquina_script() {
