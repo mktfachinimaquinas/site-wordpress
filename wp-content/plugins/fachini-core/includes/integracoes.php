@@ -2,10 +2,14 @@
 /**
  * Integrações de marketing (etapa 3), em código e sem plugin, como combinado:
  *
- * - Google Tag Manager: GA4, Google Ads e Pixel da Meta são configurados
- *   dentro do GTM. O site só carrega o GTM, e só depois de a pessoa aceitar
- *   cookies de análise ou de marketing no banner (consentimento.php). Antes
- *   disso, nenhuma tag dispara.
+ * - GA4, Google Ads e Pixel da Meta: entram direto pelo ID de cada um, sem
+ *   depender de acesso ao GTM. GA4 só depois de a pessoa aceitar cookies de
+ *   análise; Google Ads e Pixel só depois de aceitar marketing
+ *   (consentimento.php). Antes disso, nenhuma tag dispara. Cada pedido de
+ *   orçamento vira um "lead" nas três; cada clique no WhatsApp também é medido.
+ * - Google Tag Manager (opcional): para quem quiser gerenciar tags por lá.
+ *   Se o GA4 estiver dentro do GTM, o campo do GA4 fica em branco, senão as
+ *   visitas contam em dobro.
  * - RD Station Marketing: o script de rastreamento do RD (que também traz o
  *   RD Conversas) entra direto pelo site, não pelo GTM, também só com
  *   consentimento. E cada pedido de orçamento vai para o RD pela API de
@@ -29,6 +33,26 @@ function fachini_gtm_id() {
 	return preg_match( '/^GTM-[A-Z0-9]{4,12}$/', $id ) ? $id : '';
 }
 
+function fachini_ga4_id() {
+	$id = strtoupper( trim( (string) get_option( 'fachini_ga4_id', '' ) ) );
+	return preg_match( '/^G-[A-Z0-9]{4,15}$/', $id ) ? $id : '';
+}
+
+function fachini_ads_id() {
+	$id = strtoupper( trim( (string) get_option( 'fachini_ads_id', '' ) ) );
+	return preg_match( '/^AW-[0-9]{6,15}$/', $id ) ? $id : '';
+}
+
+// Rótulo da ação de conversão "pedido de orçamento" criada no Google Ads.
+function fachini_ads_rotulo() {
+	return preg_replace( '/[^A-Za-z0-9_-]/', '', (string) get_option( 'fachini_ads_rotulo', '' ) );
+}
+
+function fachini_pixel_id() {
+	$id = trim( (string) get_option( 'fachini_pixel_id', '' ) );
+	return preg_match( '/^[0-9]{6,20}$/', $id ) ? $id : '';
+}
+
 function fachini_rd_script() {
 	$url = trim( (string) get_option( 'fachini_rd_script', '' ) );
 	return ( 0 === strpos( $url, 'https://' ) ) ? esc_url_raw( $url ) : '';
@@ -41,6 +65,25 @@ function fachini_rd_token() {
 /* ---------------------------------------------------------------------------
    Site: carregamento das tags, depois do consentimento.
    ------------------------------------------------------------------------ */
+
+/**
+ * Na confirmação de um pedido válido, as tags registram o lead. Vai só o
+ * protocolo e a categoria, nenhum dado da pessoa.
+ */
+function fachini_rastreamento_lead() {
+	if ( ! function_exists( 'fachini_confirmacao_e_esta' ) || ! fachini_confirmacao_e_esta() ) {
+		return null;
+	}
+	$pedido = fachini_pedido_da_url();
+	if ( ! $pedido ) {
+		return null;
+	}
+	$d = get_post_meta( $pedido->ID, 'fachini_pedido_dados', true );
+	return array(
+		'id'        => (string) get_post_meta( $pedido->ID, 'fachini_pedido_protocolo', true ),
+		'categoria' => ( is_array( $d ) && ! empty( $d['categoria_nome'] ) ) ? (string) $d['categoria_nome'] : '',
+	);
+}
 
 function fachini_rastreamento_script() {
 	if ( isset( $_GET['elementor-preview'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
@@ -60,8 +103,13 @@ function fachini_rastreamento_script() {
 		'fachini-rastreamento',
 		'window.fachiniRastreamento = ' . wp_json_encode(
 			array(
-				'gtm' => fachini_gtm_id(),
-				'rd'  => fachini_rd_script(),
+				'gtm'       => fachini_gtm_id(),
+				'rd'        => fachini_rd_script(),
+				'ga4'       => fachini_ga4_id(),
+				'ads'       => fachini_ads_id(),
+				'adsRotulo' => fachini_ads_rotulo(),
+				'pixel'     => fachini_pixel_id(),
+				'lead'      => fachini_rastreamento_lead(),
 			)
 		) . ';',
 		'before'
@@ -190,6 +238,58 @@ function fachini_integracoes_ajustes() {
 	);
 	register_setting(
 		'fachini_integracoes',
+		'fachini_ga4_id',
+		array(
+			'type'              => 'string',
+			'default'           => '',
+			'sanitize_callback' => function ( $valor ) {
+				$valor = strtoupper( trim( (string) $valor ) );
+				return preg_match( '/^G-[A-Z0-9]{4,15}$/', $valor ) ? $valor : '';
+			},
+		)
+	);
+	register_setting(
+		'fachini_integracoes',
+		'fachini_ads_id',
+		array(
+			'type'              => 'string',
+			'default'           => '',
+			'sanitize_callback' => function ( $valor ) {
+				$valor = strtoupper( trim( (string) $valor ) );
+				return preg_match( '/^AW-[0-9]{6,15}$/', $valor ) ? $valor : '';
+			},
+		)
+	);
+	register_setting(
+		'fachini_integracoes',
+		'fachini_ads_rotulo',
+		array(
+			'type'              => 'string',
+			'default'           => '',
+			'sanitize_callback' => function ( $valor ) {
+				// Aceita o rótulo sozinho ou o "AW-123/rotulo" que o Google Ads mostra.
+				$valor = trim( (string) $valor );
+				if ( false !== strpos( $valor, '/' ) ) {
+					$valor = substr( $valor, strrpos( $valor, '/' ) + 1 );
+				}
+				return preg_replace( '/[^A-Za-z0-9_-]/', '', $valor );
+			},
+		)
+	);
+	register_setting(
+		'fachini_integracoes',
+		'fachini_pixel_id',
+		array(
+			'type'              => 'string',
+			'default'           => '',
+			'sanitize_callback' => function ( $valor ) {
+				$valor = trim( (string) $valor );
+				return preg_match( '/^[0-9]{6,20}$/', $valor ) ? $valor : '';
+			},
+		)
+	);
+	register_setting(
+		'fachini_integracoes',
 		'fachini_rd_script',
 		array(
 			'type'              => 'string',
@@ -230,10 +330,33 @@ function fachini_integracoes_tela() {
 			<?php settings_fields( 'fachini_integracoes' ); ?>
 			<table class="form-table" role="presentation">
 				<tr>
+					<th scope="row"><label for="fachini_ga4_id">Google Analytics 4</label></th>
+					<td>
+						<input name="fachini_ga4_id" id="fachini_ga4_id" type="text" class="regular-text" placeholder="G-XXXXXXXXXX" value="<?php echo esc_attr( (string) get_option( 'fachini_ga4_id', '' ) ); ?>">
+						<p class="description">ID da métrica. Mede visitas, cliques no WhatsApp (whatsapp_click) e pedidos de orçamento (generate_lead). Só com consentimento de análise.</p>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row"><label for="fachini_ads_id">Google Ads</label></th>
+					<td>
+						<input name="fachini_ads_id" id="fachini_ads_id" type="text" class="regular-text" placeholder="AW-XXXXXXXXXX" value="<?php echo esc_attr( (string) get_option( 'fachini_ads_id', '' ) ); ?>">
+						<label for="fachini_ads_rotulo" class="screen-reader-text">Rótulo da conversão</label>
+						<input name="fachini_ads_rotulo" id="fachini_ads_rotulo" type="text" class="regular-text" placeholder="Rótulo da conversão (opcional)" value="<?php echo esc_attr( (string) get_option( 'fachini_ads_rotulo', '' ) ); ?>">
+						<p class="description">Com o rótulo da ação de conversão criada no Google Ads, cada pedido de orçamento conta como conversão. Só com consentimento de marketing.</p>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row"><label for="fachini_pixel_id">Pixel da Meta</label></th>
+					<td>
+						<input name="fachini_pixel_id" id="fachini_pixel_id" type="text" class="regular-text" placeholder="Número do pixel" value="<?php echo esc_attr( (string) get_option( 'fachini_pixel_id', '' ) ); ?>">
+						<p class="description">Envia visitas (PageView), cliques no WhatsApp (Contact) e pedidos de orçamento (Lead). Só com consentimento de marketing.</p>
+					</td>
+				</tr>
+				<tr>
 					<th scope="row"><label for="fachini_gtm_id">Google Tag Manager</label></th>
 					<td>
 						<input name="fachini_gtm_id" id="fachini_gtm_id" type="text" class="regular-text" placeholder="GTM-XXXXXXX" value="<?php echo esc_attr( (string) get_option( 'fachini_gtm_id', '' ) ); ?>">
-						<p class="description">GA4, Google Ads e Pixel da Meta são configurados dentro do GTM.</p>
+						<p class="description">Opcional. Se o GA4 já estiver dentro do GTM, deixe o campo do GA4 em branco para as visitas não contarem em dobro. O site envia ao dataLayer os eventos fachini_whatsapp e fachini_pedido.</p>
 					</td>
 				</tr>
 				<tr>
