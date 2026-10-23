@@ -268,6 +268,10 @@ function fachini_ordenacao() {
 function fachini_faixas( $termos, $rotulo ) {
 	$html = '<div class="fachini-faixas">';
 
+	// No celular a primeira faixa é o maior elemento da tela: ela vem primeiro.
+	// As de baixo só carregam quando a pessoa chega perto delas.
+	$primeira = true;
+
 	foreach ( $termos as $termo ) {
 		$total     = fachini_total_maquinas( $termo );
 		$foto      = fachini_foto_categoria( $termo );
@@ -282,7 +286,9 @@ function fachini_faixas( $termos, $rotulo ) {
 
 		$html .= '<a class="fachini-faixa__corpo" href="' . esc_url( get_term_link( $termo ) ) . '">';
 		if ( $foto ) {
-			$html .= wp_get_attachment_image( $foto, 'full', false, array( 'class' => 'fachini-faixa__foto', 'alt' => '', 'sizes' => '100vw' ) );
+			$carga = $primeira ? array( 'loading' => 'eager', 'fetchpriority' => 'high' ) : array( 'loading' => 'lazy', 'fetchpriority' => 'auto' );
+			$html .= wp_get_attachment_image( $foto, 'full', false, array( 'class' => 'fachini-faixa__foto', 'alt' => '', 'sizes' => '100vw' ) + $carga );
+			$primeira = false;
 		}
 		$html .= '<div class="fachini-faixa__texto">';
 		$html .= '<h2 class="fachini-faixa__titulo">' . esc_html( $termo->name ) . '</h2>';

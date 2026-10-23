@@ -70,28 +70,87 @@ function fachini_child_maquina_script() {
 add_action( 'wp_enqueue_scripts', 'fachini_child_maquina_script', 20 );
 
 /**
- * Carrega as fontes do site.
+ * Carrega as fontes do site, do próprio servidor (assets/fontes/).
  *
  * Decisão da Débora em 02/10/2026: a Geist é usada exclusivamente no hero.
  * No Figma o estilo do hero (DISPLAY/HERO) é a Geist Mono, então é ela que
  * carregamos. Todo o resto do site usa Archivo.
  *
- * Carregamos só os pesos realmente usados. Cada peso a mais é um arquivo a
- * mais para o visitante baixar, e isso pesa na nota de performance.
+ * Desde 22/10/2026 os arquivos ficam no tema, e não no Google Fonts: a
+ * página não espera mais a conexão com outro servidor para mostrar o texto,
+ * e o IP do visitante não vai para o Google sem consentimento. São os mesmos
+ * arquivos que o Google entregava (só o alfabeto latino, que cobre o
+ * português), com licença OFL (assets/fontes/OFL-*.txt).
+ *
+ * Archivo: um arquivo variável com todos os pesos (400 texto, 500 rótulos,
+ * 600 destaques e botões, 700 títulos). Geist Mono 700: título do hero.
+ * Inter 700: números da Home.
  */
 function fachini_child_fontes() {
-	// Uma única requisição, só com os pesos realmente usados no projeto.
-	// Archivo: 400 texto, 500 rótulos, 600 destaques e botões, 700 títulos.
-	// Geist Mono: 700, exclusiva do título do hero.
-	// Inter: 700, só nos números da Home (é a fonte do componente no Figma).
-	wp_enqueue_style(
-		'fachini-fontes',
-		'https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Geist+Mono:wght@700&family=Inter:wght@700&display=swap',
-		array(),
-		null
-	);
+	$base  = get_stylesheet_directory_uri() . '/assets/fontes/';
+	$faixa = 'U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD';
+	$fonte = function ( $familia, $peso, $arquivo ) use ( $base, $faixa ) {
+		return "@font-face{font-family:'" . $familia . "';font-style:normal;font-weight:" . $peso . ';font-display:swap;src:url(' . esc_url( $base . $arquivo ) . ") format('woff2');unicode-range:" . $faixa . ";}\n";
+	};
+
+	// A Archivo está em quase todo texto: o navegador já começa a baixar.
+	echo '<link rel="preload" href="' . esc_url( $base . 'archivo-latin.woff2' ) . '" as="font" type="font/woff2" crossorigin>' . "\n";
+	echo "<style id=\"fachini-fontes\">\n"
+		. $fonte( 'Archivo', '400 700', 'archivo-latin.woff2' ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- montado acima com esc_url.
+		. $fonte( 'Geist Mono', '700', 'geist-mono-700-latin.woff2' ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		. $fonte( 'Inter', '700', 'inter-700-latin.woff2' ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		. "</style>\n";
 }
-add_action( 'wp_enqueue_scripts', 'fachini_child_fontes', 5 );
+add_action( 'wp_head', 'fachini_child_fontes', 3 );
+
+/**
+ * Home: a foto do hero é fundo de um container do Elementor, e o navegador só
+ * a encontra depois de ler todo o CSS. Ela é o maior elemento da tela, então
+ * avisamos logo no começo do <head> para baixá-la primeiro. O endereço sai do
+ * próprio Elementor (container com a classe fachini-home-hero): trocar a foto
+ * no editor não exige mexer aqui.
+ */
+function fachini_child_foto_hero( $elementos ) {
+	foreach ( (array) $elementos as $elemento ) {
+		$ajustes = isset( $elemento['settings'] ) ? $elemento['settings'] : array();
+		$classes = ( isset( $ajustes['css_classes'] ) ? $ajustes['css_classes'] : '' ) . ' ' . ( isset( $ajustes['_css_classes'] ) ? $ajustes['_css_classes'] : '' );
+		if ( false !== strpos( $classes, 'fachini-home-hero' ) && ! empty( $ajustes['background_image']['url'] ) ) {
+			return $ajustes['background_image']['url'];
+		}
+		if ( ! empty( $elemento['elements'] ) ) {
+			$achou = fachini_child_foto_hero( $elemento['elements'] );
+			if ( $achou ) {
+				return $achou;
+			}
+		}
+	}
+	return '';
+}
+
+function fachini_child_preload_hero() {
+	if ( ! is_front_page() ) {
+		return;
+	}
+	$dados = json_decode( (string) get_post_meta( get_queried_object_id(), '_elementor_data', true ), true );
+	$foto  = fachini_child_foto_hero( $dados );
+	if ( $foto ) {
+		echo '<link rel="preload" as="image" href="' . esc_url( $foto ) . '" fetchpriority="high">' . "\n";
+	}
+}
+add_action( 'wp_head', 'fachini_child_preload_hero', 2 );
+
+/**
+ * Home: como a foto do hero é a primeira a carregar, nenhuma foto do conteúdo
+ * (as das abas, mais abaixo) recebe prioridade alta, que o WordPress daria à
+ * primeira imagem da página.
+ */
+function fachini_child_sem_prioridade_na_home( $atributos ) {
+	if ( is_front_page() && isset( $atributos['fetchpriority'] ) && 'high' === $atributos['fetchpriority'] ) {
+		unset( $atributos['fetchpriority'] );
+	}
+	return $atributos;
+}
+add_filter( 'wp_get_loading_optimization_attributes', 'fachini_child_sem_prioridade_na_home' );
 
 /**
  * Impede o Elementor de carregar as fontes por conta própria.
@@ -101,18 +160,6 @@ add_action( 'wp_enqueue_scripts', 'fachini_child_fontes', 5 );
  * usado, aqui apenas desligamos a carga automática dele.
  */
 add_filter( 'elementor/frontend/print_google_fonts', '__return_false' );
-
-/**
- * Abre a conexão com o servidor de fontes mais cedo, para o texto aparecer antes.
- */
-function fachini_child_preconnect_fontes( $urls, $relation_type ) {
-	if ( 'preconnect' === $relation_type ) {
-		$urls[] = array( 'href' => 'https://fonts.googleapis.com' );
-		$urls[] = array( 'href' => 'https://fonts.gstatic.com', 'crossorigin' => 'anonymous' );
-	}
-	return $urls;
-}
-add_filter( 'wp_resource_hints', 'fachini_child_preconnect_fontes', 10, 2 );
 
 /**
  * Limpeza de cabeçalho: remove o que não é usado e só adiciona peso.
