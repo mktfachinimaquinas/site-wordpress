@@ -96,6 +96,15 @@ function fachini_confirmacao_robots_rank_math( $robots ) {
 }
 add_filter( 'rank_math/frontend/robots', 'fachini_confirmacao_robots_rank_math' );
 
+// O sitemap do Rank Math não passa pelo filtro acima: a confirmação sai dele aqui.
+function fachini_confirmacao_fora_do_sitemap( $url, $tipo, $objeto ) {
+	if ( 'post' === $tipo && isset( $objeto->post_content ) && has_shortcode( $objeto->post_content, 'fachini_confirmacao' ) ) {
+		return false;
+	}
+	return $url;
+}
+add_filter( 'rank_math/sitemap/entry', 'fachini_confirmacao_fora_do_sitemap', 10, 3 );
+
 /**
  * Perguntas frequentes: campos na própria página Contato (ACF), preenchidos
  * por nós com o texto que a Fachini enviar. Pergunta sem resposta não aparece;

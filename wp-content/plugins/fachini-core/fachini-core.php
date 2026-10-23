@@ -3,7 +3,7 @@
  * Plugin Name:       Fachini Core
  * Plugin URI:        https://github.com/mktfachinimaquinas/site-wordpress
  * Description:       Estrutura de conteúdo do site da Fachini Máquinas: tipo de conteúdo "Máquinas", taxonomias, campos, endereços, kit de estilos e modelos de página. Independente do tema, de forma que trocar o visual não apaga nenhum cadastro.
- * Version:           1.15.0
+ * Version:           1.15.2
  * Requires at least: 6.5
  * Requires PHP:      8.0
  * Author:            Fachini Máquinas
@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'FACHINI_CORE_VERSION', '1.15.0' );
+define( 'FACHINI_CORE_VERSION', '1.15.2' );
 define( 'FACHINI_CORE_PATH', plugin_dir_path( __FILE__ ) );
 
 /**
@@ -51,6 +51,8 @@ require_once FACHINI_CORE_PATH . 'includes/contato.php';
 require_once FACHINI_CORE_PATH . 'includes/politica.php';
 require_once FACHINI_CORE_PATH . 'includes/consentimento.php';
 require_once FACHINI_CORE_PATH . 'includes/redirecionamentos.php';
+require_once FACHINI_CORE_PATH . 'includes/autores.php';
+require_once FACHINI_CORE_PATH . 'includes/seo.php';
 require_once FACHINI_CORE_PATH . 'includes/smtp.php';
 require_once FACHINI_CORE_PATH . 'includes/integracoes.php';
 require_once FACHINI_CORE_PATH . 'includes/seed-templates.php';
