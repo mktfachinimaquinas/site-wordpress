@@ -301,11 +301,36 @@ function fachini_pedido_linhas( $d ) {
 }
 
 /**
+ * A origem da visita em linhas "rótulo: valor".
+ */
+function fachini_pedido_linhas_origem( $origem ) {
+	$rotulos = array(
+		'utm_source'   => 'Origem (utm_source)',
+		'utm_medium'   => 'Mídia (utm_medium)',
+		'utm_campaign' => 'Campanha (utm_campaign)',
+		'utm_term'     => 'Termo (utm_term)',
+		'utm_content'  => 'Conteúdo (utm_content)',
+		'gclid'        => 'Google Ads (gclid)',
+		'fbclid'       => 'Meta (fbclid)',
+		'entrada'      => 'Página de entrada',
+		'referencia'   => 'Veio de',
+		'rd_src'       => 'Origem no RD Station',
+	);
+	$linhas = array();
+	foreach ( $rotulos as $chave => $rotulo ) {
+		if ( is_array( $origem ) && ! empty( $origem[ $chave ] ) ) {
+			$linhas[ $rotulo ] = $origem[ $chave ];
+		}
+	}
+	return $linhas;
+}
+
+/**
  * Manda o pedido por e-mail, se houver e-mail configurado.
  *
  * @return bool|null Null quando não há para quem mandar.
  */
-function fachini_pedido_enviar_email( $id, $d, $protocolo ) {
+function fachini_pedido_enviar_email( $id, $d, $protocolo, $origem = array() ) {
 	$para = fachini_pedidos_emails();
 	if ( ! $para ) {
 		return null;
@@ -314,6 +339,13 @@ function fachini_pedido_enviar_email( $id, $d, $protocolo ) {
 	$corpo = "Novo pedido de orçamento recebido pelo site.\n\nProtocolo: #" . $protocolo . "\n";
 	foreach ( fachini_pedido_linhas( $d ) as $rotulo => $valor ) {
 		$corpo .= $rotulo . ': ' . $valor . "\n";
+	}
+	$linhas_origem = fachini_pedido_linhas_origem( $origem );
+	if ( $linhas_origem ) {
+		$corpo .= "\nOrigem da visita\n";
+		foreach ( $linhas_origem as $rotulo => $valor ) {
+			$corpo .= $rotulo . ': ' . $valor . "\n";
+		}
 	}
 	$corpo .= "\nVer no painel: " . admin_url( 'post.php?post=' . (int) $id . '&action=edit' ) . "\n";
 
@@ -411,8 +443,26 @@ function fachini_pedido_receber( WP_REST_Request $pedido ) {
 		)
 	);
 
-	$email = fachini_pedido_enviar_email( $id, $d, $protocolo );
+	// Origem da visita (UTMs, gclid, fbclid, página de entrada, site de onde
+	// veio e o cookie de origem do RD), enviada pelo formulário. Só as chaves
+	// conhecidas, limpas.
+	$origem = array();
+	$bruto  = isset( $p['origem'] ) && is_scalar( $p['origem'] ) ? json_decode( (string) $p['origem'], true ) : null;
+	if ( is_array( $bruto ) ) {
+		foreach ( array( 'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'fbclid', 'entrada', 'referencia', 'rd_src' ) as $chave_origem ) {
+			if ( isset( $bruto[ $chave_origem ] ) && is_scalar( $bruto[ $chave_origem ] ) && '' !== (string) $bruto[ $chave_origem ] ) {
+				$origem[ $chave_origem ] = mb_substr( sanitize_text_field( (string) $bruto[ $chave_origem ] ), 0, 300 );
+			}
+		}
+	}
+	update_post_meta( $id, 'fachini_pedido_origem', $origem );
+
+	$email = fachini_pedido_enviar_email( $id, $d, $protocolo, $origem );
 	update_post_meta( $id, 'fachini_pedido_email', null === $email ? 'sem e-mail configurado' : ( $email ? 'enviado' : 'falhou' ) );
+
+	// Integrações (RD Station, em includes/integracoes.php). O pedido já está
+	// salvo: uma falha lá não perde o pedido.
+	do_action( 'fachini_pedido_recebido', $id, $d, $protocolo, $origem );
 
 	return new WP_REST_Response(
 		array(
@@ -553,10 +603,15 @@ function fachini_pedido_caixa_dados( $post ) {
 	if ( ! is_array( $d ) ) {
 		return;
 	}
+	$origem = fachini_pedido_linhas_origem( get_post_meta( $post->ID, 'fachini_pedido_origem', true ) );
 	fachini_pedido_tabela(
 		array( 'Protocolo' => '#' . get_post_meta( $post->ID, 'fachini_pedido_protocolo', true ) )
 		+ fachini_pedido_linhas( $d )
-		+ array( 'E-mail do pedido' => get_post_meta( $post->ID, 'fachini_pedido_email', true ) )
+		+ ( $origem ? $origem : array( 'Origem da visita' => 'acesso direto ou sem parâmetros de campanha' ) )
+		+ array(
+			'E-mail do pedido' => get_post_meta( $post->ID, 'fachini_pedido_email', true ),
+			'RD Station'       => get_post_meta( $post->ID, 'fachini_pedido_rd', true ),
+		)
 	);
 }
 

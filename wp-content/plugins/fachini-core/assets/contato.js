@@ -68,6 +68,22 @@
 		return '(' + d.slice(0, 2) + ') ' + d.slice(2, 7) + '-' + d.slice(7);
 	}
 
+	/* Origem da visita, guardada na chegada por assets/rastreamento.js, e o
+	   cookie de origem do RD Station, quando o script dele estiver ativo. */
+	function origemDaVisita() {
+		var origem = {};
+		try {
+			origem = JSON.parse(window.sessionStorage.getItem('fachini-origem') || '{}') || {};
+		} catch (e) {
+			origem = {};
+		}
+		var rd = document.cookie.match(/(?:^|; )__trf\.src=([^;]*)/);
+		if (rd) {
+			origem.rd_src = decodeURIComponent(rd[1]).slice(0, 300);
+		}
+		return origem;
+	}
+
 	function iniciarFormulario(form) {
 		var inicio = Date.now();
 		var categorias = [];
@@ -243,7 +259,10 @@
 			campos.referencia.value = document.referrer;
 			enviando(true);
 
-			fetch(form.getAttribute('data-endpoint'), { method: 'POST', body: new FormData(form), credentials: 'omit' })
+			var dados = new FormData(form);
+			dados.append('origem', JSON.stringify(origemDaVisita()));
+
+			fetch(form.getAttribute('data-endpoint'), { method: 'POST', body: dados, credentials: 'omit' })
 				.then(function (resposta) {
 					return resposta.json().catch(function () { return {}; });
 				})

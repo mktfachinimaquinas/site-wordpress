@@ -48,6 +48,8 @@
 		var k = escolha.marketing ? 'granted' : 'denied';
 		gtag('consent', 'update', { analytics_storage: a, ad_storage: k, ad_user_data: k, ad_personalization: k });
 		window.dataLayer.push({ event: 'fachini_consentimento', consentimento_analise: a, consentimento_marketing: k });
+		/* Avisa o carregador das tags (assets/rastreamento.js). */
+		document.dispatchEvent(new CustomEvent('fachini-consentimento', { detail: escolha }));
 	}
 
 	function mostrarOpcoes(sim) {
