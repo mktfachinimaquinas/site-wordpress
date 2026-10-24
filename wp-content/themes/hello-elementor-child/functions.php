@@ -168,6 +168,9 @@ remove_action( 'wp_head', 'wp_generator' );                 // esconde a versão
 remove_action( 'wp_head', 'wlwmanifest_link' );             // Windows Live Writer, descontinuado
 remove_action( 'wp_head', 'rsd_link' );                     // Really Simple Discovery, não usado
 
+// A descrição para o Google vem do Rank Math; a do Hello repetia a tag nas máquinas.
+add_filter( 'hello_elementor_description_meta_tag', '__return_false' );
+
 /**
  * Desativa a API de comentários do site inteiro.
  * O site é institucional e não tem blog aberto a comentários. Comentário
