@@ -4,7 +4,7 @@ Theme URI:    https://github.com/mktfachinimaquinas/site-wordpress
 Description:  Tema filho do Hello Elementor para o site da Fachini Máquinas. Todo código personalizado (CSS, scripts, SMTP, scripts de marketing) mora aqui, para que o tema pai possa ser atualizado sem perder nada.
 Author:       Fachini Máquinas
 Template:     hello-elementor
-Version:      1.9.1
+Version:      1.9.2
 License:      GPL-2.0-or-later
 Text Domain:  hello-elementor-child
 */
@@ -1924,6 +1924,9 @@ button.fachini-topo-botao.fachini-topo-botao:focus { background-color: var(--fac
 button.fachini-topo-botao.fachini-topo-botao:focus-visible { outline: 2px solid var(--fachini-navy-escuro); outline-offset: 3px; }
 /* Com o menu do celular aberto, o botão não fica por cima dele. */
 body:has(.elementor-menu-toggle.elementor-active) .fachini-topo-botao { display: none; }
+/* O botão de WhatsApp do RD (vem com o código de monitoramento, depois do
+   consentimento) ocupa o mesmo canto: o voltar ao topo sobe para cima dele. */
+body:has(.rdstation-popup-position-bottom_right.floating-button) button.fachini-topo-botao.fachini-topo-botao { bottom: 104px; }
 
 /* Subcategorias, logo abaixo da barra principal: o mesmo desenho, menor. */
 .fachini-subcat-nav { border-top: 0; background: var(--fachini-cinza-nevoa); }
@@ -1935,6 +1938,7 @@ body:has(.elementor-menu-toggle.elementor-active) .fachini-topo-botao { display:
 
 @media (max-width: 767px) {
 	button.fachini-topo-botao.fachini-topo-botao { right: 16px; bottom: 16px; width: 44px; height: 44px; }
+	body:has(.rdstation-popup-position-bottom_right.floating-button) button.fachini-topo-botao.fachini-topo-botao { right: 38px; bottom: 96px; }
 	.fachini-subcat-nav .fachini-cat-nav__lista { flex-wrap: nowrap; gap: 24px; }
 	.fachini-subcat-nav .fachini-cat-nav__item { height: 44px; font-size: 13px; }
 }

@@ -145,7 +145,10 @@ function fachini_total_maquinas( WP_Term $termo ) {
 function fachini_seta_link( $texto, $url, $variante, $tag = 'a' ) {
 	$classe = 'fachini-seta-link fachini-seta-link--' . $variante;
 	if ( 'a' === $tag ) {
-		return '<a class="' . esc_attr( $classe ) . '" href="' . esc_url( $url ) . '"><span>' . esc_html( $texto ) . '</span></a>';
+		// Link para fora do site (ex.: canal do YouTube) abre em outra aba, sem fechar o site.
+		$host  = wp_parse_url( $url, PHP_URL_HOST );
+		$extra = ( $host && wp_parse_url( home_url(), PHP_URL_HOST ) !== $host ) ? ' target="_blank" rel="noopener"' : '';
+		return '<a class="' . esc_attr( $classe ) . '" href="' . esc_url( $url ) . '"' . $extra . '><span>' . esc_html( $texto ) . '</span></a>';
 	}
 	return '<span class="' . esc_attr( $classe ) . '"><span>' . esc_html( $texto ) . '</span></span>';
 }
