@@ -37,7 +37,7 @@ function fachini_sc_rodape() {
 	$redes = array(
 		array( 'https://www.instagram.com/fachinimaquinasoficial/', '@fachinimaquinasoficial', 'Instagram' ),
 		array( 'https://www.facebook.com/fachinimaquinasoficial/', 'Fachini Máquinas Oficial', 'Facebook' ),
-		array( 'https://www.linkedin.com/company/grupofachini/', 'Grupo Fachini', 'LinkedIn' ),
+		array( 'https://www.linkedin.com/company/135168453/', 'Fachini Máquinas', 'LinkedIn' ),
 		array( 'https://www.youtube.com/@fachinimaquinasoficial', 'Fachini Máquinas', 'YouTube' ),
 	);
 
