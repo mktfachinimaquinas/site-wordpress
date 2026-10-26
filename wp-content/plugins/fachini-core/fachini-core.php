@@ -3,7 +3,7 @@
  * Plugin Name:       Fachini Core
  * Plugin URI:        https://github.com/mktfachinimaquinas/site-wordpress
  * Description:       Estrutura de conteúdo do site da Fachini Máquinas: tipo de conteúdo "Máquinas", taxonomias, campos, endereços, kit de estilos e modelos de página. Independente do tema, de forma que trocar o visual não apaga nenhum cadastro.
- * Version:           1.16.2
+ * Version:           1.16.3
  * Requires at least: 6.5
  * Requires PHP:      8.0
  * Author:            Fachini Máquinas
@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'FACHINI_CORE_VERSION', '1.16.2' );
+define( 'FACHINI_CORE_VERSION', '1.16.3' );
 define( 'FACHINI_CORE_PATH', plugin_dir_path( __FILE__ ) );
 
 /**
@@ -67,17 +67,35 @@ function fachini_core_activate() {
 	fachini_core_register_taxonomies();
 	fachini_core_migrar_papeis();
 	flush_rewrite_rules();
+	fachini_core_regravar_regras_no_site();
 }
 register_activation_hook( __FILE__, 'fachini_core_activate' );
 
 /**
- * Na desativação, limpa as regras de URL.
+ * Na desativação, limpa as regras de URL; o WordPress refaz na próxima visita.
  * Os cadastros de máquina NÃO são apagados: eles continuam no banco de dados.
  */
 function fachini_core_deactivate() {
-	flush_rewrite_rules();
+	delete_option( 'rewrite_rules' );
 }
 register_deactivation_hook( __FILE__, 'fachini_core_deactivate' );
+
+/**
+ * Regravar as regras dentro do painel apaga o sitemap: o Rank Math só registra
+ * as regras dele fora do painel (aconteceu em 26/10). Por isso, depois de
+ * regravar no painel, as regras são regravadas de novo na primeira visita ao site.
+ */
+function fachini_core_regravar_regras_no_site() {
+	update_option( 'fachini_core_regras_pendentes', 1, false );
+}
+
+function fachini_core_regras_pendentes() {
+	if ( get_option( 'fachini_core_regras_pendentes' ) ) {
+		delete_option( 'fachini_core_regras_pendentes' );
+		flush_rewrite_rules( false );
+	}
+}
+add_action( 'template_redirect', 'fachini_core_regras_pendentes', 1 );
 
 /**
  * Uma vez a cada versão nova do plugin: distribui as permissões das máquinas
@@ -93,6 +111,7 @@ function fachini_core_atualizar_versao() {
 
 	fachini_core_migrar_papeis();
 	flush_rewrite_rules();
+	fachini_core_regravar_regras_no_site();
 	update_option( 'fachini_core_versao', FACHINI_CORE_VERSION );
 }
 add_action( 'init', 'fachini_core_atualizar_versao', 99 );
