@@ -36,7 +36,7 @@ function fachini_contato_pagina_propria() {
 	if ( ! ( $post instanceof WP_Post ) ) {
 		return false;
 	}
-	foreach ( array( 'fachini_contato', 'fachini_confirmacao', 'fachini_politica' ) as $shortcode ) {
+	foreach ( array( 'fachini_contato', 'fachini_confirmacao', 'fachini_politica', 'fachini_termos' ) as $shortcode ) {
 		if ( has_shortcode( $post->post_content, $shortcode ) ) {
 			return true;
 		}

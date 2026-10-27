@@ -93,7 +93,10 @@ function fachini_sc_rodape() {
 		<div class="fachini-rodape__base">
 			<img class="fachini-rodape__linha" src="<?php echo esc_url( $img . 'linha-horizontal.svg' ); ?>" width="1208" height="1" alt="" aria-hidden="true">
 			<div class="fachini-rodape__base-linha">
-				<a href="<?php echo esc_url( home_url( '/politica-de-privacidade/' ) ); ?>">Política de Privacidade</a>
+				<span class="fachini-rodape__legais">
+					<a href="<?php echo esc_url( home_url( '/politica-de-privacidade/' ) ); ?>">Política de Privacidade</a>
+					<a href="<?php echo esc_url( home_url( '/termos-de-uso/' ) ); ?>">Termos de uso</a>
+				</span>
 				<p>&copy; <?php echo esc_html( date_i18n( 'Y' ) ); ?> All Rights Reserved by Fachini</p>
 			</div>
 		</div>

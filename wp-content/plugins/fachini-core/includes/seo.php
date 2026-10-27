@@ -48,6 +48,9 @@ function fachini_seo_descricao( $descricao ) {
 	if ( fachini_seo_pagina_com( 'fachini_politica' ) ) {
 		return 'Como a Fachini Máquinas coleta, usa, compartilha e protege dados pessoais no site e nos canais de atendimento comercial e marketing.';
 	}
+	if ( fachini_seo_pagina_com( 'fachini_termos' ) ) {
+		return 'Termos de uso do site da Fachini Máquinas: licença de uso dos materiais, isenção de responsabilidade, limitações, links e lei aplicável.';
+	}
 	return $descricao;
 }
 add_filter( 'rank_math/frontend/description', 'fachini_seo_descricao' );
