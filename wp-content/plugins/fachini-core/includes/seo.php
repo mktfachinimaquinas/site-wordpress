@@ -38,9 +38,13 @@ function fachini_seo_titulo( $titulo ) {
 add_filter( 'rank_math/frontend/title', 'fachini_seo_titulo' );
 
 // Contato e política são montados por shortcode, então não têm resumo próprio.
+// No Quem somos, o resumo automático cortava a primeira frase no meio.
 function fachini_seo_descricao( $descricao ) {
 	if ( ! is_page() || ! fachini_seo_campo_vazio( 'rank_math_description' ) ) {
 		return $descricao;
+	}
+	if ( is_page( 'quem-somos' ) ) {
+		return 'Fachini Máquinas: indústria brasileira de máquinas para conformação, corte e processamento de metais desde 2003, com parque industrial em Cascavel (PR).';
 	}
 	if ( fachini_seo_pagina_com( 'fachini_contato' ) ) {
 		return 'Solicite seu orçamento à Fachini Máquinas. Escolha a máquina de interesse e um especialista entra em contato com você.';

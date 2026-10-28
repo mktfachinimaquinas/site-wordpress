@@ -209,3 +209,16 @@ function fachini_redirecionar_site_antigo() {
 	exit;
 }
 add_action( 'template_redirect', 'fachini_redirecionar_site_antigo', 0 );
+
+/**
+ * Nenhum redirecionamento fica no cache do LiteSpeed. Ele ignora utm_*, gclid
+ * e fbclid na chave do cache, então devolvia a quem chegava com esses
+ * parâmetros o 301 guardado de outra visita: sem os parâmetros da pessoa, ou
+ * com os de outra campanha, e a origem do contato se perdia. Vale para os
+ * endereços antigos e para os do próprio WordPress (ex.: /contato sem barra).
+ */
+function fachini_redirecionamento_sem_cache( $destino ) {
+	do_action( 'litespeed_control_set_nocache', 'redirecionamento leva os parâmetros do pedido' );
+	return $destino;
+}
+add_filter( 'wp_redirect', 'fachini_redirecionamento_sem_cache' );

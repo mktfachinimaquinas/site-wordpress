@@ -3,7 +3,7 @@
 Documento de operação do site novo. Serve para a equipe da Fachini no dia a dia
 e para qualquer desenvolvedor WordPress que venha a assumir o projeto.
 
-Atualizado em 25/10/2026.
+Atualizado em 27/10/2026.
 
 ---
 
@@ -22,12 +22,23 @@ A regra que sustenta tudo: **o conteúdo não mora dentro do Elementor**. Trocar
 visual do site, ou até sair do Elementor, não apaga nenhum cadastro de máquina
 nem nenhum pedido de orçamento.
 
+### Onde editar cada página
+
+| Página | Onde se edita |
+|---|---|
+| Home e Quem somos | *Páginas > Editar com Elementor*: textos, fotos e botões direto na tela. As listas de máquinas da Home vêm do cadastro de máquinas. |
+| Máquinas e categorias | Cadastro de máquinas (seção 2) e *Máquinas > Categorias de máquina* |
+| Contato | O formulário é do Fachini Core; as perguntas frequentes ficam nos campos da própria página (seção 5) |
+| Política de privacidade e Termos de uso | No código (seção 6) |
+| Cabeçalho e rodapé | *Modelos > Theme Builder* no Elementor. Os itens do menu ficam em *Aparência > Menus* (o item "Pesquisa" abre a busca: não apague). O conteúdo do rodapé (contatos, redes, links legais) vem do Fachini Core |
+
 ## 2. Como cadastrar uma máquina
 
 1. No painel, vá em **Máquinas > Adicionar nova**.
 2. **Título**: nome da máquina como aparece no site.
 3. **Texto principal** (o editor da página): a descrição completa, em parágrafos.
-   Aparece na seção "Descrição".
+   Aparece na seção "Descrição". Pode ter subtítulos (bloco *Título*, nível
+   H3) e listas com marcadores.
 4. **Categoria de máquina**: marque a subcategoria mais específica. Ex.: para a
    dobradeira automática de régua dentada, marque *Dobradeiras de régua
    dentada*, e não apenas *Calhas*. É a subcategoria que define o endereço.
@@ -130,11 +141,14 @@ Ficam na própria página **Contato** (*Páginas > Contato*), nos campos
 *Pergunta 1* a *Pergunta 8* e *Resposta 1* a *Resposta 8*, abaixo do editor.
 Pergunta sem resposta não aparece. Sem nenhuma, a seção some.
 
-## 6. Política de privacidade e banner de cookies
+## 6. Política de privacidade, termos de uso e banner de cookies
 
 - O texto da **Política de privacidade** é o aprovado pelo jurídico e fica no
   código (`includes/politica.php`), para não ser alterado por engano. Mudança
   no texto passa pelo desenvolvedor.
+- Os **Termos de uso** seguem a mesma regra (`includes/termos.php`). O texto é o
+  do site antigo, sem alterações.
+- Os links das duas páginas ficam na faixa de baixo do rodapé.
 - O **banner de cookies** aparece na primeira visita, com as categorias da
   política: essenciais (sempre ativos), desempenho e análise, marketing e
   remarketing. A pessoa pode aceitar, recusar ou escolher, e rever a escolha
@@ -183,7 +197,9 @@ Depois de configurar, use o botão *Enviar e-mail de teste* em
 ## 9. SEO (Rank Math)
 
 - Título e descrição de cada página ou máquina: caixa do Rank Math na tela de
-  edição. Em branco, ele monta sozinho a partir do título e do texto.
+  edição. Em branco, ele monta sozinho a partir do título e do texto. O título
+  da Home e a descrição de Quem somos, Contato, Política e Termos têm um texto
+  padrão em `includes/seo.php`, usado só enquanto a caixa estiver em branco.
 - Dados da empresa para o Google (endereço da matriz em Cascavel, telefone,
   razão social, CNPJ, logo e redes sociais): *Rank Math > Títulos e meta >
   SEO local* e *Meta social*.
@@ -235,6 +251,9 @@ Editar pelo painel funciona normalmente. A rotina de código só roda uma vez.
 - Ao publicar ou editar uma máquina, o cache das páginas ligadas a ela é
   atualizado sozinho. Se algo não aparecer, use *LiteSpeed Cache > Caixa de
   ferramentas > Limpar tudo*.
+- Redirecionamentos (endereços antigos, endereço sem a barra no fim) nunca
+  entram no cache. O LiteSpeed ignora `utm_*`, `gclid` e `fbclid` ao guardar uma
+  página; com um 301 guardado, a visita perdia os parâmetros da campanha.
 
 ## 13. Backup e publicação
 
