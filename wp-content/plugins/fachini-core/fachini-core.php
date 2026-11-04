@@ -2,8 +2,8 @@
 /**
  * Plugin Name:       Fachini Core
  * Plugin URI:        https://github.com/mktfachinimaquinas/site-wordpress
- * Description:       Estrutura de conteúdo do site da Fachini Máquinas: tipo de conteúdo "Máquinas", taxonomias, campos, endereços, kit de estilos e modelos de página. Independente do tema, de forma que trocar o visual não apaga nenhum cadastro.
- * Version:           1.16.6
+ * Description:       Estrutura de conteúdo do site da Fachini Máquinas: tipos de conteúdo "Máquinas" e "Modelos", taxonomias, campos, endereços, kit de estilos e modelos de página. Independente do tema, de forma que trocar o visual não apaga nenhum cadastro.
+ * Version:           1.17.0
  * Requires at least: 6.5
  * Requires PHP:      8.0
  * Author:            Fachini Máquinas
@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'FACHINI_CORE_VERSION', '1.16.6' );
+define( 'FACHINI_CORE_VERSION', '1.17.0' );
 define( 'FACHINI_CORE_PATH', plugin_dir_path( __FILE__ ) );
 
 /**
@@ -34,6 +34,9 @@ define( 'FACHINI_CORE_PATH', plugin_dir_path( __FILE__ ) );
 define( 'FACHINI_SLUG_MAQUINAS', 'maquinas' );
 define( 'FACHINI_SLUG_CATEGORIAS', 'categorias' );
 
+// Endereço das páginas dos modelos de telha e perfil: /modelos/<apelido>/.
+define( 'FACHINI_SLUG_MODELOS', 'modelos' );
+
 require_once FACHINI_CORE_PATH . 'includes/post-types.php';
 require_once FACHINI_CORE_PATH . 'includes/taxonomies.php';
 require_once FACHINI_CORE_PATH . 'includes/papeis.php';
@@ -46,6 +49,7 @@ require_once FACHINI_CORE_PATH . 'includes/shortcodes.php';
 require_once FACHINI_CORE_PATH . 'includes/categorias.php';
 require_once FACHINI_CORE_PATH . 'includes/busca.php';
 require_once FACHINI_CORE_PATH . 'includes/maquina.php';
+require_once FACHINI_CORE_PATH . 'includes/modelos.php';
 require_once FACHINI_CORE_PATH . 'includes/pedidos.php';
 require_once FACHINI_CORE_PATH . 'includes/contato.php';
 require_once FACHINI_CORE_PATH . 'includes/politica.php';
@@ -65,6 +69,7 @@ require_once FACHINI_CORE_PATH . 'includes/seed-templates.php';
  */
 function fachini_core_activate() {
 	fachini_core_register_post_types();
+	fachini_core_register_modelos();
 	fachini_core_register_taxonomies();
 	fachini_core_migrar_papeis();
 	flush_rewrite_rules();

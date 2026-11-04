@@ -10,12 +10,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Páginas e máquinas ficam sem tipo de schema padrão (máquina como "Produto"
- * sem preço gera alerta no Google). Sem tipo, o Rank Math não imprime nada
- * nelas; aqui ele volta a imprimir o básico: página, empresa e site.
+ * Páginas, máquinas e modelos ficam sem tipo de schema padrão (máquina como
+ * "Produto" sem preço gera alerta no Google). Sem tipo, o Rank Math não
+ * imprime nada nelas; aqui ele volta a imprimir o básico: página, empresa e site.
  */
 function fachini_seo_schema_basico( $adicionar ) {
-	return is_singular( array( 'page', 'maquina' ) ) ? true : $adicionar;
+	return is_singular( array( 'page', 'maquina', 'fachini_modelo' ) ) ? true : $adicionar;
 }
 add_filter( 'rank_math/schema/add_global_entities', 'fachini_seo_schema_basico' );
 
@@ -40,6 +40,9 @@ add_filter( 'rank_math/frontend/title', 'fachini_seo_titulo' );
 // Contato e política são montados por shortcode, então não têm resumo próprio.
 // No Quem somos, o resumo automático cortava a primeira frase no meio.
 function fachini_seo_descricao( $descricao ) {
+	if ( is_singular( 'fachini_modelo' ) && fachini_seo_campo_vazio( 'rank_math_description' ) ) {
+		return fachini_seo_descricao_modelo( get_queried_object_id() );
+	}
 	if ( ! is_page() || ! fachini_seo_campo_vazio( 'rank_math_description' ) ) {
 		return $descricao;
 	}
@@ -58,3 +61,60 @@ function fachini_seo_descricao( $descricao ) {
 	return $descricao;
 }
 add_filter( 'rank_math/frontend/description', 'fachini_seo_descricao' );
+
+/**
+ * Modelo: a descrição curta do cadastro. Sem ela, uma frase montada só com o
+ * que a página tem de fato (o resumo automático do Rank Math sairia vazio,
+ * porque o modelo quase não tem texto).
+ */
+function fachini_seo_descricao_modelo( $modelo_id ) {
+	$curta = trim( (string) get_post_meta( $modelo_id, 'descricao_curta', true ) );
+	if ( '' !== $curta ) {
+		return $curta;
+	}
+
+	$partes = array();
+	if ( '' !== trim( (string) get_post_meta( $modelo_id, 'especificacoes', true ) ) ) {
+		$partes[] = 'tabela técnica';
+	}
+	if ( (int) get_post_meta( $modelo_id, 'desenho', true ) ) {
+		$partes[] = 'desenho técnico';
+	}
+	if ( function_exists( 'fachini_modelo_amostras' ) && fachini_modelo_amostras( $modelo_id ) ) {
+		$partes[] = 'fotos de amostra';
+	}
+	$ultima = array_pop( $partes );
+	$lista  = $partes ? implode( ', ', $partes ) . ' e ' . $ultima : (string) $ultima;
+
+	$texto    = get_the_title( $modelo_id ) . ( '' !== $lista ? ': ' . $lista . '.' : '.' );
+	$maquinas = function_exists( 'fachini_modelo_maquinas' ) ? fachini_modelo_maquinas( $modelo_id ) : array();
+	if ( $maquinas ) {
+		return $texto . ' Produzido na ' . get_the_title( $maquinas[0] ) . ' da Fachini Máquinas.';
+	}
+	return $texto . ' Modelo da Fachini Máquinas.';
+}
+
+/**
+ * Configuração do Rank Math para os modelos. O Rank Math só coloca no sitemap
+ * (e só configura título, robots e schema) os tipos de conteúdo que existiam
+ * quando ele foi configurado, e os modelos vieram depois. Enquanto ninguém
+ * salvar os modelos em Rank Math > Títulos e meta e Sitemap, eles seguem a
+ * configuração das máquinas. O que for salvo no painel tem a palavra final.
+ */
+function fachini_seo_modelos_como_maquinas( $opcoes ) {
+	if ( ! is_array( $opcoes ) ) {
+		return $opcoes;
+	}
+	foreach ( $opcoes as $chave => $valor ) {
+		if ( 0 !== strpos( $chave, 'pt_maquina_' ) || false !== strpos( $chave, 'archive' ) || false !== strpos( $chave, 'primary_taxonomy' ) ) {
+			continue;
+		}
+		$nova = 'pt_fachini_modelo_' . substr( $chave, strlen( 'pt_maquina_' ) );
+		if ( ! array_key_exists( $nova, $opcoes ) ) {
+			$opcoes[ $nova ] = $valor;
+		}
+	}
+	return $opcoes;
+}
+add_filter( 'option_rank-math-options-titles', 'fachini_seo_modelos_como_maquinas' );
+add_filter( 'option_rank-math-options-sitemap', 'fachini_seo_modelos_como_maquinas' );

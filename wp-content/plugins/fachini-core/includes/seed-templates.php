@@ -349,6 +349,18 @@ function fachini_seed_templates() {
 		wp_set_object_terms( $post_id, $modelo['tipo'], 'elementor_library_type', false );
 	}
 
+	fachini_elementor_regenerar_condicoes();
+
+	update_option( 'fachini_templates_layout', FACHINI_TEMPLATES_LAYOUT );
+	update_option( 'fachini_templates_versao', FACHINI_TEMPLATES_VERSAO );
+}
+add_action( 'init', 'fachini_seed_templates', 30 );
+
+/**
+ * Depois de criar ou mudar um modelo do Construtor de Temas por código.
+ * Usada aqui e em includes/modelos.php.
+ */
+function fachini_elementor_regenerar_condicoes() {
 	// O Elementor Pro guarda as condições em cache. Sem limpar, um modelo
 	// criado fora do editor existe mas não é aplicado a nenhuma página.
 	delete_option( 'elementor_pro_theme_builder_conditions' );
@@ -372,8 +384,4 @@ function fachini_seed_templates() {
 	if ( class_exists( '\Elementor\Plugin' ) && isset( \Elementor\Plugin::$instance->files_manager ) ) {
 		\Elementor\Plugin::$instance->files_manager->clear_cache();
 	}
-
-	update_option( 'fachini_templates_layout', FACHINI_TEMPLATES_LAYOUT );
-	update_option( 'fachini_templates_versao', FACHINI_TEMPLATES_VERSAO );
 }
-add_action( 'init', 'fachini_seed_templates', 30 );

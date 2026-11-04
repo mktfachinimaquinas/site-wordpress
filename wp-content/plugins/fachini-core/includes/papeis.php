@@ -108,7 +108,8 @@ function fachini_core_migrar_papeis() {
  * ou pela API: esses pedidos não trazem user_ID e valem como vieram.
  */
 function fachini_manter_autor_maquina( $dados, $postarr, $postarr_bruto = array(), $atualizacao = false ) {
-	if ( 'maquina' !== $dados['post_type'] || ! $atualizacao || empty( $postarr['ID'] ) ) {
+	// Os modelos (includes/modelos.php) usam as mesmas permissões, então a mesma regra.
+	if ( ! in_array( $dados['post_type'], array( 'maquina', 'fachini_modelo' ), true ) || ! $atualizacao || empty( $postarr['ID'] ) ) {
 		return $dados;
 	}
 

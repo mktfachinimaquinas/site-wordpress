@@ -129,9 +129,44 @@ function fachini_maquina_tabela( $post_id ) {
 }
 
 /**
- * Modelos de telha: nome, imagem da telha (ou da peça) e desenho técnico.
+ * Uma linha do quadro branco dos modelos: o nome (se houver) e uma ou duas
+ * imagens lado a lado, sem cortar (telha ou peça e desenho técnico).
+ *
+ * @param string $nome    Nome do modelo, ou '' para não mostrar.
+ * @param array  $imagens Lista de [ id da imagem, texto alternativo se a imagem não tiver um ].
+ */
+function fachini_maquina_modelo_linha( $nome, $imagens ) {
+	$html = '<div class="fachini-maquina-modelo' . ( 1 === count( $imagens ) ? ' fachini-maquina-modelo--uma' : '' ) . '">';
+	if ( '' !== $nome ) {
+		$html .= '<p class="fachini-maquina-modelo__nome">' . esc_html( $nome ) . '</p>';
+	}
+	foreach ( $imagens as $imagem ) {
+		$html .= '<div class="fachini-maquina-modelo__imagem">' . wp_get_attachment_image(
+			$imagem[0],
+			'large',
+			false,
+			array(
+				'alt'     => get_post_meta( $imagem[0], '_wp_attachment_image_alt', true ) ?: $imagem[1],
+				'sizes'   => '(max-width: 767px) 100vw, 560px',
+				'loading' => 'lazy',
+			)
+		) . '</div>';
+	}
+	return $html . '</div>';
+}
+
+/**
+ * Seção Modelos da máquina. Com modelos que têm página própria ligados a ela
+ * (includes/modelos.php), um card para cada um. Sem nenhum, os modelos
+ * cadastrados na própria máquina: nome, imagem da telha (ou da peça) e
+ * desenho técnico.
  */
 function fachini_maquina_modelos( $post_id ) {
+	$ligados = function_exists( 'fachini_maquina_modelos_ligados' ) ? fachini_maquina_modelos_ligados( $post_id ) : array();
+	if ( $ligados ) {
+		return fachini_modelos_cards( $ligados );
+	}
+
 	$linhas = '';
 	for ( $n = 1; $n <= 6; $n++ ) {
 		$nome    = trim( (string) fachini_campo( 'modelo_' . $n . '_nome', $post_id ) );
@@ -139,23 +174,16 @@ function fachini_maquina_modelos( $post_id ) {
 		if ( ! $imagens ) {
 			continue;
 		}
-		$linhas .= '<div class="fachini-maquina-modelo' . ( 1 === count( $imagens ) ? ' fachini-maquina-modelo--uma' : '' ) . '">';
-		if ( '' !== $nome ) {
-			$linhas .= '<p class="fachini-maquina-modelo__nome">' . esc_html( $nome ) . '</p>';
-		}
-		foreach ( $imagens as $imagem ) {
-			$linhas .= '<div class="fachini-maquina-modelo__imagem">' . wp_get_attachment_image(
-				$imagem,
-				'large',
-				false,
-				array(
-					'alt'     => get_post_meta( $imagem, '_wp_attachment_image_alt', true ) ?: ( '' !== $nome ? 'Telha ' . $nome : '' ),
-					'sizes'   => '(max-width: 767px) 100vw, 560px',
-					'loading' => 'lazy',
-				)
-			) . '</div>';
-		}
-		$linhas .= '</div>';
+		$alt     = '' !== $nome ? 'Telha ' . $nome : '';
+		$linhas .= fachini_maquina_modelo_linha(
+			$nome,
+			array_map(
+				function ( $imagem ) use ( $alt ) {
+					return array( $imagem, $alt );
+				},
+				array_values( $imagens )
+			)
+		);
 	}
 	return $linhas ? '<div class="fachini-maquina-modelos">' . $linhas . '</div>' : '';
 }
@@ -261,12 +289,43 @@ function fachini_sc_maquina() {
 		$secoes['midia'] = array( 'Mídia', 'Mídia', $midia );
 	}
 
-	$html  = '<div class="fachini-maquina">';
+	// O formulário já abre com a categoria e o modelo desta máquina escolhidos.
+	// O parâmetro não pode se chamar "maquina": esse nome é do próprio tipo de
+	// conteúdo, e /contato/?maquina=17 daria página não encontrada.
+	return fachini_pagina_maquina(
+		array(
+			'titulo'    => $titulo,
+			'resumo'    => $resumo,
+			'foto_topo' => fachini_maquina_foto_topo( $post_id ),
+			'orcamento' => add_query_arg( 'orcamento', $post_id, home_url( '/contato/' ) ),
+			'secoes'    => $secoes,
+		)
+	);
+}
+add_shortcode( 'fachini_maquina', 'fachini_sc_maquina' );
+
+/**
+ * Monta a página no formato da máquina: caminho, foto larga com o nome, barra
+ * das seções e as seções. Usada também pela página de cada modelo
+ * (includes/modelos.php), que segue o mesmo visual.
+ *
+ * @param array $pagina {
+ *     titulo, resumo, foto_topo (id), orcamento (endereço do botão), classe
+ *     (opcional, a mais no contêiner) e secoes: âncora => [ nome na barra,
+ *     título, conteúdo, classe a mais da seção (opcional) ].
+ * }
+ */
+function fachini_pagina_maquina( $pagina ) {
+	$titulo    = $pagina['titulo'];
+	$resumo    = $pagina['resumo'];
+	$foto_topo = $pagina['foto_topo'];
+	$secoes    = $pagina['secoes'];
+
+	$html  = '<div class="fachini-maquina' . ( ! empty( $pagina['classe'] ) ? ' ' . esc_attr( $pagina['classe'] ) : '' ) . '">';
 	$html .= '<div class="fachini-maquina__caminho">' . fachini_sc_breadcrumb() . '</div>';
 
 	// Topo: foto larga com o nome, o resumo e o pedido de orçamento.
-	$foto_topo = fachini_maquina_foto_topo( $post_id );
-	$html     .= '<section class="fachini-maquina-topo">';
+	$html .= '<section class="fachini-maquina-topo">';
 	if ( $foto_topo ) {
 		$html .= wp_get_attachment_image(
 			$foto_topo,
@@ -286,10 +345,7 @@ function fachini_sc_maquina() {
 	if ( '' !== $resumo ) {
 		$html .= '<p class="fachini-maquina-topo__resumo">' . esc_html( $resumo ) . '</p>';
 	}
-	// O formulário já abre com a categoria e o modelo desta máquina escolhidos.
-	// O parâmetro não pode se chamar "maquina": esse nome é do próprio tipo de
-	// conteúdo, e /contato/?maquina=17 daria página não encontrada.
-	$html .= fachini_seta_link( 'Solicite seu orçamento', add_query_arg( 'orcamento', $post_id, home_url( '/contato/' ) ), 'claro' );
+	$html .= fachini_seta_link( 'Solicite seu orçamento', $pagina['orcamento'], 'claro' );
 	$html .= '</div></section>';
 
 	if ( count( $secoes ) > 1 ) {
@@ -303,7 +359,7 @@ function fachini_sc_maquina() {
 	}
 
 	foreach ( $secoes as $ancora => $secao ) {
-		$html .= '<section class="fachini-maquina-secao fachini-maquina-secao--' . esc_attr( $ancora ) . '" id="' . esc_attr( $ancora ) . '">'
+		$html .= '<section class="fachini-maquina-secao fachini-maquina-secao--' . esc_attr( $ancora ) . ( ! empty( $secao[3] ) ? ' ' . esc_attr( $secao[3] ) : '' ) . '" id="' . esc_attr( $ancora ) . '">'
 			. '<h2 class="fachini-maquina-secao__titulo">' . esc_html( $secao[1] ) . '</h2>'
 			. $secao[2]
 			. '</section>';
@@ -311,4 +367,3 @@ function fachini_sc_maquina() {
 
 	return $html . '</div>';
 }
-add_shortcode( 'fachini_maquina', 'fachini_sc_maquina' );

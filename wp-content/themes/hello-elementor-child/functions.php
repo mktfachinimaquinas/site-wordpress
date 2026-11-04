@@ -53,10 +53,11 @@ function fachini_child_site_script() {
 add_action( 'wp_enqueue_scripts', 'fachini_child_site_script', 20 );
 
 /**
- * Galeria, barra das seções e vídeo da página da máquina. Só nessa página.
+ * Galeria, barra das seções e vídeo da página da máquina. Só nessa página e
+ * na página de cada modelo de telha ou perfil, que usa o mesmo visual.
  */
 function fachini_child_maquina_script() {
-	if ( ! is_singular( 'maquina' ) ) {
+	if ( ! is_singular( array( 'maquina', 'fachini_modelo' ) ) ) {
 		return;
 	}
 	wp_enqueue_script(

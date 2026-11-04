@@ -4,7 +4,7 @@ Theme URI:    https://github.com/mktfachinimaquinas/site-wordpress
 Description:  Tema filho do Hello Elementor para o site da Fachini Máquinas. Todo código personalizado (CSS, scripts, SMTP, scripts de marketing) mora aqui, para que o tema pai possa ser atualizado sem perder nada.
 Author:       Fachini Máquinas
 Template:     hello-elementor
-Version:      1.9.4
+Version:      1.9.5
 License:      GPL-2.0-or-later
 Text Domain:  hello-elementor-child
 */
@@ -1174,6 +1174,28 @@ body.fachini-busca-aberta { overflow: hidden; }
 .fachini-maquina-modelo--uma .fachini-maquina-modelo__imagem { grid-column: 1 / -1; }
 .fachini-maquina .fachini-maquina-modelo--uma .fachini-maquina-modelo__imagem img { height: 320px; }
 
+/* Cards dos modelos que têm página própria (plugin, includes/modelos.php): a
+   imagem inteira num quadro branco, o nome e "Ver modelo". O card inteiro é
+   o link. Sem limite de quantidade: três por linha, dois no tablet e no celular. */
+.fachini-maquina .fachini-modelos-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin: 0; padding: 0; list-style: none; }
+.fachini-maquina .fachini-modelo-card { margin: 0; padding: 0; }
+.fachini-maquina .fachini-modelo-card__link { display: flex; flex-direction: column; height: 100%; padding-bottom: 24px; border: 1px solid #EDEDED; background: #fff; color: var(--fachini-onix); text-decoration: none; transition: border-color .2s, box-shadow .2s; }
+.fachini-maquina .fachini-modelo-card__link:hover,
+.fachini-maquina .fachini-modelo-card__link:focus-visible { border-color: var(--fachini-navy-escuro); box-shadow: 0 6px 20px rgba(0, 0, 0, .08); }
+.fachini-modelo-card__imagem { display: block; height: 220px; padding: 20px; }
+.fachini-maquina .fachini-modelo-card__imagem img { display: block; width: 100%; height: 100%; max-width: none; object-fit: contain; }
+.fachini-modelo-card__nome { display: block; margin: 4px 24px 16px; color: var(--fachini-navy-escuro); font-size: 16px; font-weight: 700; line-height: 22px; letter-spacing: .5px; text-transform: uppercase; }
+.fachini-maquina .fachini-modelo-card .fachini-seta-link { align-self: flex-start; margin: auto 24px 0; }
+
+/* Página do modelo, no mesmo visual da máquina. Amostras sem texto ocupam a
+   largura do conteúdo; texto sem amostras fica na coluna de leitura. */
+.fachini-maquina-descricao--so-fotos .fachini-maquina-galeria { grid-column: 2 / 5; }
+.fachini-maquina-descricao--so-texto .fachini-maquina-descricao__texto { grid-column: 2 / 5; max-width: 760px; }
+/* A linha escura em cima do título é só da primeira seção da máquina. */
+.fachini-maquina .fachini-maquina-secao--amostras .fachini-maquina-secao__titulo { border-top-color: #EDEDED; }
+/* Máquinas que produzem o modelo: as linhas da listagem, na largura da seção. */
+.fachini-maquina .fachini-maquinas-lista { max-width: none; margin: 0; }
+
 /* Aplicações: as duas fotos lado a lado na largura toda, legenda embaixo. */
 .fachini-maquina-secao--aplicacoes { max-width: none; }
 .fachini-maquina-secao--aplicacoes .fachini-maquina-secao__titulo { max-width: 1200px; margin-right: auto; margin-left: auto; }
@@ -1209,6 +1231,10 @@ body.fachini-busca-aberta { overflow: hidden; }
 }
 
 @media (max-width: 1024px) {
+	.fachini-maquina .fachini-modelos-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 1024px) {
 	.fachini-maquina-descricao { display: block; }
 	.fachini-maquina-descricao__texto { margin: 0 24px 32px; }
 	.fachini-maquina-galeria__principal { height: 440px; }
@@ -1238,6 +1264,11 @@ body.fachini-busca-aberta { overflow: hidden; }
 	.fachini-maquina-modelo { grid-template-columns: 1fr; row-gap: 12px; padding: 20px 0; }
 	.fachini-maquina .fachini-maquina-modelo__imagem img { height: 160px; }
 	.fachini-maquina .fachini-maquina-modelo--uma .fachini-maquina-modelo__imagem img { height: 260px; }
+	.fachini-maquina .fachini-modelos-cards { gap: 12px; }
+	.fachini-maquina .fachini-modelo-card__link { padding-bottom: 16px; }
+	.fachini-modelo-card__imagem { height: 130px; padding: 12px; }
+	.fachini-modelo-card__nome { margin: 2px 12px 12px; font-size: 13px; line-height: 18px; letter-spacing: .3px; }
+	.fachini-maquina .fachini-modelo-card .fachini-seta-link { min-width: 0; gap: 8px; margin: auto 12px 0; font-size: 12px; }
 	.fachini-maquina-aplicacoes { grid-template-columns: 1fr; row-gap: 24px; }
 	.fachini-maquina-aplicacao__foto { height: 280px; }
 	.fachini-maquina .fachini-maquina-aplicacao__legenda,

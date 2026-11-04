@@ -117,24 +117,21 @@ function fachini_sc_breadcrumb() {
 	$itens = array( '<a href="' . esc_url( home_url( '/' ) ) . '">Home</a>' );
 
 	// No Figma o caminho passa por "Máquinas" (/maquinas/) antes das categorias.
-	if ( is_singular( 'maquina' ) || is_tax( 'categoria_maquina' ) ) {
+	if ( is_singular( 'maquina' ) || is_tax( 'categoria_maquina' ) || is_singular( 'fachini_modelo' ) ) {
 		$itens[] = '<a href="' . esc_url( get_post_type_archive_link( 'maquina' ) ) . '">Máquinas</a>';
 	}
 
 	if ( is_singular( 'maquina' ) ) {
-		$termo = fachini_get_termo_principal( get_the_ID() );
+		$itens   = array_merge( $itens, fachini_breadcrumb_categorias( get_the_ID() ) );
+		$itens[] = '<span>' . esc_html( get_the_title() ) . '</span>';
 
-		if ( $termo ) {
-			$ancestrais = array_reverse( get_ancestors( $termo->term_id, 'categoria_maquina' ) );
-			foreach ( $ancestrais as $id ) {
-				$pai = get_term( $id, 'categoria_maquina' );
-				if ( $pai && ! is_wp_error( $pai ) ) {
-					$itens[] = '<a href="' . esc_url( get_term_link( $pai ) ) . '">' . esc_html( $pai->name ) . '</a>';
-				}
-			}
-			$itens[] = '<a href="' . esc_url( get_term_link( $termo ) ) . '">' . esc_html( $termo->name ) . '</a>';
+	} elseif ( is_singular( 'fachini_modelo' ) ) {
+		// Modelo: o caminho da primeira máquina que o produz, e a máquina.
+		$maquinas = fachini_modelo_maquinas( get_the_ID() );
+		if ( $maquinas ) {
+			$itens   = array_merge( $itens, fachini_breadcrumb_categorias( $maquinas[0] ) );
+			$itens[] = '<a href="' . esc_url( get_permalink( $maquinas[0] ) ) . '">' . esc_html( get_the_title( $maquinas[0] ) ) . '</a>';
 		}
-
 		$itens[] = '<span>' . esc_html( get_the_title() ) . '</span>';
 
 	} elseif ( is_tax( 'categoria_maquina' ) ) {
@@ -160,6 +157,29 @@ function fachini_sc_breadcrumb() {
 	return fachini_breadcrumb_montar( $itens );
 }
 add_shortcode( 'fachini_breadcrumb', 'fachini_sc_breadcrumb' );
+
+/**
+ * Links da categoria (e das categorias-mãe) de uma máquina, para o caminho.
+ *
+ * @return string[]
+ */
+function fachini_breadcrumb_categorias( $maquina_id ) {
+	$itens = array();
+	$termo = fachini_get_termo_principal( $maquina_id );
+
+	if ( $termo ) {
+		$ancestrais = array_reverse( get_ancestors( $termo->term_id, 'categoria_maquina' ) );
+		foreach ( $ancestrais as $id ) {
+			$pai = get_term( $id, 'categoria_maquina' );
+			if ( $pai && ! is_wp_error( $pai ) ) {
+				$itens[] = '<a href="' . esc_url( get_term_link( $pai ) ) . '">' . esc_html( $pai->name ) . '</a>';
+			}
+		}
+		$itens[] = '<a href="' . esc_url( get_term_link( $termo ) ) . '">' . esc_html( $termo->name ) . '</a>';
+	}
+
+	return $itens;
+}
 
 /**
  * Monta o caminho a partir dos itens (links e, no fim, um <span> com a página

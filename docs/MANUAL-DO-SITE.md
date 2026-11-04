@@ -3,7 +3,7 @@
 Documento de operação do site novo. Serve para a equipe da Fachini no dia a dia
 e para qualquer desenvolvedor WordPress que venha a assumir o projeto.
 
-Atualizado em 27/10/2026.
+Atualizado em 04/11/2026.
 
 ---
 
@@ -28,6 +28,7 @@ nem nenhum pedido de orçamento.
 |---|---|
 | Home e Quem somos | *Páginas > Editar com Elementor*: textos, fotos e botões direto na tela. As listas de máquinas da Home vêm do cadastro de máquinas. |
 | Máquinas e categorias | Cadastro de máquinas (seção 2) e *Máquinas > Categorias de máquina* |
+| Modelos de telha e perfil | *Máquinas > Modelos* (seção 2.1) |
 | Contato | O formulário é do Fachini Core; as perguntas frequentes ficam nos campos da própria página (seção 5) |
 | Política de privacidade e Termos de uso | No código (seção 6) |
 | Cabeçalho e rodapé | *Modelos > Theme Builder* no Elementor. Os itens do menu ficam em *Aparência > Menus* (o item "Pesquisa" abre a busca: não apague). O conteúdo do rodapé (contatos, redes, links legais) vem do Fachini Core |
@@ -63,7 +64,9 @@ nem nenhum pedido de orçamento.
    - **Topo da página**: *Foto do topo*. Sem ela, o topo usa a foto da
      categoria.
    - **Modelos de telha**: título da seção e até 6 modelos, cada um com nome,
-     imagem da telha (ou peça) e desenho técnico.
+     imagem da telha (ou peça) e desenho técnico. Esses campos só aparecem na
+     página enquanto a máquina não tiver nenhum modelo com página própria
+     (seção 2.1). A partir do primeiro, a seção mostra os cards desses modelos.
    - **Aplicações**: até 2 fotos com uma legenda curta cada.
 6. **Imagem destacada** (coluna da direita): a foto principal. Aparece no card
    da listagem e no início da galeria.
@@ -80,6 +83,37 @@ como foto de produto, porque mostram uma máquina que não existe.
 editam as próprias máquinas. Um administrador pode passar a autoria de uma
 máquina para outro usuário no campo *Autor*.
 
+### 2.1 Modelos de telha e perfil (página própria)
+
+Cada modelo pode ter a sua página, em `/modelos/<apelido>/`, com a tabela
+técnica, o desenho técnico e as fotos de amostra. É um link que os vendedores
+podem mandar direto. Na página da máquina, a seção *Modelos* mostra um card
+para cada modelo ligado a ela, sem limite de quantidade.
+
+1. No painel, vá em **Máquinas > Modelos > Adicionar novo**.
+2. **Título**: o nome do modelo como aparece no card e na página. Ex.: *Telha
+   TP 40/980*.
+3. **Texto** (o editor): opcional. Aparece ao lado das fotos de amostra.
+4. **Imagem do modelo** (coluna da direita): a telha ou a peça, de preferência
+   em fundo branco ou transparente. É a imagem do card na máquina.
+5. Campos abaixo do texto (o que ficar vazio não aparece):
+   - *Descrição curta*: uma ou duas frases, no alto da página e no Google.
+   - *Máquinas que produzem este modelo*: escolha uma ou mais. O card aparece
+     em cada uma. A **primeira** da lista define o caminho no alto da página,
+     a foto do topo e a máquina já escolhida no botão *Solicite seu orçamento*.
+   - *Tabela técnica*: uma linha por item, no formato `Rótulo: valor`, igual às
+     especificações da máquina.
+   - *Desenho técnico*: aparece ao lado da imagem do modelo.
+   - *Fotos de amostra 1 a 4*.
+6. **Ordem** (painel *Atributos* na coluna da direita): define a ordem dos cards
+   na máquina. Menor primeiro; empate, ordem alfabética.
+7. **Publicar**. Rascunho não aparece em lugar nenhum.
+
+Quem tem o perfil *Cadastro de máquinas* também cadastra modelos (as mesmas
+permissões: cria e edita os próprios). A página do modelo usa o mesmo visual da
+máquina, montado pelo shortcode `[fachini_modelo]` no modelo *Modelo de telha
+ou perfil (página individual)* do Construtor de Temas.
+
 ### Cuidado importante com o Elementor
 
 Nunca mude uma página publicada para rascunho. Ela sai do ar na hora e passa a
@@ -95,6 +129,7 @@ Três níveis, conforme a planilha aprovada:
 /calhas/dobradeiras-regua-dentada/          subcategoria
 /calhas/dobradeiras-regua-dentada/automatica/  máquina
 /maquinas/                                  listagem geral
+/modelos/tp-40-980/                         página de um modelo (seção 2.1)
 ```
 
 As categorias e subcategorias são criadas automaticamente pelo plugin, a partir
@@ -200,6 +235,11 @@ Depois de configurar, use o botão *Enviar e-mail de teste* em
   edição. Em branco, ele monta sozinho a partir do título e do texto. O título
   da Home e a descrição de Quem somos, Contato, Política e Termos têm um texto
   padrão em `includes/seo.php`, usado só enquanto a caixa estiver em branco.
+- Modelos (seção 2.1): sem texto no Rank Math, a descrição é a *Descrição
+  curta* do modelo; sem ela, uma frase montada com o que a página tem (tabela,
+  desenho, amostras) e a máquina que produz o modelo. Os modelos entram no
+  sitemap e seguem a configuração das máquinas em *Títulos e meta* até alguém
+  salvar uma configuração própria para eles (`includes/seo.php`).
 - Dados da empresa para o Google (endereço da matriz em Cascavel, telefone,
   razão social, CNPJ, logo e redes sociais): *Rank Math > Títulos e meta >
   SEO local* e *Meta social*.
@@ -249,7 +289,8 @@ Editar pelo painel funciona normalmente. A rotina de código só roda uma vez.
   página). A otimização vale só para visitantes; quem está logado vê a versão
   normal.
 - Ao publicar ou editar uma máquina, o cache das páginas ligadas a ela é
-  atualizado sozinho. Se algo não aparecer, use *LiteSpeed Cache > Caixa de
+  atualizado sozinho. Ao publicar, editar ou apagar um modelo, o cache das
+  máquinas ligadas a ele (agora e antes) também, porque o card fica nelas. Se algo não aparecer, use *LiteSpeed Cache > Caixa de
   ferramentas > Limpar tudo*.
 - Redirecionamentos (endereços antigos, endereço sem a barra no fim) nunca
   entram no cache. O LiteSpeed ignora `utm_*`, `gclid` e `fbclid` ao guardar uma
