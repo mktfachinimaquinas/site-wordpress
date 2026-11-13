@@ -16,9 +16,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /**
  * Ordem das categorias principais na barra, a mesma do menu e da Home.
+ * Perfiladeiras primeiro, a pedido do Paulo (13/11/2026).
  * Uma categoria principal nova entra no fim, em ordem alfabética.
  */
-define( 'FACHINI_ORDEM_CATEGORIAS', array( 'calhas', 'perfiladeiras', 'corte-e-dobra', 'laser' ) );
+define( 'FACHINI_ORDEM_CATEGORIAS', array( 'perfiladeiras', 'calhas', 'corte-e-dobra', 'laser' ) );
 
 /**
  * Categoria da página atual, ou null em /maquinas/.

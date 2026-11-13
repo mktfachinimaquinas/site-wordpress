@@ -55,8 +55,18 @@ function fachini_permissoes_papel_cadastro() {
 }
 
 /**
- * Dá ao administrador as permissões de máquina e deixa o papel "Cadastro de
- * Máquinas" exatamente com a lista acima.
+ * Editor (papel padrão do WordPress): quem cuida do site no dia a dia. Além
+ * das páginas (e do Elementor nelas), ganha todas as máquinas e modelos e o
+ * menu (Aparência > Menus, que pede edit_theme_options). Continua sem
+ * plugins, tema, usuários e configurações. Pedido do Paulo em 13/11/2026.
+ */
+function fachini_permissoes_editor_extra() {
+	return array_merge( fachini_permissoes_maquina_admin(), array( 'edit_theme_options' ) );
+}
+
+/**
+ * Dá ao administrador as permissões de máquina, completa o Editor e deixa o
+ * papel "Cadastro de Máquinas" exatamente com a lista acima.
  */
 function fachini_core_migrar_papeis() {
 	$admin = get_role( 'administrator' );
@@ -64,6 +74,14 @@ function fachini_core_migrar_papeis() {
 	if ( $admin ) {
 		foreach ( fachini_permissoes_maquina_admin() as $permissao ) {
 			$admin->add_cap( $permissao );
+		}
+	}
+
+	$editor = get_role( 'editor' );
+
+	if ( $editor ) {
+		foreach ( fachini_permissoes_editor_extra() as $permissao ) {
+			$editor->add_cap( $permissao );
 		}
 	}
 

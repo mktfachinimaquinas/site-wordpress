@@ -3,7 +3,7 @@
 Documento de operação do site novo. Serve para a equipe da Fachini no dia a dia
 e para qualquer desenvolvedor WordPress que venha a assumir o projeto.
 
-Atualizado em 04/11/2026.
+Atualizado em 13/11/2026.
 
 ---
 
@@ -26,12 +26,12 @@ nem nenhum pedido de orçamento.
 
 | Página | Onde se edita |
 |---|---|
-| Home e Quem somos | *Páginas > Editar com Elementor*: textos, fotos e botões direto na tela. As listas de máquinas da Home vêm do cadastro de máquinas. |
+| Home e Quem somos | *Páginas > Editar com Elementor*: textos, fotos e botões direto na tela. Nas fotos da vitrine da Home (abas por categoria), o *Link* da foto (URL personalizada, ex.: `/perfiladeiras/coberturas-e-fechamentos/simples/`) define o card que aparece no hover: nome e resumo vêm da máquina ou da categoria do link (`includes/vitrine.php`). Foto sem link não tem card. |
 | Máquinas e categorias | Cadastro de máquinas (seção 2) e *Máquinas > Categorias de máquina* |
 | Modelos de telha e perfil | *Máquinas > Modelos* (seção 2.1) |
 | Contato | O formulário é do Fachini Core; as perguntas frequentes ficam nos campos da própria página (seção 5) |
 | Política de privacidade e Termos de uso | No código (seção 6) |
-| Cabeçalho e rodapé | *Modelos > Theme Builder* no Elementor. Os itens do menu ficam em *Aparência > Menus* (o item "Pesquisa" abre a busca: não apague). O conteúdo do rodapé (contatos, redes, links legais) vem do Fachini Core |
+| Cabeçalho e rodapé | *Modelos > Theme Builder* no Elementor. O cabeçalho é transparente só nas páginas com foto grande no topo (Home e Quem somos, as que têm a classe `fachini-home-hero`); nas demais usa a versão clara do Figma, com o logo escuro (DARK_H, trocado pelo tema filho). Os itens do menu ficam em *Aparência > Menus* (o item "Pesquisa" abre a busca: não apague). O conteúdo do rodapé (contatos, redes, links legais) vem do Fachini Core |
 
 ## 2. Como cadastrar uma máquina
 
@@ -81,7 +81,10 @@ como foto de produto, porque mostram uma máquina que não existe.
 
 **Quem pode cadastrar**: usuários com o perfil *Cadastro de máquinas* criam e
 editam as próprias máquinas. Um administrador pode passar a autoria de uma
-máquina para outro usuário no campo *Autor*.
+máquina para outro usuário no campo *Autor*. O perfil *Editor* cuida do site
+no dia a dia: páginas (com o Elementor), o menu (*Aparência > Menus*) e todas
+as máquinas e modelos; não mexe em plugins, tema, usuários nem configurações
+(`includes/papeis.php`).
 
 ### 2.1 Modelos de telha e perfil (página própria)
 

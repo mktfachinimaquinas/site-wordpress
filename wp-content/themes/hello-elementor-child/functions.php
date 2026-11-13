@@ -154,6 +154,56 @@ function fachini_child_sem_prioridade_na_home( $atributos ) {
 add_filter( 'wp_get_loading_optimization_attributes', 'fachini_child_sem_prioridade_na_home' );
 
 /**
+ * Logo escuro no cabeçalho claro (revisão da Débora, 05/11/2026).
+ *
+ * Nas páginas sem foto grande no topo, o cabeçalho usa a variação clara do
+ * Figma, e o logo de texto branco (LIGHT_H) sumiria. O cabeçalho é um só
+ * modelo do Elementor para o site todo, então a troca é feita no CSS: o logo
+ * escuro (DARK_H, o mesmo do Rank Math) vira o fundo do link e a imagem
+ * branca fica transparente (continua lá para leitores de tela). Sem DARK_H na
+ * biblioteca de mídia, nada muda.
+ */
+function fachini_child_logo_escuro() {
+	$ids = get_posts(
+		array(
+			'post_type'      => 'attachment',
+			'post_status'    => 'inherit',
+			'posts_per_page' => 1,
+			'fields'         => 'ids',
+			'name'           => 'dark_h',
+		)
+	);
+	$url = $ids ? wp_get_attachment_image_url( (int) $ids[0], 'medium' ) : '';
+	if ( ! $url ) {
+		return;
+	}
+	$seletor = 'body:not(:has(.fachini-home-hero)) .elementor-location-header .elementor-widget-theme-site-logo';
+	wp_add_inline_style(
+		'hello-elementor-child',
+		$seletor . ' a{display:inline-block;background:url("' . esc_url( $url ) . '") no-repeat left center/contain}'
+		. $seletor . ' img{opacity:0}'
+	);
+}
+add_action( 'wp_enqueue_scripts', 'fachini_child_logo_escuro', 21 );
+
+/**
+ * Na página de uma máquina ou de um modelo, o item MÁQUINAS do menu fica
+ * marcado como a seção atual (a badge do Figma), como nas categorias.
+ */
+function fachini_child_menu_maquinas_atual( $classes, $item, $args = null, $nivel = 0 ) {
+	if ( 0 === (int) $nivel && is_singular( array( 'maquina', 'fachini_modelo' ) ) ) {
+		$listagem = get_post_type_archive_link( 'maquina' );
+		// Compara só o caminho: o item pode ter sido salvo com outro domínio.
+		$caminho = untrailingslashit( (string) wp_parse_url( (string) $item->url, PHP_URL_PATH ) );
+		if ( $listagem && '' !== $caminho && untrailingslashit( (string) wp_parse_url( $listagem, PHP_URL_PATH ) ) === $caminho ) {
+			$classes[] = 'current-menu-ancestor';
+		}
+	}
+	return $classes;
+}
+add_filter( 'nav_menu_css_class', 'fachini_child_menu_maquinas_atual', 10, 4 );
+
+/**
  * Impede o Elementor de carregar as fontes por conta própria.
  *
  * Por padrão ele pede a Archivo em todos os pesos e itálicos, 18 arquivos,

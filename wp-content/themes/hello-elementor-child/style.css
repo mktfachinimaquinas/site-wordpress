@@ -4,7 +4,7 @@ Theme URI:    https://github.com/mktfachinimaquinas/site-wordpress
 Description:  Tema filho do Hello Elementor para o site da Fachini Máquinas. Todo código personalizado (CSS, scripts, SMTP, scripts de marketing) mora aqui, para que o tema pai possa ser atualizado sem perder nada.
 Author:       Fachini Máquinas
 Template:     hello-elementor
-Version:      1.9.5
+Version:      1.10.0
 License:      GPL-2.0-or-later
 Text Domain:  hello-elementor-child
 */
@@ -249,7 +249,7 @@ body:has(.fachini-home-hero) .elementor-location-header .e-con { background: tra
 .fachini-vitrine__foto--2 { grid-column: 2; grid-row: 1; }
 .fachini-vitrine__foto--3 { grid-column: 3; grid-row: 1; }
 .fachini-vitrine__foto--4 { grid-column: 2 / 4; grid-row: 2; }
-.fachini-vitrine > .fachini-botao { grid-column: 1 / -1; grid-row: 3; justify-self: end; width: auto; margin: 8px 46px 0 0; }
+.fachini-vitrine > .fachini-botao { grid-column: 1 / -1; grid-row: 3; justify-self: end; width: auto; margin: 8px 0 0; }
 .fachini-vitrine .elementor-widget-image .elementor-widget-container,
 .fachini-vitrine .elementor-widget-image a { display: block; height: 100%; }
 .fachini-vitrine .elementor-widget-image img { display: block; width: 100%; height: 100%; object-fit: cover; }
@@ -739,24 +739,9 @@ a.fachini-seta-link:hover::after { transform: translateX(4px) rotate(44.57deg) s
 
 /* -------------------------------------------------------------------------
    Cabeçalho e menu (Figma: DROPDOWN, nó 29:13739; menu do celular, 171:2534).
-   Nas categorias e em /maquinas/ o cabeçalho fica por cima da foto do topo,
-   transparente e levemente escuro. Nas páginas sem foto no topo (máquina,
-   contato) ele continua com o fundo navy do modelo, senão o menu branco
-   sumiria no fundo branco.
+   Transparente só nas páginas com foto grande no topo (Home e Quem somos);
+   nas demais, a versão clara do Figma (ver "Revisão da Débora", no fim).
    ------------------------------------------------------------------------- */
-body:has(.fachini-cat-banner) .elementor-location-header { position: fixed; top: var(--fachini-barra-admin, 0px); left: 0; right: 0; z-index: 30; }
-body:has(.fachini-cat-banner) .elementor-location-header .elementor-section { background: transparent !important; }
-/* O véu fica num pseudo-elemento: blur no próprio cabeçalho prenderia o
-   painel do celular (position: fixed) dentro dele. */
-body:has(.fachini-cat-banner) .elementor-location-header::after {
-	content: '';
-	position: absolute;
-	inset: 0;
-	z-index: -1;
-	background: rgba(15, 15, 15, .35);
-	-webkit-backdrop-filter: blur(6px);
-	backdrop-filter: blur(6px);
-}
 
 /* Computador: MÁQUINAS abre as categorias numa caixa translúcida com um
    traço vermelho em cada item. Subcategorias só no celular. */
@@ -773,7 +758,7 @@ body:has(.fachini-cat-banner) .elementor-location-header::after {
 		backdrop-filter: blur(16px) brightness(.6);
 	}
 	/* Sem foto atrás, o branco translúcido some: caixa navy. */
-	body:not(:has(.fachini-cat-banner, .fachini-home-hero)) .elementor-location-header .elementor-nav-menu--main .elementor-nav-menu ul.sub-menu {
+	body:not(:has(.fachini-home-hero)) .elementor-location-header .elementor-nav-menu--main .elementor-nav-menu ul.sub-menu {
 		background: rgba(21, 39, 78, .94);
 		-webkit-backdrop-filter: none;
 		backdrop-filter: none;
@@ -1911,15 +1896,12 @@ body.fachini-pagina-larga .site-main { max-width: none; padding-inline: 0; }
 .elementor-location-header { position: sticky; top: var(--fachini-barra-admin, 0px); z-index: 30; }
 
 /* Nas páginas com foto no topo o cabeçalho é transparente; depois de rolar,
-   ganha o fundo navy, senão o menu branco some sobre o conteúdo claro. */
-body:has(.fachini-cat-banner) .elementor-location-header .elementor-section,
+   ganha o fundo navy da variação "dark" do NAV BAR no Figma, senão o menu
+   branco some sobre o conteúdo claro. */
 body:has(.fachini-home-hero) .elementor-location-header .elementor-section,
 body:has(.fachini-home-hero) .elementor-location-header .e-con { transition: background-color .25s ease; }
-body.fachini-rolou:has(.fachini-cat-banner) .elementor-location-header .elementor-section,
 body.fachini-rolou:has(.fachini-home-hero) .elementor-location-header .elementor-section,
-body.fachini-rolou:has(.fachini-home-hero) .elementor-location-header .e-con { background-color: var(--fachini-navy) !important; }
-body:has(.fachini-cat-banner) .elementor-location-header::after { transition: opacity .25s ease; }
-body.fachini-rolou:has(.fachini-cat-banner) .elementor-location-header::after { opacity: 0; }
+body.fachini-rolou:has(.fachini-home-hero) .elementor-location-header .e-con { background-color: var(--fachini-navy-escuro) !important; }
 @media (min-width: 1025px) {
 	/* Rolada a página, o que fica atrás da caixa do menu MÁQUINAS pode ser
 	   claro: caixa navy, como nas páginas sem foto. */
@@ -1974,4 +1956,116 @@ body:has(.rdstation-popup-position-bottom_right.floating-button) button.fachini-
 	body:has(.rdstation-popup-position-bottom_right.floating-button) button.fachini-topo-botao.fachini-topo-botao { right: 38px; bottom: 96px; }
 	.fachini-subcat-nav .fachini-cat-nav__lista { flex-wrap: nowrap; gap: 24px; }
 	.fachini-subcat-nav .fachini-cat-nav__item { height: 44px; font-size: 13px; }
+}
+
+/* -------------------------------------------------------------------------
+   Revisão da Débora (05/11/2026), pelos componentes do Figma.
+   ------------------------------------------------------------------------- */
+
+/* Navbar, variação "light" do NAV BAR (17:4204): nas páginas sem foto grande
+   no topo, fundo #FBFBFB, itens navy e o logo escuro (o logo vem do
+   functions.php, que conhece o endereço da imagem). Ao rolar, uma linha fina
+   separa o cabeçalho do conteúdo. */
+body:not(:has(.fachini-home-hero)) .elementor-location-header .elementor-section { background-color: var(--fachini-offwhite) !important; transition: box-shadow .25s ease; }
+body.fachini-rolou:not(:has(.fachini-home-hero)) .elementor-location-header .elementor-section { box-shadow: 0 1px 0 #EDEDED; }
+
+/* Item do menu ("Nav item", 8:4045): sem o sublinhado vermelho; a página
+   atual e o hover ganham a badge arredondada (branco 20% no fundo escuro,
+   navy 10% no fundo claro, onde o branco não apareceria). */
+@media (min-width: 1025px) {
+	.elementor-location-header .elementor-nav-menu--main .elementor-nav-menu > li:not(.fachini-busca-item) > a.elementor-item {
+		margin: 0 2px;
+		padding: 4px 12px !important;
+		border-radius: 25px;
+		background-color: transparent;
+		color: var(--fachini-offwhite) !important;
+		transition: background-color .2s ease;
+	}
+	.elementor-location-header .elementor-nav-menu--main .elementor-nav-menu > li:not(.fachini-busca-item) > a.elementor-item::before,
+	.elementor-location-header .elementor-nav-menu--main .elementor-nav-menu > li:not(.fachini-busca-item) > a.elementor-item::after { display: none !important; }
+	.elementor-location-header .elementor-nav-menu--main .elementor-nav-menu > li:not(.fachini-busca-item) > a.elementor-item:hover,
+	.elementor-location-header .elementor-nav-menu--main .elementor-nav-menu > li:not(.fachini-busca-item) > a.elementor-item:focus-visible,
+	.elementor-location-header .elementor-nav-menu--main .elementor-nav-menu > li:not(.fachini-busca-item) > a.elementor-item.highlighted,
+	.elementor-location-header .elementor-nav-menu--main .elementor-nav-menu > li:not(.fachini-busca-item) > a.elementor-item.elementor-item-active,
+	.elementor-location-header .elementor-nav-menu--main .elementor-nav-menu > li.current-menu-ancestor > a.elementor-item { background-color: rgba(255, 255, 255, .2); }
+
+	body:not(:has(.fachini-home-hero)) .elementor-location-header .elementor-nav-menu--main .elementor-nav-menu > li:not(.fachini-busca-item) > a.elementor-item { color: var(--fachini-navy-escuro) !important; }
+	body:not(:has(.fachini-home-hero)) .elementor-location-header .elementor-nav-menu--main .elementor-nav-menu > li:not(.fachini-busca-item) > a.elementor-item:hover,
+	body:not(:has(.fachini-home-hero)) .elementor-location-header .elementor-nav-menu--main .elementor-nav-menu > li:not(.fachini-busca-item) > a.elementor-item:focus-visible,
+	body:not(:has(.fachini-home-hero)) .elementor-location-header .elementor-nav-menu--main .elementor-nav-menu > li:not(.fachini-busca-item) > a.elementor-item.highlighted,
+	body:not(:has(.fachini-home-hero)) .elementor-location-header .elementor-nav-menu--main .elementor-nav-menu > li:not(.fachini-busca-item) > a.elementor-item.elementor-item-active,
+	body:not(:has(.fachini-home-hero)) .elementor-location-header .elementor-nav-menu--main .elementor-nav-menu > li.current-menu-ancestor > a.elementor-item { background-color: rgba(0, 34, 78, .1); }
+
+	/* Campo de busca da variação clara: navy 20%, lupa escura. */
+	body:not(:has(.fachini-home-hero)) .elementor-location-header .elementor-nav-menu--main .fachini-busca-item > a.elementor-item { background: rgba(0, 34, 78, .2) var(--fachini-lupa-escura) no-repeat 16px center / 20px; }
+	body:not(:has(.fachini-home-hero)) .elementor-location-header .elementor-nav-menu--main .fachini-busca-item > a.elementor-item:hover,
+	body:not(:has(.fachini-home-hero)) .elementor-location-header .elementor-nav-menu--main .fachini-busca-item > a.elementor-item:focus-visible { background-color: rgba(0, 34, 78, .28); }
+}
+
+/* Celular e tablet: o botão do menu navy no fundo claro; aberto, ele fica
+   sobre o painel preto e volta a ser branco. */
+@media (max-width: 1024px) {
+	body:not(:has(.fachini-home-hero)) .elementor-location-header .elementor-menu-toggle:not(.elementor-active) { --nav-menu-icon-color: var(--fachini-navy-escuro); color: var(--fachini-navy-escuro); }
+	body:not(:has(.fachini-home-hero)) .elementor-location-header .elementor-menu-toggle:not(.elementor-active) svg { fill: var(--fachini-navy-escuro); }
+}
+
+/* Perguntas frequentes: abrir e fechar com animação (assets/site.js). */
+.fachini-faq__item { overflow: hidden; }
+
+/* Abas da vitrine da Home: troca de cor suave no hover. */
+.fachini-home-abas .e-n-tabs-heading .e-n-tab-title { transition: color .2s ease, border-color .2s ease; }
+
+/* Fotos da vitrine da Home com link: no hover, o card do Figma ("MACHINE
+   CARD", estado hover): véu escuro com desfoque leve, linha branca, nome,
+   resumo e seta. O conteúdo vem do plugin (includes/vitrine.php), a partir
+   da máquina ou da categoria do link da foto. */
+.fachini-vitrine .elementor-widget-image a { position: relative; overflow: hidden; }
+.fachini-vitrine__cartao {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-between;
+	gap: 32px;
+	padding: 32px;
+	background: linear-gradient(180deg, rgba(32, 32, 32, .8) 0%, rgba(0, 0, 0, .8) 100%);
+	-webkit-backdrop-filter: blur(2px);
+	backdrop-filter: blur(2px);
+	color: #fff;
+	font-family: 'Archivo', sans-serif;
+	text-align: left;
+	opacity: 0;
+	transition: opacity .3s ease-in;
+	pointer-events: none;
+}
+.fachini-vitrine .elementor-widget-image a:hover .fachini-vitrine__cartao,
+.fachini-vitrine .elementor-widget-image a:focus-visible .fachini-vitrine__cartao { opacity: 1; }
+.fachini-vitrine__info { display: flex; flex-direction: column; gap: 12px; max-width: 440px; padding-left: 13px; border-left: 3px solid #fff; }
+.fachini-vitrine__nome { font-size: 20px; font-weight: 500; line-height: 28px; text-transform: uppercase; }
+.fachini-vitrine__texto { display: -webkit-box; overflow: hidden; font-size: 14px; line-height: 16px; letter-spacing: .05em; -webkit-line-clamp: 4; -webkit-box-orient: vertical; }
+.fachini-vitrine__seta {
+	flex: none;
+	width: 32px;
+	height: 32px;
+	background-color: var(--fachini-offwhite);
+	-webkit-mask: url(assets/seta.svg) center / 26px no-repeat;
+	mask: url(assets/seta.svg) center / 26px no-repeat;
+	transform: rotate(44.57deg);
+}
+/* Fotos pequenas: menos linhas de resumo, como nos cards pequenos do Figma. */
+.fachini-vitrine__foto--2 .fachini-vitrine__texto,
+.fachini-vitrine__foto--3 .fachini-vitrine__texto { -webkit-line-clamp: 2; }
+.fachini-vitrine--2-altas .fachini-vitrine__foto--1 .fachini-vitrine__texto,
+.fachini-vitrine--2-altas .fachini-vitrine__foto--2 .fachini-vitrine__texto { display: none; }
+/* Tela de toque não tem hover: a foto continua sendo o link, sem o card. */
+@media (max-width: 1024px), (hover: none) {
+	.fachini-vitrine__cartao { display: none; }
+}
+
+/* Entrada dos blocos na rolagem (assets/site.js marca com fachini-anima só o
+   que começa fora da tela; o que já aparece ao abrir a página não se mexe). */
+.fachini-anima { opacity: 0; transform: translateY(32px); transition: opacity .6s ease-out, transform .6s ease-out; }
+.fachini-anima.is-visivel { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+	.fachini-anima { opacity: 1; transform: none; transition: none; }
 }
