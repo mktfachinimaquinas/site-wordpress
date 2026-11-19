@@ -46,7 +46,7 @@ nem nenhum pedido de orçamento.
 5. Preencha os campos abaixo do texto. O que ficar vazio simplesmente não
    aparece na página.
    - **Dados da máquina**
-     - *Modelo / série*: ex. Série "HWM". Aparece nos cards das listagens.
+     - *Modelo / série*: ex. Série "HWM". Aparece na lista de máquinas, embaixo à direita.
      - *Descrição curta*: uma ou duas frases. Usada nos cards das listagens.
      - *Especificações técnicas*: uma por linha, no formato `Rótulo: valor`.
        Exemplo:
