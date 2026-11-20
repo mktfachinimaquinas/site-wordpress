@@ -217,20 +217,22 @@ Meta.
 
 ## 8. E-mail do site
 
-Os e-mails dos pedidos saem por uma caixa própria do site (SMTP), configurada
-no arquivo `wp-config.php` do servidor, nunca no painel:
+Os e-mails dos pedidos saem por SMTP da Hostinger, configurado no arquivo
+`wp-config.php` do servidor, nunca no painel. Hoje o site envia pela caixa
+`sdr@fachinimaquinas.com.br` (configuração do lançamento, 20/11/2026):
 
 ```php
 define( 'FACHINI_SMTP_HOST', 'smtp.hostinger.com' );
-define( 'FACHINI_SMTP_PORT', 465 );
-define( 'FACHINI_SMTP_SECURE', 'ssl' );
-define( 'FACHINI_SMTP_USER', 'site@fachinimaquinas.com.br' );
+define( 'FACHINI_SMTP_USER', 'sdr@fachinimaquinas.com.br' );
 define( 'FACHINI_SMTP_PASS', 'senha da caixa' );
-define( 'FACHINI_SMTP_FROM_NAME', 'Site Fachini Máquinas' );
 ```
 
-Depois de configurar, use o botão *Enviar e-mail de teste* em
-*Configurações > Integrações*. Ninguém precisa ler essa caixa: ela só envia.
+Opcionais, com o padrão entre parênteses: `FACHINI_SMTP_PORT` (465),
+`FACHINI_SMTP_SECURE` (ssl) e `FACHINI_SMTP_FROM_NAME` (Site Fachini
+Máquinas). Se a senha dessa caixa
+mudar, ela precisa ser trocada também no `wp-config.php`, senão os pedidos
+continuam salvos no painel, mas o e-mail para de sair. Depois de qualquer
+mudança, use o botão *Enviar e-mail de teste* em *Configurações > Integrações*.
 
 ## 9. SEO (Rank Math)
 
