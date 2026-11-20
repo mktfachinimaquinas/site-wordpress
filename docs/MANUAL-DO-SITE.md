@@ -333,5 +333,10 @@ repositório quando ficarem prontos.
 
 | Ambiente | Endereço | Para quê |
 |---|---|---|
-| Construção | wordpress.fachinimaquinas.com.br | Onde o site está sendo montado. Protegido por senha e bloqueado para buscadores. |
-| Produção | fachinimaquinas.com.br | Entra no ar no lançamento, com os redirecionamentos do site antigo. |
+| Produção | fachinimaquinas.com.br | O site no ar desde 20/11/2026, com os redirecionamentos do site antigo. Todo conteúdo (máquinas, modelos, textos, páginas) é editado aqui, em fachinimaquinas.com.br/wp-admin, com o mesmo usuário e senha de antes. |
+| Homologação | wordpress.fachinimaquinas.com.br | Cópia de testes, protegida por senha e bloqueada para buscadores. Serve para testar código e atualizações antes de levar à produção. O conteúdo dela não acompanha o da produção. |
+
+No lançamento, a produção foi criada como cópia da homologação (WP Toolkit >
+Clonar), com banco de dados próprio. O site antigo foi guardado no servidor,
+fora do ar, na pasta `site-antigo-20261120` (fora de `public_html`), e o
+WordPress antigo que ficava em `/backup` saiu do ar junto com ele.
