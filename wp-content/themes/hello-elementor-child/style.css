@@ -4,7 +4,7 @@ Theme URI:    https://github.com/mktfachinimaquinas/site-wordpress
 Description:  Tema filho do Hello Elementor para o site da Fachini Máquinas. Todo código personalizado (CSS, scripts, SMTP, scripts de marketing) mora aqui, para que o tema pai possa ser atualizado sem perder nada.
 Author:       Fachini Máquinas
 Template:     hello-elementor
-Version:      1.10.1
+Version:      1.10.2
 License:      GPL-2.0-or-later
 Text Domain:  hello-elementor-child
 */
@@ -161,9 +161,9 @@ Text Domain:  hello-elementor-child
    ------------------------------------------------------------------------- */
 
 /* O cabeçalho fica por cima da foto do hero, sem fundo próprio. */
-body:has(.fachini-home-hero) .elementor-location-header { position: fixed; top: var(--fachini-barra-admin, 0px); left: 0; right: 0; z-index: 30; }
-body:has(.fachini-home-hero) .elementor-location-header .elementor-section,
-body:has(.fachini-home-hero) .elementor-location-header .e-con { background: transparent !important; }
+body:has(.fachini-home-hero, .fachini-cat-banner) .elementor-location-header { position: fixed; top: var(--fachini-barra-admin, 0px); left: 0; right: 0; z-index: 30; }
+body:has(.fachini-home-hero, .fachini-cat-banner) .elementor-location-header .elementor-section,
+body:has(.fachini-home-hero, .fachini-cat-banner) .elementor-location-header .e-con { background: transparent !important; }
 
 .fachini-home-hero__titulo .elementor-heading-title { margin: 0; }
 .fachini-home-hero__texto p { margin: 0; }
@@ -517,6 +517,9 @@ a.fachini-seta-link:hover::after { transform: translateX(4px) rotate(44.57deg) s
 .fachini-cat-banner { position: relative; height: 482px; overflow: hidden; background: var(--fachini-navy-escuro); }
 /* Duas classes nas fotos: o Elementor aplica ".elementor img { height: auto }". */
 .fachini-cat-banner .fachini-cat-banner__foto { display: block; width: 100%; height: 100%; max-width: none; object-fit: cover; }
+/* O cabeçalho transparente fica por cima da foto: escurece só o alto dela,
+   para o menu branco continuar legível nas fotos claras. */
+.fachini-cat-banner::after { content: ''; position: absolute; inset: 0 0 auto; z-index: 1; height: 220px; background: linear-gradient(180deg, rgba(15, 15, 15, .6) 0%, rgba(15, 15, 15, 0) 100%); pointer-events: none; }
 
 /* Barra das categorias principais. */
 .fachini-cat-nav { border: 2px solid #EDEDED; background: var(--fachini-offwhite); }
@@ -769,8 +772,10 @@ a.fachini-seta-link:hover::after { transform: translateX(4px) rotate(44.57deg) s
 
 /* -------------------------------------------------------------------------
    Cabeçalho e menu (Figma: DROPDOWN, nó 29:13739; menu do celular, 171:2534).
-   Transparente só nas páginas com foto grande no topo (Home e Quem somos);
-   nas demais, a versão clara do Figma (ver "Revisão da Débora", no fim).
+   Transparente nas páginas com foto grande no topo (Home, Quem somos e, a
+   pedido do Paulo em 20/11/2026, /maquinas/ e as categorias, com a foto do
+   topo até a borda de cima); nas demais, a versão clara do Figma (ver
+   "Revisão da Débora", no fim).
    ------------------------------------------------------------------------- */
 
 /* Computador: MÁQUINAS abre as categorias numa caixa translúcida com um
@@ -788,7 +793,7 @@ a.fachini-seta-link:hover::after { transform: translateX(4px) rotate(44.57deg) s
 		backdrop-filter: blur(16px) brightness(.6);
 	}
 	/* Sem foto atrás, o branco translúcido some: caixa navy. */
-	body:not(:has(.fachini-home-hero)) .elementor-location-header .elementor-nav-menu--main .elementor-nav-menu ul.sub-menu {
+	body:not(:has(.fachini-home-hero, .fachini-cat-banner)) .elementor-location-header .elementor-nav-menu--main .elementor-nav-menu ul.sub-menu {
 		background: rgba(21, 39, 78, .94);
 		-webkit-backdrop-filter: none;
 		backdrop-filter: none;
@@ -1928,10 +1933,10 @@ body.fachini-pagina-larga .site-main { max-width: none; padding-inline: 0; }
 /* Nas páginas com foto no topo o cabeçalho é transparente; depois de rolar,
    ganha o fundo navy da variação "dark" do NAV BAR no Figma, senão o menu
    branco some sobre o conteúdo claro. */
-body:has(.fachini-home-hero) .elementor-location-header .elementor-section,
-body:has(.fachini-home-hero) .elementor-location-header .e-con { transition: background-color .25s ease; }
-body.fachini-rolou:has(.fachini-home-hero) .elementor-location-header .elementor-section,
-body.fachini-rolou:has(.fachini-home-hero) .elementor-location-header .e-con { background-color: var(--fachini-navy-escuro) !important; }
+body:has(.fachini-home-hero, .fachini-cat-banner) .elementor-location-header .elementor-section,
+body:has(.fachini-home-hero, .fachini-cat-banner) .elementor-location-header .e-con { transition: background-color .25s ease; }
+body.fachini-rolou:has(.fachini-home-hero, .fachini-cat-banner) .elementor-location-header .elementor-section,
+body.fachini-rolou:has(.fachini-home-hero, .fachini-cat-banner) .elementor-location-header .e-con { background-color: var(--fachini-navy-escuro) !important; }
 @media (min-width: 1025px) {
 	/* Rolada a página, o que fica atrás da caixa do menu MÁQUINAS pode ser
 	   claro: caixa navy, como nas páginas sem foto. */
@@ -1996,8 +2001,8 @@ body:has(.rdstation-popup-position-bottom_right.floating-button) button.fachini-
    no topo, fundo #FBFBFB, itens navy e o logo escuro (o logo vem do
    functions.php, que conhece o endereço da imagem). Ao rolar, uma linha fina
    separa o cabeçalho do conteúdo. */
-body:not(:has(.fachini-home-hero)) .elementor-location-header .elementor-section { background-color: var(--fachini-offwhite) !important; transition: box-shadow .25s ease; }
-body.fachini-rolou:not(:has(.fachini-home-hero)) .elementor-location-header .elementor-section { box-shadow: 0 1px 0 #EDEDED; }
+body:not(:has(.fachini-home-hero, .fachini-cat-banner)) .elementor-location-header .elementor-section { background-color: var(--fachini-offwhite) !important; transition: box-shadow .25s ease; }
+body.fachini-rolou:not(:has(.fachini-home-hero, .fachini-cat-banner)) .elementor-location-header .elementor-section { box-shadow: 0 1px 0 #EDEDED; }
 
 /* Item do menu ("Nav item", 8:4045): sem o sublinhado vermelho; a página
    atual e o hover ganham a badge arredondada (branco 20% no fundo escuro,
@@ -2019,24 +2024,24 @@ body.fachini-rolou:not(:has(.fachini-home-hero)) .elementor-location-header .ele
 	.elementor-location-header .elementor-nav-menu--main .elementor-nav-menu > li:not(.fachini-busca-item) > a.elementor-item.elementor-item-active,
 	.elementor-location-header .elementor-nav-menu--main .elementor-nav-menu > li.current-menu-ancestor > a.elementor-item { background-color: rgba(255, 255, 255, .2); }
 
-	body:not(:has(.fachini-home-hero)) .elementor-location-header .elementor-nav-menu--main .elementor-nav-menu > li:not(.fachini-busca-item) > a.elementor-item { color: var(--fachini-navy-escuro) !important; }
-	body:not(:has(.fachini-home-hero)) .elementor-location-header .elementor-nav-menu--main .elementor-nav-menu > li:not(.fachini-busca-item) > a.elementor-item:hover,
-	body:not(:has(.fachini-home-hero)) .elementor-location-header .elementor-nav-menu--main .elementor-nav-menu > li:not(.fachini-busca-item) > a.elementor-item:focus-visible,
-	body:not(:has(.fachini-home-hero)) .elementor-location-header .elementor-nav-menu--main .elementor-nav-menu > li:not(.fachini-busca-item) > a.elementor-item.highlighted,
-	body:not(:has(.fachini-home-hero)) .elementor-location-header .elementor-nav-menu--main .elementor-nav-menu > li:not(.fachini-busca-item) > a.elementor-item.elementor-item-active,
-	body:not(:has(.fachini-home-hero)) .elementor-location-header .elementor-nav-menu--main .elementor-nav-menu > li.current-menu-ancestor > a.elementor-item { background-color: rgba(0, 34, 78, .1); }
+	body:not(:has(.fachini-home-hero, .fachini-cat-banner)) .elementor-location-header .elementor-nav-menu--main .elementor-nav-menu > li:not(.fachini-busca-item) > a.elementor-item { color: var(--fachini-navy-escuro) !important; }
+	body:not(:has(.fachini-home-hero, .fachini-cat-banner)) .elementor-location-header .elementor-nav-menu--main .elementor-nav-menu > li:not(.fachini-busca-item) > a.elementor-item:hover,
+	body:not(:has(.fachini-home-hero, .fachini-cat-banner)) .elementor-location-header .elementor-nav-menu--main .elementor-nav-menu > li:not(.fachini-busca-item) > a.elementor-item:focus-visible,
+	body:not(:has(.fachini-home-hero, .fachini-cat-banner)) .elementor-location-header .elementor-nav-menu--main .elementor-nav-menu > li:not(.fachini-busca-item) > a.elementor-item.highlighted,
+	body:not(:has(.fachini-home-hero, .fachini-cat-banner)) .elementor-location-header .elementor-nav-menu--main .elementor-nav-menu > li:not(.fachini-busca-item) > a.elementor-item.elementor-item-active,
+	body:not(:has(.fachini-home-hero, .fachini-cat-banner)) .elementor-location-header .elementor-nav-menu--main .elementor-nav-menu > li.current-menu-ancestor > a.elementor-item { background-color: rgba(0, 34, 78, .1); }
 
 	/* Campo de busca da variação clara: navy 20%, lupa escura. */
-	body:not(:has(.fachini-home-hero)) .elementor-location-header .elementor-nav-menu--main .fachini-busca-item > a.elementor-item { background: rgba(0, 34, 78, .2) var(--fachini-lupa-escura) no-repeat 16px center / 20px; }
-	body:not(:has(.fachini-home-hero)) .elementor-location-header .elementor-nav-menu--main .fachini-busca-item > a.elementor-item:hover,
-	body:not(:has(.fachini-home-hero)) .elementor-location-header .elementor-nav-menu--main .fachini-busca-item > a.elementor-item:focus-visible { background-color: rgba(0, 34, 78, .28); }
+	body:not(:has(.fachini-home-hero, .fachini-cat-banner)) .elementor-location-header .elementor-nav-menu--main .fachini-busca-item > a.elementor-item { background: rgba(0, 34, 78, .2) var(--fachini-lupa-escura) no-repeat 16px center / 20px; }
+	body:not(:has(.fachini-home-hero, .fachini-cat-banner)) .elementor-location-header .elementor-nav-menu--main .fachini-busca-item > a.elementor-item:hover,
+	body:not(:has(.fachini-home-hero, .fachini-cat-banner)) .elementor-location-header .elementor-nav-menu--main .fachini-busca-item > a.elementor-item:focus-visible { background-color: rgba(0, 34, 78, .28); }
 }
 
 /* Celular e tablet: o botão do menu navy no fundo claro; aberto, ele fica
    sobre o painel preto e volta a ser branco. */
 @media (max-width: 1024px) {
-	body:not(:has(.fachini-home-hero)) .elementor-location-header .elementor-menu-toggle:not(.elementor-active) { --nav-menu-icon-color: var(--fachini-navy-escuro); color: var(--fachini-navy-escuro); }
-	body:not(:has(.fachini-home-hero)) .elementor-location-header .elementor-menu-toggle:not(.elementor-active) svg { fill: var(--fachini-navy-escuro); }
+	body:not(:has(.fachini-home-hero, .fachini-cat-banner)) .elementor-location-header .elementor-menu-toggle:not(.elementor-active) { --nav-menu-icon-color: var(--fachini-navy-escuro); color: var(--fachini-navy-escuro); }
+	body:not(:has(.fachini-home-hero, .fachini-cat-banner)) .elementor-location-header .elementor-menu-toggle:not(.elementor-active) svg { fill: var(--fachini-navy-escuro); }
 }
 
 /* Perguntas frequentes: abrir e fechar com animação (assets/site.js). */

@@ -177,7 +177,7 @@ function fachini_child_logo_escuro() {
 	if ( ! $url ) {
 		return;
 	}
-	$seletor = 'body:not(:has(.fachini-home-hero)) .elementor-location-header .elementor-widget-theme-site-logo';
+	$seletor = 'body:not(:has(.fachini-home-hero, .fachini-cat-banner)) .elementor-location-header .elementor-widget-theme-site-logo';
 	wp_add_inline_style(
 		'hello-elementor-child',
 		$seletor . ' a{display:inline-block;background:url("' . esc_url( $url ) . '") no-repeat left center/contain}'

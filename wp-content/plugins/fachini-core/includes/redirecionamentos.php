@@ -12,7 +12,9 @@
  * Se o destino ainda não existir (ex.: uma máquina que ainda não foi
  * cadastrada), o redirecionamento vai para a página-mãe mais próxima que
  * exista. Quando a máquina for cadastrada com o endereço da planilha, o
- * redirecionamento passa a levar direto para ela, sem mexer aqui.
+ * redirecionamento passa a levar direto para ela, sem mexer aqui. Se o
+ * apelido da máquina for trocado depois, o endereço antigo continua levando
+ * a ela (o WordPress guarda o apelido antigo).
  *
  * Os domínios e subdomínios antigos (www, wordpress., maquinas.,
  * dobradeirasfachini.com.br) só são redirecionados quando apontarem para este
@@ -152,12 +154,72 @@ function fachini_caminho_existe( $caminho ) {
 }
 
 /**
- * O destino, ou a página-mãe mais próxima que exista.
+ * Caminho de um endereço do site, sem o domínio e sem a pasta do WordPress,
+ * com barra no começo e no fim.
+ */
+function fachini_caminho_relativo( $url ) {
+	$caminho = '/' . trim( (string) wp_parse_url( $url, PHP_URL_PATH ), '/' ) . '/';
+	$base    = '/' . trim( (string) wp_parse_url( home_url(), PHP_URL_PATH ), '/' );
+	if ( '/' !== $base && 0 === strpos( $caminho, $base . '/' ) ) {
+		$caminho = substr( $caminho, strlen( $base ) );
+	}
+	return '//' === $caminho ? '/' : $caminho;
+}
+
+/**
+ * Máquina que já teve este endereço, ou 0.
+ *
+ * Quando alguém troca o apelido (o fim do endereço) de uma máquina
+ * publicada, o WordPress guarda o apelido antigo (_wp_old_slug). Assim um
+ * endereço antigo, salvo no Google, num anúncio, no mapa de
+ * redirecionamentos ou num link da Home, continua levando à máquina.
+ */
+function fachini_maquina_pelo_apelido_antigo( $caminho ) {
+	$partes = array_values( array_filter( explode( '/', trim( (string) $caminho, '/' ) ), 'strlen' ) );
+	if ( count( $partes ) < 2 ) {
+		return 0;
+	}
+
+	$ids = get_posts(
+		array(
+			'post_type'   => 'maquina',
+			'post_status' => 'publish',
+			'numberposts' => 10,
+			'fields'      => 'ids',
+			'meta_key'    => '_wp_old_slug', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+			'meta_value'  => sanitize_title( end( $partes ) ), // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+		)
+	);
+	if ( ! $ids ) {
+		return 0;
+	}
+
+	// Só vale a máquina que continua na mesma categoria do endereço pedido
+	// (o mesmo apelido, ex.: "automatica", existe em categorias diferentes).
+	$pai = '/' . implode( '/', array_slice( $partes, 0, -1 ) ) . '/';
+	foreach ( $ids as $id ) {
+		$atual = fachini_caminho_relativo( get_permalink( $id ) );
+		if ( 0 === strpos( $atual, $pai ) && substr_count( $atual, '/' ) === substr_count( $pai, '/' ) + 1 ) {
+			return (int) $id;
+		}
+	}
+	return 0;
+}
+
+/**
+ * O destino, ou a página-mãe mais próxima que exista. Uma máquina que mudou
+ * de apelido é encontrada pelo apelido antigo.
  */
 function fachini_destino_existente( $destino ) {
 	$caminho = '/' . trim( $destino, '/' ) . '/';
 	if ( '//' === $caminho ) {
 		return '/';
+	}
+	if ( ! fachini_caminho_existe( $caminho ) ) {
+		$maquina = fachini_maquina_pelo_apelido_antigo( $caminho );
+		if ( $maquina ) {
+			return fachini_caminho_relativo( get_permalink( $maquina ) );
+		}
 	}
 	while ( '/' !== $caminho && ! fachini_caminho_existe( $caminho ) ) {
 		$sem_barra = rtrim( $caminho, '/' );
@@ -165,6 +227,29 @@ function fachini_destino_existente( $destino ) {
 	}
 	return $caminho;
 }
+
+/**
+ * Endereço antigo de máquina (apelido trocado) que daria página de erro:
+ * 301 para o endereço atual, mantendo os parâmetros (UTMs, gclid).
+ */
+function fachini_redirecionar_apelido_antigo() {
+	if ( ! is_404() ) {
+		return;
+	}
+	$uri     = isset( $_SERVER['REQUEST_URI'] ) ? wp_unslash( $_SERVER['REQUEST_URI'] ) : ''; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+	$maquina = fachini_maquina_pelo_apelido_antigo( fachini_caminho_relativo( strtolower( rawurldecode( (string) wp_parse_url( $uri, PHP_URL_PATH ) ) ) ) );
+	if ( ! $maquina ) {
+		return;
+	}
+	$url    = get_permalink( $maquina );
+	$params = (string) wp_parse_url( $uri, PHP_URL_QUERY );
+	if ( '' !== $params ) {
+		$url .= '?' . $params;
+	}
+	wp_safe_redirect( $url, 301, 'Fachini Core' );
+	exit;
+}
+add_action( 'template_redirect', 'fachini_redirecionar_apelido_antigo', 1 );
 
 /**
  * Leva os endereços antigos aos novos.

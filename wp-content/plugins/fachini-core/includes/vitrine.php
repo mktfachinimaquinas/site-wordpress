@@ -47,11 +47,7 @@ function fachini_vitrine_alvo( $url ) {
 		if ( $real !== $esperado ) {
 			continue;
 		}
-		$resumo = trim( (string) get_post_meta( $id, 'descricao_curta', true ) );
-		if ( '' === $resumo ) {
-			$resumo = has_excerpt( $id ) ? get_the_excerpt( $id ) : wp_strip_all_tags( (string) get_post_field( 'post_content', $id ) );
-		}
-		return array( get_the_title( $id ), $resumo );
+		return array( get_the_title( $id ), fachini_vitrine_resumo( $id ) );
 	}
 
 	// Categoria ou subcategoria.
@@ -60,7 +56,25 @@ function fachini_vitrine_alvo( $url ) {
 		return array( $termo->name, wp_strip_all_tags( term_description( $termo ) ) );
 	}
 
+	// Máquina que mudou de apelido depois que o link foi escolhido: o card
+	// aparece e o link passa a ser o endereço atual (terceiro item).
+	$antiga = function_exists( 'fachini_maquina_pelo_apelido_antigo' ) ? fachini_maquina_pelo_apelido_antigo( $esperado ) : 0;
+	if ( $antiga ) {
+		return array( get_the_title( $antiga ), fachini_vitrine_resumo( $antiga ), get_permalink( $antiga ) );
+	}
+
 	return null;
+}
+
+/**
+ * Resumo da máquina para o card: a descrição curta, ou o resumo do texto.
+ */
+function fachini_vitrine_resumo( $id ) {
+	$resumo = trim( (string) get_post_meta( $id, 'descricao_curta', true ) );
+	if ( '' === $resumo ) {
+		$resumo = has_excerpt( $id ) ? get_the_excerpt( $id ) : wp_strip_all_tags( (string) get_post_field( 'post_content', $id ) );
+	}
+	return $resumo;
 }
 
 /**
@@ -88,6 +102,11 @@ function fachini_vitrine_cartao( $html, $widget ) {
 		. '</span>'
 		. '<span class="fachini-vitrine__seta"></span>'
 		. '</span>';
+
+	// Link escolhido com o apelido antigo da máquina: vai direto ao endereço atual.
+	if ( ! empty( $alvo[2] ) ) {
+		$html = preg_replace( '/(<a\b[^>]*?\bhref=")[^"]*(")/', '${1}' . esc_url( $alvo[2] ) . '${2}', $html, 1 );
+	}
 
 	$fim = strrpos( $html, '</a>' );
 	return substr( $html, 0, $fim ) . $cartao . substr( $html, $fim );
